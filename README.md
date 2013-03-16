@@ -31,6 +31,6 @@ First, you need to activate the Drive API for your app. You can do this in your 
 
 ### Setup your App inforamtion in the code
 
-Also in `/js/rtpg.js` change the `appId` and the `clientId` in the `rtpg.realTimeOptions` object.
+Also in `/js/rtpg.js` change the `APP_ID` and the `CLIENT_ID` constants at the top of the file.
 
 ### Deploy, run that's it!
