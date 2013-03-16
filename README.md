@@ -1,6 +1,6 @@
 # Google Drive Realtime API Playground
 
-![Google Drive Realtime API Playground Screenshot](https://github.com/googledrive/realtime-playground/raw/master/screenshot.png)
+[![Google Drive Realtime API Playground Screenshot](https://github.com/googledrive/realtime-playground/raw/master/screenshot.png)](https://realtimeplayground.appspot.com/)
 
 ## Overview
 
