@@ -602,7 +602,7 @@ section h2 {
 }
 
 /*disabled buttons*/
-.disabled  .rp-button, .rp-button.disabled, .rp-button.disabled:hover, .rp-button.disabled:active {
+.rp-button:disabled, .rp-button[disabled=disabled], .disabled  .rp-button, .rp-button.disabled, .rp-button.disabled:hover, .rp-button.disabled:active {
     background: #FFF;
     color: #b8b8b8;
     border: 1px solid #f3f3f3;
@@ -615,7 +615,7 @@ section h2 {
     -moz-box-shadow: inset 0px 1px 2px rgba(0,0,0,0.1);
     box-shadow: inset 0px 1px 2px rgba(0,0,0,0.1);
 }
-.rp-button-submit.disabled, .rp-button-submit.disabled:hover, .rp-button-submit.disabled:active {
+.rp-button-submit:disabled, .rp-button-submit[disabled=disabled], .rp-button-submit.disabled, .rp-button-submit.disabled:hover, .rp-button-submit.disabled:active {
     border: 1px solid #3079ed;
     background-color: #4d90fe;
     color: #FFF;
@@ -644,7 +644,6 @@ section h2 {
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
     filter: alpha(opacity=50);
 }
-
 /* @group Colored Buttons */
 
 .rp-button-submit:focus, .rp-button-submit.focus,
