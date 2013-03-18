@@ -1,0 +1,16 @@
+{
+  "name" : "Google Drive Realtime API Playground",
+  "version" : "1",
+  "manifest_version": 2,
+  "description" : "Lets you experiment with the Google Drive Realtime API and take you through how the API works step by step.",
+  "container" : "GOOGLE_DRIVE",
+  "api_console_project_id" : "840867953062",
+  "icons": {
+    "128": "icon_128.png"
+  },
+  "app" : {
+    "launch" : {
+      "web_url" : "https://realtimeplayground.appspot.com/"
+    }
+  }
+}
