@@ -16,7 +16,6 @@
 
 __author__ = 'nivco@google.com (Nicolas Garnier)'
 
-#import google3  # pylint: disable-msg=W0611
 import webapp2
 
 
