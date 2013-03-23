@@ -22,7 +22,7 @@ import webapp2
 class DefaultHandler(webapp2.RequestHandler):
   """Handler redirecting /* to /"""
 
-  def get(self):  # pylint: disable-msg=C6409
+  def get(self):
     """Redirect to / and keeping the URL parameters."""
     if self.request.query_string:
       self.redirect('/?' + self.request.query_string)
