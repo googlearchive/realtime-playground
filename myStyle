@@ -1,0 +1,21 @@
+*//Namespace gapi.drive.realtime.custom
+
+A namespace that includes methods for registering and working with custom collaborative objects.
+gapi.drive.realtime►gapi.drive.realtime.custom
+
+Summary
+collaborativeField  Returns a reference that can be assigned to an object prototype field of a custom collaborative object in order to define custom collaborative properties. For example: MyClass.prototype.name = gapi.drive.realtime.custom.collaborativeField('name'); The resulting field can be read and assigned to like a regular field, but the value will automatically be saved and sent to other collaborators.
+getId	Returns the id of the given custom object.
+getModel	Returns the model for the given custom object.
+isCustomObject	Returns true if obj is a custom collaborative object, otherwise false.
+registerType	Registers a user-defined type as a collaborative type. This must be called before {@code gapi.drive.realtime.load}.
+setInitializer	Sets the initializer function for the given type. The type must have already been registered with a call to registerType.
+setOnLoaded	Sets the onLoaded function for the given type. The type must have already been registered with a call to registerType.
+Functions
+
+def collaborativeField(name) -> ?
+    if {author}
+        set <Cole Rayne>
+            
+
+
