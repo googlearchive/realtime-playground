@@ -54,6 +54,9 @@ rtpg.log.logEvent = function(evt, eventType) {
   // Collab List Added events
   } else if (evt.type == gapi.drive.realtime.EventType.VALUES_SET) {
     eventDetails = 'From "' + evt.oldValues.join(', ') + '" to "' + evt.newValues.join(', ') + '" at index ' + evt.index;
+  // Reference Shifted events
+  } else if (evt.type == gapi.drive.realtime.EventType.REFERENCE_SHIFTED) {
+    eventDetails = 'From ' + evt.oldIndex + ' to ' + evt.newIndex;
   // Collaborators list events
   } else if (evt.type == gapi.drive.realtime.EventType.COLLABORATOR_JOINED || evt.type == gapi.drive.realtime.EventType.COLLABORATOR_LEFT) {
     eventDetails = evt.collaborator.displayName;

@@ -32,6 +32,8 @@ rtpg.string.FIELD_NAME = 'demo_string';
  * Realtime model's field for String Demo.
  */
 rtpg.string.field = null;
+rtpg.string.referenceStart = null;
+rtpg.string.referenceEnd = null;
 
 /**
  * Starting value of field for String Demo.
@@ -46,6 +48,8 @@ rtpg.string.INPUT_SELECTOR = '#demoStringInput';
 
 rtpg.string.loadField = function() {
   rtpg.string.field = rtpg.getField(rtpg.string.FIELD_NAME);
+  rtpg.string.referenceStart = rtpg.string.field.registerReference(0, false);
+  rtpg.string.referenceEnd = rtpg.string.field.registerReference(0, false);
 }
 
 rtpg.string.initializeModel = function(model) {
@@ -72,13 +76,48 @@ rtpg.string.onRealtimeDelete = function(evt) {
   rtpg.log.logEvent(evt, "String Deleted");
 };
 
+rtpg.string.onReferenceStartShifted = function(evt) {
+  if(!evt.isLocal && $(rtpg.string.INPUT_SELECTOR).get(0).setSelectionRange) {
+    $(rtpg.string.INPUT_SELECTOR).get(0).setSelectionRange(evt.newIndex, $(rtpg.string.INPUT_SELECTOR).get(0).selectionEnd);
+  }
+  if ($(rtpg.string.INPUT_SELECTOR).get(0).selectionStart != $(rtpg.string.INPUT_SELECTOR).get(0).selectionEnd) {
+    rtpg.log.logEvent(evt, "Selection Start Postion Shifted");
+  }
+};
+
+rtpg.string.onReferenceEndShifted = function(evt) {
+  if(!evt.isLocal && $(rtpg.string.INPUT_SELECTOR).get(0).setSelectionRange) {
+    $(rtpg.string.INPUT_SELECTOR).get(0).setSelectionRange($(rtpg.string.INPUT_SELECTOR).get(0).selectionStart, evt.newIndex);
+  }
+
+  if ($(rtpg.string.INPUT_SELECTOR).get(0).selectionStart == $(rtpg.string.INPUT_SELECTOR).get(0).selectionEnd) {
+    rtpg.log.logEvent(evt, "Cursor Position Shifted");
+  } else {
+    rtpg.log.logEvent(evt, "Selection End Postion Shifted");
+  }
+};
+
+rtpg.string.updateReference = function(evt) {
+  var indexStart = $(rtpg.string.INPUT_SELECTOR).get(0).selectionStart;
+  var indexEnd = $(rtpg.string.INPUT_SELECTOR).get(0).selectionEnd;
+  if (rtpg.string.referenceEnd.index != indexEnd) {
+    rtpg.string.referenceEnd.index = indexEnd;
+  }
+  if (rtpg.string.referenceStart.index != indexStart) {
+    rtpg.string.referenceStart.index = indexStart;
+  }
+};
 
 rtpg.string.connectUi = function() {
   $(rtpg.string.INPUT_SELECTOR).keyup(rtpg.string.onInput);
+  $(rtpg.string.INPUT_SELECTOR).click(rtpg.string.updateReference);
+  $(rtpg.string.INPUT_SELECTOR).keyup(rtpg.string.updateReference);
 };
 
 
 rtpg.string.connectRealtime = function() {
   rtpg.string.field.addEventListener(gapi.drive.realtime.EventType.TEXT_INSERTED, rtpg.string.onRealtimeInsert);
   rtpg.string.field.addEventListener(gapi.drive.realtime.EventType.TEXT_DELETED, rtpg.string.onRealtimeDelete);
+  rtpg.string.referenceStart.addEventListener(gapi.drive.realtime.EventType.REFERENCE_SHIFTED, rtpg.string.onReferenceStartShifted);
+  rtpg.string.referenceEnd.addEventListener(gapi.drive.realtime.EventType.REFERENCE_SHIFTED, rtpg.string.onReferenceEndShifted);
 };
