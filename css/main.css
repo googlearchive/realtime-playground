@@ -2326,6 +2326,35 @@ select > option {
   width: 35%;
   text-align: center;
   display:none;
+}
+#undoButton {
+	margin-right: 20px;
+}
+#leftContainer {
+	z-index: 1002;
+	position: relative;
+	float: left;
+	width: 740px;
+	border-right: 1px solid #ebebeb;
+	margin-right: -1px;
+}
+
+#rightContainer {
+	z-index: 1001;
+	position:relative;
+	height: 100%;
+	float: right;
+	border-top: solid 1px #ebebeb;
+	margin-top: -1px;
+	background-color: white;
+}
+#fakeappbar {
+	margin-top: -67px;
+	padding-bottom: 17px;
+	padding-top: 20px;
+	padding-left: 15px;
+	background-color: white;
+}
 #filterLocalContainer {
 	float: right;
 	padding-right: 30px;

@@ -95,6 +95,18 @@ rtpg.onFileLoaded = function(doc) {
     demo.connectRealtime(doc);
   }
   
+  // Activating undo and redo buttons.
+  var model = doc.getModel();
+  $('#undoButton').click(function(){model.undo();});
+  $('#redoButton').click(function(){model.redo();});
+
+  // Add event handler for UndoRedoStateChanged events.
+  var onUndoRedoStateChanged = function(e) {
+    $('#undoButton').prop('disabled', !e.canUndo);
+    $('#redoButton').prop('disabled', !e.canRedo);
+  };
+  model.addEventListener(gapi.drive.realtime.EventType.UNDO_REDO_STATE_CHANGED, onUndoRedoStateChanged);
+
   // We load the name of the file to populate the file name field.
   gapi.client.load('drive', 'v2', function() {
     var request = gapi.client.drive.files.get({

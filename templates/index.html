@@ -41,11 +41,9 @@
 
   <div class="rp-appbar">
     <h2 class="rp-appname">Google Drive Realtime API Playground</h2>
-    <div id="collaborators">
-    </div>
   </div>
 
-  <div id="leftContainer" style="float: left; width: 740px; border-right: 1px solid #ebebeb; margin-right: -1px;">
+  <div id="leftContainer">
 
     <section id="demoUnauthorizedOverlay">
       <div class="notesBox rp-greyRuledBottom">
@@ -252,8 +250,14 @@
 
   </div>
 
-  <div id="rightContainer" style="float: right; height: 100%;">
-    <span id="logTitle" class="componentName" style="margin: 10px 0 5px 15px;">Event Logs</span>
+  <div id="rightContainer">
+    <div id="fakeappbar">
+      <button id="undoButton" disabled="true" class="rp-button">Undo</button>
+      <button id="redoButton" disabled="true" class="rp-button">Redo</button>
+      <div id="collaborators">
+      </div>
+    </div>
+    <span id="logTitle" class="componentName" style="padding-top:1px;margin: 10px 0 5px 15px;">Event Logs
     <span id="filterLocalContainer"><input id="filterLocal" type="checkbox" onchange="if(this.checked){$('.localEvent').hide();}else{$('.localEvent').show();}">Hide local events</span></span>
     <div class="scrollBarBox">
       <div id="logContainer" class="scrollBarInner">
