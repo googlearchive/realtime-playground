@@ -110,7 +110,7 @@ rtpg.onFileLoaded = function(doc) {
   // We load the name of the file to populate the file name field.
   gapi.client.load('drive', 'v2', function() {
     var request = gapi.client.drive.files.get({
-      'fileId' : rtclient.params['fileId']
+      'fileId' : rtclient.params['fileIds'].split(',')[0]
     });
     $('#documentName').attr('disabled', '');
     request.execute(function(resp) {
@@ -130,7 +130,7 @@ rtpg.onFileLoaded = function(doc) {
       });
     });
   });
-  
+
   // Showing message that a doc has been loaded
   $('#documentNameContainer').show();
   // Enable Step 3 and 4
@@ -196,7 +196,7 @@ rtpg.connectUi = function() {
 rtpg.start = function() {
   rtpg.realTimeLoader = new rtclient.RealtimeLoader(rtpg.realTimeOptions);
   rtpg.connectUi();
-  rtpg.realTimeLoader.start(rtpg.afterAuth);
+  rtpg.realTimeLoader.start();
 };
 
 rtpg.afterAuth = function() {
@@ -223,6 +223,8 @@ rtpg.realTimeOptions = {
   initializeModel: rtpg.initializeModel,
   onFileLoaded: rtpg.onFileLoaded,
   registerTypes: rtpg.registerTypes,
+  afterAuth: rtpg.afterAuth,
+  newFileMimeType: null, // Using default.
   defaultTitle: "New Realtime Playground File"
 };
 

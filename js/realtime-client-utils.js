@@ -58,15 +58,15 @@ rtclient.REALTIME_MIMETYPE = 'application/vnd.google-apps.drive-sdk';
 
 
 /**
- * Parses the query parameters to this page and returns them as an object.
+ * Parses the hash parameters to this page and returns them as an object.
  * @function
  */
 rtclient.getParams = function() {
   var params = {};
-  var queryString = window.location.search;
-  if (queryString) {
+  var hashFragment = window.location.hash;
+  if (hashFragment) {
     // split up the query string and store in an object
-    var paramStrs = queryString.slice(1).split("&");
+    var paramStrs = hashFragment.slice(1).split("&");
     for (var i = 0; i < paramStrs.length; i++) {
       var paramStr = paramStrs[i].split("=");
       params[paramStr[0]] = unescape(paramStr[1]);
@@ -196,13 +196,14 @@ rtclient.Authorizer.prototype.fetchUserId = function(callback) {
 /**
  * Creates a new Realtime file.
  * @param title {string} title of the newly created file.
+ * @param mimeType {string} the MIME Type of the new file.
  * @param callback {Function} the callback to call after creation.
  */
-rtclient.createRealtimeFile = function(title, callback) {
+rtclient.createRealtimeFile = function(title, mimeType, callback) {
   gapi.client.load('drive', 'v2', function() {
     gapi.client.drive.files.insert({
       'resource': {
-        mimeType: rtclient.REALTIME_MIMETYPE,
+        mimeType: mimeType,
         title: title
       }
     }).execute(callback);
@@ -222,7 +223,7 @@ rtclient.createRealtimeFile = function(title, callback) {
 rtclient.getFileMetadata = function(fileId, callback) {
   gapi.client.load('drive', 'v2', function() {
     gapi.client.drive.files.get({
-      'fileId' : id
+      'fileId' : fileId
     }).execute(callback);
   });
 }
@@ -245,24 +246,6 @@ rtclient.parseState = function(stateParam) {
 
 
 /**
- * Redirects the browser back to the current page with an appropriate file ID.
- * @param fileId {string} the file ID to redirect to.
- * @param userId {string} the user ID to redirect to.
- */
-rtclient.redirectTo = function(fileId, userId) {
-  var params = [];
-  if (fileId) {
-    params.push('fileId=' + fileId);
-  }
-  if (userId) {
-    params.push('userId=' + userId);
-  }
-  // Naive URL construction.
-  window.location.href = params.length == 0 ? '/' : ('?' + params.join('&'));
-}
-
-
-/**
  * Handles authorizing, parsing query parameters, loading and creating Realtime
  * documents.
  * @constructor
@@ -279,8 +262,10 @@ rtclient.redirectTo = function(fileId, userId) {
 rtclient.RealtimeLoader = function(options) {
   // Initialize configuration variables.
   this.onFileLoaded = rtclient.getOption(options, 'onFileLoaded');
+  this.newFileMimeType = rtclient.getOption(options, 'newFileMimeType', rtclient.REALTIME_MIMETYPE);
   this.initializeModel = rtclient.getOption(options, 'initializeModel');
-  this.registerTypes = rtclient.getOption(options, 'registerTypes', function(){})
+  this.registerTypes = rtclient.getOption(options, 'registerTypes', function(){});
+  this.afterAuth = rtclient.getOption(options, 'afterAuth', function(){})
   this.autoCreate = rtclient.getOption(options, 'autoCreate', false); // This tells us if need to we automatically create a file after auth.
   this.defaultTitle = rtclient.getOption(options, 'defaultTitle', 'New Realtime File');
   this.authorizer = new rtclient.Authorizer(options);
@@ -288,18 +273,47 @@ rtclient.RealtimeLoader = function(options) {
 
 
 /**
- * Starts the loader by authorizing.
- * @param callback {Function} afterAuth callback called after authorization.
+ * Redirects the browser back to the current page with an appropriate file ID.
+ * @param fileIds {List<string>} the file IDs of the files to open.
+ * @param userId {string} the ID of the user.
  */
-rtclient.RealtimeLoader.prototype.start = function(afterAuth) {
+rtclient.RealtimeLoader.prototype.redirectTo = function(fileIds, userId) {
+  var params = [];
+  if (fileIds) {
+    params.push('fileIds=' + fileIds.join(','));
+  }
+  if (userId) {
+    params.push('userId=' + userId);
+  }
+  
+  // Naive URL construction.
+  var newUrl = params.length == 0 ? './' : ('./#' + params.join('&'));
+  // Using HTML URL re-write if available.
+  if (window.history && window.history.replaceState) {
+    window.history.replaceState("Google Drive Relatime API Playground", "Google Drive Relatime API Playground", newUrl);
+  } else {
+    window.location.href = newUrl;
+  }
+  // We are still here that means the page didn't reload.
+  rtclient.params = rtclient.getParams();
+  for (var index in fileIds) {
+    gapi.drive.realtime.load(fileIds[index], this.onFileLoaded, this.initializeModel, this.handleErrors);
+  }
+}
+
+
+/**
+ * Starts the loader by authorizing.
+ */
+rtclient.RealtimeLoader.prototype.start = function() {
   // Bind to local context to make them suitable for callbacks.
   var _this = this;
   this.authorizer.start(function() {
     if (_this.registerTypes) {
       _this.registerTypes();
     }
-    if (afterAuth) {
-      afterAuth();
+    if (_this.afterAuth) {
+      _this.afterAuth();
     }
     _this.load();
   });
@@ -307,32 +321,42 @@ rtclient.RealtimeLoader.prototype.start = function(afterAuth) {
 
 
 /**
+ * Handles errors thrown by the RealTime API.
+ */
+rtclient.RealtimeLoader.prototype.handleErrors = function(e) {
+  if(e.type == gapi.drive.realtime.ErrorType.TOKEN_REFRESH_REQUIRED) {
+    authorizer.authorize();
+  } else if(e.type == gapi.drive.realtime.ErrorType.CLIENT_ERROR) {
+    alert("An Error happened: " + e.message);
+    window.location.href= "/";
+  } else if(e.type == gapi.drive.realtime.ErrorType.NOT_FOUND) {
+    alert("The file was not found. It does not exist or you do not have read access to the file.");
+    window.location.href= "/";
+  }
+};
+
+
+/**
  * Loads or creates a Realtime file depending on the fileId and state query
  * parameters.
  */
 rtclient.RealtimeLoader.prototype.load = function() {
-  var fileId = rtclient.params['fileId'];
+  var fileIds = rtclient.params['fileIds'];
+  if (fileIds) {
+    fileIds = fileIds.split(',');
+  }
   var userId = this.authorizer.userId;
   var state = rtclient.params['state'];
 
   // Creating the error callback.
   var authorizer = this.authorizer;
-  var handleErrors = function(e) {
-    if(e.type == gapi.drive.realtime.ErrorType.TOKEN_REFRESH_REQUIRED) {
-      authorizer.authorize();
-    } else if(e.type == gapi.drive.realtime.ErrorType.CLIENT_ERROR) {
-      alert("An Error happened: " + e.message);
-      window.location.href= "/";
-    } else if(e.type == gapi.drive.realtime.ErrorType.NOT_FOUND) {
-      alert("The file was not found. It does not exist or you do not have read access to the file.");
-      window.location.href= "/";
+
+
+  // We have file IDs in the query parameters, so we will use it to load a file.
+  if (fileIds) {
+    for (var index in fileIds) {
+      gapi.drive.realtime.load(fileIds[index], this.onFileLoaded, this.initializeModel, this.handleErrors);
     }
-  };
-
-
-  // We have a file ID in the query parameters, so we will use it to load a file.
-  if (fileId) {
-    gapi.drive.realtime.load(fileId, this.onFileLoaded, this.initializeModel, handleErrors);
     return;
   }
 
@@ -342,9 +366,9 @@ rtclient.RealtimeLoader.prototype.load = function() {
     var stateObj = rtclient.parseState(state);
     // If opening a file from Drive.
     if (stateObj.action == "open") {
-      fileId = stateObj.ids[0];
+      fileIds = stateObj.ids;
       userId = stateObj.userId;
-      rtclient.redirectTo(fileId, userId);
+      this.redirectTo(fileIds, userId);
       return;
     }
   }
@@ -359,12 +383,12 @@ rtclient.RealtimeLoader.prototype.load = function() {
  * Creates a new file and redirects to the URL to load it.
  */
 rtclient.RealtimeLoader.prototype.createNewFileAndRedirect = function() {
-  //No fileId or state have been passed. We create a new Realtime file and
+  // No fileId or state have been passed. We create a new Realtime file and
   // redirect to it.
   var _this = this;
-  rtclient.createRealtimeFile(this.defaultTitle, function(file) {
+  rtclient.createRealtimeFile(this.defaultTitle, this.newFileMimeType, function(file) {
     if (file.id) {
-      rtclient.redirectTo(file.id, _this.authorizer.userId);
+      _this.redirectTo([file.id], _this.authorizer.userId);
     }
     // File failed to be created, log why and do not attempt to redirect.
     else {
