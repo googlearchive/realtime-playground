@@ -322,8 +322,7 @@ pre, pre.prettyprint {
  App bars
  ------------------------------------------------------------------*/
 .rp-appbar .rp-appname {
-  width: 236px;
-  margin-right: 16px;
+  margin-right: 354px;
   margin-left: 42px;
   height: 29px;
   float: left;
@@ -2329,6 +2328,39 @@ select > option {
 }
 #undoButton {
 	margin-right: 20px;
+}
+
+#rp-googlebar {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	min-width: 952px;
+	width: auto !important;
+	width: 952px;
+	position: relative;
+	background: #f1f1f1;
+	border-bottom: 1px solid #e5e5e5;
+	height: 77px;
+	margin: 0;
+	overflow: hidden;
+	padding: 24px 44px;
+	color: rgba(255, 255, 255, 0.5)
+}
+
+#rp-logo {
+	display: block;
+	height: 37px;
+	vertical-align: top;
+	text-decoration: none;
+	position: absolute
+}
+
+#rp-logo img {
+	width: 200px;
+	vertical-align: top;
+	top: -5px;
+	left: -4px;
+	position: relative
 }
 #leftContainer {
 	z-index: 1002;
