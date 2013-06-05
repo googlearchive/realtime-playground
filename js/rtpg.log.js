@@ -34,7 +34,7 @@ rtpg.log.createLogEntryElement = function(msg) {
     ).append($('<td>').attr('class', 'from').text(msg.eventDetails).prepend($('<b>').text(msg.eventType))
     ).append($('<td>').attr('class', 'message').text('Event at')
     ).append($('<td>').attr('class', 'date').text(rtpg.log.formatDate(new Date(msg.time)))
-    );
+    ).attr('class',msg.isLocal ? 'localEvent' : '');
 };
 
 
@@ -66,7 +66,8 @@ rtpg.log.logEvent = function(evt, eventType) {
     userName: collaborator.displayName,
     color: collaborator.color,
     time: new Date().getTime(),
-    eventDetails: eventDetails
+    eventDetails: eventDetails,
+    isLocal: evt.isLocal
   };
   
   rtpg.log.onLogAdded(logMessage);

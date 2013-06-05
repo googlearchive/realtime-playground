@@ -2326,4 +2326,12 @@ select > option {
   width: 35%;
   text-align: center;
   display:none;
+#filterLocalContainer {
+	float: right;
+	padding-right: 30px;
+	color: gray;
+	font-size: 14px;
+}
+#filterLocal {
+	margin-right: 10px;
 }
