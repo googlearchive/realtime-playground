@@ -91,6 +91,14 @@ rtpg.ui.matchSelectFromKey = function() {
   $('#demoMapValue').val($('#demoMapValues').val());
 }
 
+rtpg.ui.hideShowLocalEvents = function() {
+  if ($('#filterLocal').get(0).checked) {
+    $('.localEvent').hide();
+  } else {
+    $('.localEvent').show();
+  }
+}
+
 rtpg.ui.matchSelectFromValue = function() {
   $('#demoMapKeys').prop("selectedIndex", $('#demoMapValues').prop("selectedIndex"));
   $('#demoMapKey').val($('#demoMapKeys').val());
@@ -114,6 +122,7 @@ $(document).ready(function() {
   $('#demoMapValues').change(rtpg.ui.matchSelectFromValue);
   $('#demoMapKeys').change(rtpg.ui.matchSelectFromKey);
   $('#demoListInput').change(rtpg.ui.matchListValue);
+  $('#filterLocal').change(rtpg.ui.hideShowLocalEvents);
 });
 
 // Loading Tooltips
