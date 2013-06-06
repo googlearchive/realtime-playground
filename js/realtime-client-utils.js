@@ -196,7 +196,7 @@ rtclient.Authorizer.prototype.fetchUserId = function(callback) {
 /**
  * Creates a new Realtime file.
  * @param title {string} title of the newly created file.
- * @param mimeType {string} the MIME Type of the new file.
+ * @param mimeType {string} the MIME type of the new file.
  * @param callback {Function} the callback to call after creation.
  */
 rtclient.createRealtimeFile = function(title, mimeType, callback) {
@@ -274,7 +274,7 @@ rtclient.RealtimeLoader = function(options) {
 
 /**
  * Redirects the browser back to the current page with an appropriate file ID.
- * @param fileIds {List<string>} the file IDs of the files to open.
+ * @param fileIds {Array.<string>} the IDs of the files to open.
  * @param userId {string} the ID of the user.
  */
 rtclient.RealtimeLoader.prototype.redirectTo = function(fileIds, userId) {
@@ -285,12 +285,12 @@ rtclient.RealtimeLoader.prototype.redirectTo = function(fileIds, userId) {
   if (userId) {
     params.push('userId=' + userId);
   }
-  
+
   // Naive URL construction.
   var newUrl = params.length == 0 ? './' : ('./#' + params.join('&'));
   // Using HTML URL re-write if available.
   if (window.history && window.history.replaceState) {
-    window.history.replaceState("Google Drive Relatime API Playground", "Google Drive Relatime API Playground", newUrl);
+    window.history.replaceState("Google Drive Realtime API Playground", "Google Drive Realtime API Playground", newUrl);
   } else {
     window.location.href = newUrl;
   }
@@ -321,7 +321,7 @@ rtclient.RealtimeLoader.prototype.start = function() {
 
 
 /**
- * Handles errors thrown by the RealTime API.
+ * Handles errors thrown by the Realtime API.
  */
 rtclient.RealtimeLoader.prototype.handleErrors = function(e) {
   if(e.type == gapi.drive.realtime.ErrorType.TOKEN_REFRESH_REQUIRED) {
@@ -352,7 +352,7 @@ rtclient.RealtimeLoader.prototype.load = function() {
   var authorizer = this.authorizer;
 
 
-  // We have file IDs in the query parameters, so we will use it to load a file.
+  // We have file IDs in the query parameters, so we will use them to load a file.
   if (fileIds) {
     for (var index in fileIds) {
       gapi.drive.realtime.load(fileIds[index], this.onFileLoaded, this.initializeModel, this.handleErrors);
