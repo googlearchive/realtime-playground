@@ -90,7 +90,6 @@ rtpg.log.formatDate = function(date) {
 
 rtpg.log.onLogAdded = function(logMessage) {
   $(rtpg.log.LOG_CONTAINER_SELECTOR).prepend(rtpg.log.createLogEntryElement(logMessage));
-  rtpg.ui.resizeLogs();
   rtpg.ui.hideShowLocalEvents();
 };
 

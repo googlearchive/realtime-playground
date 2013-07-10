@@ -78,11 +78,6 @@ rtpg.ui.resizeElements = function() {
     $('#rightContainer').css('top','');
     $('#rightContainer').css('right','0');
   }
-  rtpg.ui.resizeLogs();
-};
-
-rtpg.ui.resizeLogs = function() {
-  $('.from').each(function(){$(this).width($('#rightContainer').width() - 200)});  
 };
 
 rtpg.ui.matchSelectFromKey = function() {
