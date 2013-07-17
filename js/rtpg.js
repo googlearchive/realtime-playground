@@ -175,7 +175,7 @@ rtpg.popupOpen = function() {
 rtpg.openCallback = function(data) {
   if (data.action == google.picker.Action.PICKED) {
     var fileId = data.docs[0].id;
-    rtclient.redirectTo(fileId, rtpg.realTimeLoader.authorizer.userId);
+    rtpg.realtimeLoader.redirectTo([fileId], rtpg.realtimeLoader.authorizer.userId);
   }
 }
 
@@ -194,9 +194,9 @@ rtpg.connectUi = function() {
 
 // Initializes the Realtime Playground.
 rtpg.start = function() {
-  rtpg.realTimeLoader = new rtclient.RealtimeLoader(rtpg.realTimeOptions);
+  rtpg.realtimeLoader = new rtclient.RealtimeLoader(rtpg.realTimeOptions);
   rtpg.connectUi();
-  rtpg.realTimeLoader.start();
+  rtpg.realtimeLoader.start();
 };
 
 rtpg.afterAuth = function() {
@@ -206,7 +206,7 @@ rtpg.afterAuth = function() {
   $(rtpg.CREATE_SELECTOR).click(function() {
     $(rtpg.CREATE_SELECTOR).addClass('disabled');
     $(rtpg.OPEN_SELECTOR).addClass('disabled');
-    rtpg.realTimeLoader.createNewFileAndRedirect();
+    rtpg.realtimeLoader.createNewFileAndRedirect();
   });
 }
 
