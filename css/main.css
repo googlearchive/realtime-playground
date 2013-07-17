@@ -363,7 +363,7 @@ pre, pre.prettyprint {
   padding: 19px 0 17px 0;
   border-bottom: 1px solid #ebebeb;
   height: 30px;
-  z-index: 1000;
+  z-index: 999;
   background: #fff;
 }
 
@@ -2363,7 +2363,7 @@ select > option {
 	position: relative
 }
 #leftContainer {
-	z-index: 1002;
+	z-index: 1001;
 	position: relative;
 	float: left;
 	width: 740px;
@@ -2372,7 +2372,7 @@ select > option {
 }
 
 #rightContainer {
-	z-index: 1001;
+	z-index: 1000;
 	position:relative;
 	height: 100%;
 	float: right;
