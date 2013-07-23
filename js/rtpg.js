@@ -182,7 +182,7 @@ rtpg.openCallback = function(data) {
 // Popups the Sharing dialog.
 rtpg.popupShare = function() {
   var shareClient = new gapi.drive.share.ShareClient(rtpg.realTimeOptions.appId);
-  shareClient.setItemIds(rtclient.params['fileIds'].split[',']);
+  shareClient.setItemIds(rtclient.params['fileIds'].split(','));
   shareClient.showSettingsDialog();
 }
 
