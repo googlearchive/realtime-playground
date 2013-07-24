@@ -120,7 +120,7 @@ rtpg.onFileLoaded = function(doc) {
         $('#documentName').attr('disabled', '');
         var body = {'title': $('#documentName').val()};
         var renameRequest = gapi.client.drive.files.patch({
-          'fileId' : rtclient.params['fileId'],
+          'fileId' : rtclient.params['fileIds'].split(',')[0],
           'resource' : body
         });
         renameRequest.execute(function(resp) {
