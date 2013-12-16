@@ -20,7 +20,7 @@ If you wish to host it in your own App Engine instance make sure you set the nam
 
 First, you need to activate the Drive API for your app. You can do it by configuring your API project in the Google APIs Console.
 
-- Create an API project in the [Google APIs Console](https://developers.google.com/console?nodredirect).
+- Create an API project in the [Google APIs Console](https://code.google.com/apis/console/b/0/?noredirect).
 - Select the "Services" tab and enable the Drive API.
 - Select the "API Access" tab in your API project, and click "Create an OAuth 2.0 client ID".
 - In the Branding Information section, provide a name for your application (e.g. "CollabCube 3D"), and click Next. Providing a product logo is optional.
