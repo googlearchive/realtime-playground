@@ -2176,6 +2176,12 @@ section.disabled {
   margin: 10px 0;
   display: block;
 }
+#demoListMove {
+  margin-right: 4px;
+}
+#demoListMove, #demoListMoveItem {
+  margin: 10px 0;
+}
 #demoMapKeys {
   margin-right: 0;	
   border-right: 0;
