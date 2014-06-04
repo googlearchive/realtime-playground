@@ -95,7 +95,7 @@ rtclient.getOption = function(options, key, defaultValue) {
   if (value == undefined) {
     console.error(key + ' should be present in the options.');
   }
-  // console.log(value);
+  console.log(value);
   return value;
 }
 
@@ -121,15 +121,8 @@ rtclient.Authorizer = function(options) {
  */
 rtclient.Authorizer.prototype.start = function(onAuthComplete) {
   var _this = this;
-  gapi.load('auth:client,drive-realtime,drive-share', {
-    config: {
-      'drive-realtime': {
-        'server': 'https://sethhoward0.bld.corp.google.com:4443/otservice'
-      }
-    },
-    callback: function() {
-      _this.authorize(onAuthComplete);
-    }
+  gapi.load('auth:client,drive-realtime,drive-share', function() {
+    _this.authorize(onAuthComplete);
   });
 }
 

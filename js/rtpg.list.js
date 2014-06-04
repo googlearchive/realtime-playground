@@ -114,10 +114,6 @@ rtpg.list.onMoveItem = function (evt) {
   }
 };
 
-rtpg.list.onRealtimeMoveItem = function (evt) {
-  console.log('real time update from a moved item');
-};
-
 rtpg.list.onRealtimeAdded = function(evt) {
   rtpg.list.updateUi();
   rtpg.log.logEvent(evt, 'List Items Added');
@@ -148,5 +144,4 @@ rtpg.list.connectRealtime = function() {
   rtpg.list.field.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, rtpg.list.onRealtimeAdded);
   rtpg.list.field.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, rtpg.list.onRealtimeRemoved);
   rtpg.list.field.addEventListener(gapi.drive.realtime.EventType.VALUES_SET, rtpg.list.onRealtimeSet);
-  rtpg.list.field.addEventListener(gapi.drive.realtime.EventType.REFERENCE_SHIFTED, rtpg.list.onRealtimeMoveItem);
 };
