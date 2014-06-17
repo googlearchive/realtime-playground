@@ -194,7 +194,8 @@ rtpg.list.onRealtimeSet = function(evt) {
 };
 
 rtpg.list.onRealtimeReferenceShifted = function (evt) {
-  rtpg.log.logEvent(evt, rtpg.getCollaborator(evt.sessionId).displayName + ' moved cursor from ' + evt.oldIndex +' to ' + evt.newIndex);
+  var log = rtpg.getCollaborator(evt.sessionId).displayName + ' moved cursor from ' + evt.oldIndex +' to ' + evt.newIndex;
+  rtpg.log.logEvent(evt, log);
   rtpg.list.updateUi();
 };
 
