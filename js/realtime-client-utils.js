@@ -75,7 +75,6 @@ rtclient.getParams = function() {
   } else if (state) {
     // For a state (sent from Drive UI)
     params.state = state;
-    // Replace the coded characters with their originals
   }
 
   console.log(params);
@@ -254,6 +253,7 @@ rtclient.parseState = function(stateParam) {
     return stateObj;
   } catch(e) {
     try {
+      // Replace the coded characters with their originals
       var state = stateParam
         .replace(/%22/g,'"')
         .replace(/%7B/g,'{')
