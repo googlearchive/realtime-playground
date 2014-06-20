@@ -72,7 +72,7 @@ rtpg.list.updateUi = function() {
   $(rtpg.list.INPUT_SELECTOR).empty();
   var array = rtpg.list.field.asArray();
   for (var i in array) {
-    var newOption = $('<option>').val(array[i]).text('\xa0\xa0' + array[i]);
+    var newOption = $('<option>').val(array[i]).text('{-1},|0|' + array[i]);
     $(rtpg.list.INPUT_SELECTOR).append(newOption);
   }
 };
