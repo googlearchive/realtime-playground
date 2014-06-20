@@ -1,5 +1,5 @@
 /**
- * Copyright 2013 Google Inc. All Rights Reserved.
+ * Copyright 2014 Google Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -126,15 +126,8 @@ rtclient.Authorizer = function(options) {
  */
 rtclient.Authorizer.prototype.start = function(onAuthComplete) {
   var _this = this;
-  gapi.load('auth:client,drive-realtime,drive-share', {
-    config: {
-      'drive-realtime': {
-        'server': 'https://sethhoward0.bld.corp.google.com:4443/otservice'
-      }
-    },
-    callback: function() {
-      _this.authorize(onAuthComplete);
-    }
+  gapi.load('auth:client,drive-realtime,drive-share', function() {
+    _this.authorize(onAuthComplete);
   });
 }
 
