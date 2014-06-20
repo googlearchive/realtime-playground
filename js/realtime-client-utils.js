@@ -321,7 +321,7 @@ rtclient.RealtimeLoader.prototype.redirectTo = function(fileIds, userId) {
   // We are still here that means the page didn't reload.
   rtclient.params = rtclient.getParams();
   for (var id in fileIds) {
-    gapi.drive.realtime.load(fileIds[index], this.onFileLoaded, this.initializeModel, this.handleErrors);
+    gapi.drive.realtime.load(fileIds[id], this.onFileLoaded, this.initializeModel, this.handleErrors);
   }
 }
 
