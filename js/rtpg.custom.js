@@ -92,10 +92,12 @@ rtpg.custom.registerTypes = function() {
 }
 
 rtpg.custom.updateUi = function() {
-  $(rtpg.custom.INPUT_NAME_SELECTOR).val(rtpg.custom.field.name);
-  $(rtpg.custom.INPUT_DIRECTOR_SELECTOR).val(rtpg.custom.field.director);
-  $(rtpg.custom.INPUT_NOTES_SELECTOR).val(rtpg.custom.field.notes);
-  $(rtpg.custom.INPUT_RATING_SELECTOR).val(rtpg.custom.field.rating);
+  if(rtpg.custom.field){
+    $(rtpg.custom.INPUT_NAME_SELECTOR).val(rtpg.custom.field.name);
+    $(rtpg.custom.INPUT_DIRECTOR_SELECTOR).val(rtpg.custom.field.director);
+    $(rtpg.custom.INPUT_NOTES_SELECTOR).val(rtpg.custom.field.notes);
+    $(rtpg.custom.INPUT_RATING_SELECTOR).val(rtpg.custom.field.rating);  
+  } 
 };
 
 rtpg.custom.onNameInput = function(evt) {
@@ -131,5 +133,7 @@ rtpg.custom.connectUi = function() {
 };
 
 rtpg.custom.connectRealtime = function() {
-  rtpg.custom.field.addEventListener(gapi.drive.realtime.EventType.VALUE_CHANGED, rtpg.custom.onRealtimeChange);
+  if(rtpg.custom.field){
+    rtpg.custom.field.addEventListener(gapi.drive.realtime.EventType.VALUE_CHANGED, rtpg.custom.onRealtimeChange);  
+  }
 };

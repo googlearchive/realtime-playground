@@ -101,7 +101,9 @@ rtpg.ui.matchSelectFromValue = function() {
 }
 
 rtpg.ui.matchListValue = function() {
-  $('#demoListSetContent').val($('#demoListInput').val());
+  var value = $('#demoListInput').val();
+  $('#demoListSetContent').val(value);
+  $('#demoListMove').text('Move ' + value + ' to index');
 }
 
 //Resizing elastic elements on window resize.
