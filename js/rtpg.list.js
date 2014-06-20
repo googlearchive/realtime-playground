@@ -1,5 +1,5 @@
 /**
- * Copyright 2013 Google Inc. All Rights Reserved.
+ * Copyright 2014 Google Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,7 +61,6 @@ rtpg.list.loadField = function() {
   rtpg.list.field = rtpg.getField(rtpg.list.FIELD_NAME);
 }
 
-
 rtpg.list.initializeModel = function(model) {
   var field = model.createList();
   field.pushAll(rtpg.list.START_VALUE);
@@ -94,7 +93,6 @@ rtpg.list.onRemoveItem = function() {
   rtpg.list.field.remove(indexToRemove);
 };
 
-
 rtpg.list.onAddItem = function() {
   var newValue = $(rtpg.list.ADD_CONTENT_SELECTOR).val();
   if (newValue != '') {
@@ -102,24 +100,20 @@ rtpg.list.onAddItem = function() {
   }
 }
 
-
 rtpg.list.onRealtimeAdded = function(evt) {
   rtpg.list.updateUi();
   rtpg.log.logEvent(evt, 'List Items Added');
 };
-
 
 rtpg.list.onRealtimeRemoved = function(evt) {
   rtpg.list.updateUi();
   rtpg.log.logEvent(evt, 'List Items Removed');
 };
 
-
 rtpg.list.onRealtimeSet = function(evt) {
   rtpg.list.updateUi();
   rtpg.log.logEvent(evt, 'List Item Set');
 };
-
 
 rtpg.list.connectUi = function() {
   $(rtpg.list.INPUT_SELECTOR).change(rtpg.list.onSelect);
@@ -128,7 +122,6 @@ rtpg.list.connectUi = function() {
   $(rtpg.list.CLEAR_SELECTOR).click(rtpg.list.onClearList);
   $(rtpg.list.SET_SELECTOR).click(rtpg.list.onSetItem);
 };
-
 
 rtpg.list.connectRealtime = function() {
   rtpg.list.field.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, rtpg.list.onRealtimeAdded);
