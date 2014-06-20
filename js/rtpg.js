@@ -249,4 +249,3 @@ rtpg.getMe = function() {
   }
   return null;
 };
-

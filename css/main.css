@@ -2007,6 +2007,10 @@ Component: List
 	text-align: justify;
 }
 
+.rp-section-content table td{
+  vertical-align: top;
+}
+
 /*------------------------------------------------------------------
  Custom OAuth Playground
  ------------------------------------------------------------------*/
@@ -2172,9 +2176,29 @@ section.disabled {
   border-color: rgb(217,217,217);
   background-color: #fdfdfd;
 }
+#demoListInput li{
+  cursor: pointer;
+  padding: 5px;
+}
+#demoListInput li.active{
+  color: white;
+}
+#demoListInput li.muted {
+  color: white;
+  opacity: .5;
+}
+#demoListInput li.active.muted {
+  opacity: 1;
+}
 #demoListClear {
   margin: 10px 0;
   display: block;
+}
+#demoListMove {
+  margin-right: 4px;
+}
+#demoListMove, #demoListMoveItem {
+  margin: 10px 0;
 }
 #demoMapKeys {
   margin-right: 0;	

@@ -1,5 +1,5 @@
 /**
- * Copyright 2013 Google Inc. All Rights Reserved.
+ * Copyright 2014 Google Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -64,6 +64,7 @@ rtclient.REALTIME_MIMETYPE = 'application/vnd.google-apps.drive-sdk';
 rtclient.getParams = function() {
   var params = {};
   var hashFragment = window.location.hash;
+  var state = window.location.search;
   if (hashFragment) {
     // split up the query string and store in an object
     var paramStrs = hashFragment.slice(1).split("&");
@@ -71,7 +72,11 @@ rtclient.getParams = function() {
       var paramStr = paramStrs[i].split("=");
       params[paramStr[0]] = unescape(paramStr[1]);
     }
+  } else if (state) {
+    // For a state (sent from Drive UI)
+    params.state = state;
   }
+
   console.log(params);
   return params;
 }
@@ -95,7 +100,7 @@ rtclient.getOption = function(options, key, defaultValue) {
   if (value == undefined) {
     console.error(key + ' should be present in the options.');
   }
-  console.log(value);
+  // console.log(value);
   return value;
 }
 
@@ -240,7 +245,19 @@ rtclient.parseState = function(stateParam) {
     var stateObj = JSON.parse(stateParam);
     return stateObj;
   } catch(e) {
-    return null;
+    try {
+      // Replace the coded characters with their originals
+      var state = stateParam
+        .replace(/%22/g,'"')
+        .replace(/%7B/g,'{')
+        .replace(/%7D/g,'}')
+        .replace(/%5B/g,'[')
+        .replace(/%5D/g,']');
+      // Grab and parse the parameters from the query
+      return JSON.parse(/{.+}/.exec(state)[0]);
+    } catch (err) {
+      return null;
+    }
   }
 }
 
@@ -296,7 +313,7 @@ rtclient.RealtimeLoader.prototype.redirectTo = function(fileIds, userId) {
   }
   // We are still here that means the page didn't reload.
   rtclient.params = rtclient.getParams();
-  for (var index in fileIds) {
+  for (var id in fileIds) {
     gapi.drive.realtime.load(fileIds[index], this.onFileLoaded, this.initializeModel, this.handleErrors);
   }
 }
