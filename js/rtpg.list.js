@@ -61,9 +61,7 @@ rtpg.list.INPUT_SELECTOR = '#demoListInput';
 rtpg.list.loadField = function() {
   rtpg.list.field = rtpg.getField(rtpg.list.FIELD_NAME);
   rtpg.list.cursors = rtpg.getField(rtpg.list.CURSORS_NAME);
-  if(rtpg.list.cursors){
-    rtpg.list.garbageCollectCursorMap();  
-  }
+  rtpg.list.garbageCollectCursorMap();
 };
 
 rtpg.list.garbageCollectCursorMap = function () {
@@ -109,11 +107,9 @@ rtpg.list.onListItemClick = function (evt) {
   // Register Reference
   if(!rtpg.list.field.registeredReference){
     rtpg.list.field.registeredReference = rtpg.list.field.registerReference(index, true);
+    rtpg.list.cursors.set(rtpg.getMe().sessionId, rtpg.list.field.registeredReference);
     rtpg.list.field.registeredReference
       .addEventListener(gapi.drive.realtime.EventType.REFERENCE_SHIFTED, rtpg.list.onRealtimeReferenceShifted);
-    if(rtpg.list.cursors){
-      rtpg.list.cursors.set(rtpg.getMe().sessionId, rtpg.list.field.registeredReference);
-    }
   }
 
   rtpg.list.field.registeredReference.index = index;
@@ -124,9 +120,9 @@ rtpg.list.onListItemClick = function (evt) {
 };
 
 rtpg.list.updateListItems = function () {
-  var me = rtpg.getMe(),
-      listItems = $(rtpg.list.INPUT_SELECTOR + ' li'),
-      keys;
+  var keys = rtpg.list.cursors.keys(),
+      me = rtpg.getMe(),
+      listItems = $(rtpg.list.INPUT_SELECTOR + ' li');
   
   listItems.removeClass('muted').removeAttr('style');
 
@@ -136,15 +132,12 @@ rtpg.list.updateListItems = function () {
       .addClass('active').css('background-color', me.color);
   }
 
-  if(rtpg.list.cursors){
-    keys = rtpg.list.cursors.keys();
-    for(var i = 0, len = keys.length; i < len; i++){
-      if(keys[i] != me.sessionId){
-        var index = rtpg.list.cursors.get(keys[i]).index;
-        var collaborator = rtpg.getCollaborator(keys[i]);
-        $(listItems[index]).addClass('muted');
-        $(listItems[index]).css('background-color', collaborator.color);
-      }
+  for(var i = 0, len = keys.length; i < len; i++){
+    if(keys[i] != me.sessionId){
+      var index = rtpg.list.cursors.get(keys[i]).index;
+      var collaborator = rtpg.getCollaborator(keys[i]);
+      $(listItems[index]).addClass('muted');
+      $(listItems[index]).css('background-color', collaborator.color);
     }
   }
 };
@@ -233,8 +226,5 @@ rtpg.list.connectRealtime = function() {
   rtpg.list.field.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, rtpg.list.onRealtimeAdded);
   rtpg.list.field.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, rtpg.list.onRealtimeRemoved);
   rtpg.list.field.addEventListener(gapi.drive.realtime.EventType.VALUES_SET, rtpg.list.onRealtimeSet);
-
-  if(rtpg.list.cursors){
-    rtpg.list.cursors.addEventListener(gapi.drive.realtime.EventType.VALUE_CHANGED, rtpg.list.onRealtimeCursorChange);
-  }
+  rtpg.list.cursors.addEventListener(gapi.drive.realtime.EventType.VALUE_CHANGED, rtpg.list.onRealtimeCursorChange);
 };
