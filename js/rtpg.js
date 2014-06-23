@@ -210,10 +210,6 @@ rtpg.afterAuth = function() {
   });
 }
 
-rtpg.afterLoad = function() {
-  
-}
-
 // Options container for the realtime client utils.
 rtpg.realTimeOptions = {
   appId: rtpg.APP_ID,
