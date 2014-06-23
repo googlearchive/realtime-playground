@@ -145,6 +145,7 @@ rtclient.Authorizer.prototype.authorize = function(onAuthComplete) {
 
   var handleAuthResult = function(authResult) {
     if (authResult && !authResult.error) {
+      rtpg.authToken = authResult;
       _this.authButton.disabled = true;
       _this.fetchUserId(onAuthComplete);
     } else {
