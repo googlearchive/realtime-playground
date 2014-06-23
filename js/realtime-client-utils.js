@@ -145,7 +145,6 @@ rtclient.Authorizer.prototype.authorize = function(onAuthComplete) {
 
   var handleAuthResult = function(authResult) {
     if (authResult && !authResult.error) {
-      rtpg.authToken = authResult;
       _this.authButton.disabled = true;
       _this.fetchUserId(onAuthComplete);
     } else {
@@ -345,7 +344,7 @@ rtclient.RealtimeLoader.prototype.start = function() {
  */
 rtclient.RealtimeLoader.prototype.handleErrors = function(e) {
   if(e.type == gapi.drive.realtime.ErrorType.TOKEN_REFRESH_REQUIRED) {
-    authorizer.authorize();
+    rtpg.realtimeLoader.authorizer.authorize();
   } else if(e.type == gapi.drive.realtime.ErrorType.CLIENT_ERROR) {
     alert("An Error happened: " + e.message);
     window.location.href= "/";

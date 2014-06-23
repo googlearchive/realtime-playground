@@ -70,7 +70,7 @@ rtpg.COLLAB_HOLDER_SELECTOR = '#collabSections';
 rtpg.AUTHORIZED_MESSAGE_HOLDER_SELECTOR = '#authorizedMessage';
 
 // Interval at which we check if the auth token needs to be refreshed in ms
-rtpg.AUTH_TOKEN_REFRESH_CHECK_INTERVAL =  600000; // 10 minutes
+rtpg.AUTH_TOKEN_REFRESH_INTERVAL =  1800000; // 30 minutes
 
 /**
  * Generates the initial model for newly created Realtime documents.
@@ -215,19 +215,9 @@ rtpg.afterAuth = function() {
 
 rtpg.refreshAuth = function () {
   setTimeout(function () {
-    if(rtpg.authToken){
-      // Refresh auth token if current token is halfway to expiration
-      var mid = parseInt(rtpg.authToken.expires_at) - (parseInt(rtpg.authToken.expires_in) / 2);
-      var now = new Date;
-      now = parseInt(++now / 1000);
-      if(now > mid){
-        rtpg.realtimeLoader.authorizer.authorize(function () {
-          console.log('Auth token refreshed');
-        });
-      }
-    }
-    rtpg.refreshAuth();
-  }, rtpg.AUTH_TOKEN_REFRESH_CHECK_INTERVAL); 
+      rtpg.realtimeLoader.authorizer.authorize();
+      rtpg.refreshAuth();
+  }, rtpg.AUTH_TOKEN_REFRESH_INTERVAL); 
 }
 
 // Start oauth token refresher timer
