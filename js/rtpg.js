@@ -28,10 +28,10 @@
 var rtpg = rtpg || {};
 
 /** Your Application ID from the Google APIs Console. */
-rtpg.APP_ID = '840867953062';
+rtpg.APP_ID = 'YOUR APP ID';
 
 /** Your application's Client ID from the Google APIs Console. */
-rtpg.CLIENT_ID = '840867953062.apps.googleusercontent.com';
+rtpg.CLIENT_ID = 'YOUR CLIENT ID';
 
 rtpg.realtimeDoc = null;
 
