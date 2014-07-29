@@ -29,264 +29,262 @@
   <script type="text/javascript" src="js/rtpg.collaborators.js"></script>
   <script type="text/javascript" src="js/rtpg.ui.js"></script>
 </head>
+  <body>
+    <div id="message"></div>
+    <header id="rp-googlebar">
+      <a id="rp-logo" href="/"> <img src="/images/developers-logo.svg" alt="Google" /> </a>
+      <div class="rp-social"></div>
+    </header>
 
+    <div class="rp-appbar">
+      <h2 class="rp-appname">Google Drive Realtime API Playground</h2>
+    </div>
 
-<body>
-  <div id="message"></div>
+    <div id="leftContainer">
 
-  <header id="rp-googlebar">
-    <a id="rp-logo" href="/"> <img src="/images/developers-logo.svg" alt="Google" /> </a>
-    <div class="rp-social"></div>
-  </header>
-
-  <div class="rp-appbar">
-    <h2 class="rp-appname">Google Drive Realtime API Playground</h2>
-  </div>
-
-  <div id="leftContainer">
-
-    <section id="demoUnauthorizedOverlay">
-      <div class="notesBox rp-greyRuledBottom">
-        <h3>
-          <span>Step 1</span><span style="color: #777; margin-left: 10px;">Authorize</span>
-        </h3>
-      </div>
-      <div class="rp-section-content">
-        To use the Google Drive Realtime API Playground you must first
-        <button id="demoAuthorizeButton" disabled="true" class="rp-button rp-button-submit">Authorize</button>
-        the Playground.
-        <div id="authorizedMessage" style="display:none; padding-top: 10px;">
-          <span style="font-size: 20px; color: green;">&#10003;</span>
-          The Playground is authorized to use the Google Drive Realtime service!
+      <section id="demoUnauthorizedOverlay">
+        <div class="notesBox rp-greyRuledBottom">
+          <h3>
+            <span>Step 1</span><span style="color: #777; margin-left: 10px;">Authorize</span>
+          </h3>
         </div>
-      </div>
-    </section>
-
-    <section id="demoChooseDocument" class="disabled">
-      <div class="notesBox rp-greyRuledTop rp-greyRuledBottom">
-        <h3>
-          <span>Step 2</span><span style="color: #777; margin-left: 10px;">Create or Open a document</span>
-        </h3>
-      </div>
-      <div class="rp-section-content">
-        You need to
-        <button id="createNewDoc" class="rp-button rp-button-red">Create</button>
-        a new document or
-        <button id="openExistingDoc" class="rp-button rp-button-submit">Open</button>
-         an existing document on which to collaborate.
-        <div id="documentNameContainer" style="display:none;">
-          <label for="documentName" style="line-height: 27px;">
-            <span style="font-size: 20px; color: green;">&#10003;</span>
-            You currently have a document opened named </label>
-            <input type="text" name="documentName" id="documentName" title="Change the file's name" style="margin-left: 5px;" value="" disabled="disabled" placeholder="...">
-        </div>
-      </div>
-    </section>
-
-    <section id="demoShare" class="disabled">
-      <div class="notesBox rp-greyRuledTop rp-greyRuledBottom">
-        <h3>
-          <span>Step 3</span><span style="color: #777; margin-left: 10px;">Share</span>
-        </h3>
-      </div>
-      <div class="rp-section-content" style="line-height: 30px;">
-        To collaborate you must
-        <button id="demoShareButton" class="rp-button rp-button-share">Share</button> this document
-        with other users or <a href="#" onmouseover="this.href = window.location.href" target="_blank">open this
-          same document in a new window</a> and collaborate with yourself.
-      </div>
-    </section>
-
-    <section id="collabSections" class="disabled">
-      <div class="notesBox rp-greyRuledTop rp-greyRuledBottom">
-        <h3>
-          <span>Step 4</span><span style="color: #777; margin-left: 10px;">Collaborate</span>
-        </h3>
-      </div>
-
-      <section id="collabIntro" class="rp-greyRuledBottom" style="padding-bottom: 10px">
         <div class="rp-section-content">
-          <p class="demoDescription">
-            Google Drive collaborative documents are made of 4 types of collaborative elements: String, Lists,
-            Maps and Custom objects. A Google Drive collaborative document can have as many of these collaborative
-            elements as they need. As a demonstration, You will find below UI widgets representing collaborative
-            elements of each type.
-          </p>
-          <div id="realtimeInitialized" style="display:none;margin-bottom:10px;">
+          To use the Google Drive Realtime API Playground you must first
+          <button id="demoAuthorizeButton" disabled="true" class="rp-button rp-button-submit">Authorize</button>
+          the Playground.
+          <div id="authorizedMessage" style="display:none; padding-top: 10px;">
             <span style="font-size: 20px; color: green;">&#10003;</span>
-            Your Realtime session has been initialized. You can now use the widgets below.
+            The Playground is authorized to use the Google Drive Realtime service!
           </div>
         </div>
       </section>
 
-      <section id="collabStringDemo" class="rp-greyRuledBottom" style="padding-bottom: 20px">
+      <section id="demoChooseDocument" class="disabled">
+        <div class="notesBox rp-greyRuledTop rp-greyRuledBottom">
+          <h3>
+            <span>Step 2</span><span style="color: #777; margin-left: 10px;">Create or Open a document</span>
+          </h3>
+        </div>
         <div class="rp-section-content">
-          <h2>Collaborative strings</h2>
-          <p class="demoDescription">Collaborative strings are just like normal strings, except that all browser
-            sessions will be notified and updated when the string changes. Events are fired when strings are
-            inserted to the collaborative string or when part of the string is deleted.</p>
-          <h4>Edit the demo Collaborative String</h4>
-          <textarea id="demoStringInput" style="margin-top: 10px"></textarea>
-          <a target="_blank" class="demoReferenceLink" href="https://developers.google.com/drive/realtime/reference/gapi.drive.realtime.CollaborativeString">Reference docs</a>
-           - <a target="_blank" href="https://github.com/googledrive/realtime-playground/blob/master/js/rtpg.string.js">Source code</a>
+          You need to
+          <button id="createNewDoc" class="rp-button rp-button-red">Create</button>
+          a new document or
+          <button id="openExistingDoc" class="rp-button rp-button-submit">Open</button>
+           an existing document on which to collaborate.
+          <div id="documentNameContainer" style="display:none;">
+            <label for="documentName" style="line-height: 27px;">
+              <span style="font-size: 20px; color: green;">&#10003;</span>
+              You currently have a document opened named </label>
+              <input type="text" name="documentName" id="documentName" title="Change the file's name" style="margin-left: 5px;" value="" disabled="disabled" placeholder="...">
+          </div>
         </div>
       </section>
 
-      <section id="collabListDemo" class="rp-greyRuledBottom" style="padding-bottom: 20px">
-        <div class="rp-section-content">
-          <h2>Collaborative lists</h2>
-          <p class="demoDescription">A collaborative list state is shared across
-          sessions. Events are fired when items are added or removed to the list
-          or when an existig item's value is set.</p>
-          <h4>Add, remove or set items on the demo Collaborative List</h4>
-          <table style="margin: 10px 0;">
-            <tr>
-              <td style="text-align: center; color: grey; font-style: italic;">
-                List items <br />
-                <ul id="demoListInput">
-
-                </ul>
-              </td>
-              <td style="padding-left: 20px;">
-                <button id="demoListRemove" class="rp-button">Remove selected item</button>
-                <button id="demoListAdd" class="rp-button">Add an item</button>
-                <input id="demoListAddContent" type="text"><br />
-                <button id="demoListClear" class="rp-button">Clear the list</button>
-                <button id="demoListSet" class="rp-button">Set selected item's value</button>
-                <input id="demoListSetContent" type="text"><br />
-                <button id="demoListMove" class="rp-button">Move selected item to index</button>
-                <input id="demoListMoveItem" type="text">
-              </td>
-            </tr>
-          </table>
-          <a target="_blank" class="demoReferenceLink" href="https://developers.google.com/drive/realtime/reference/gapi.drive.realtime.CollaborativeList">Link to reference doc</a>
-           - <a target="_blank" href="https://github.com/googledrive/realtime-playground/blob/master/js/rtpg.list.js">Source code</a>
+      <section id="demoShare" class="disabled">
+        <div class="notesBox rp-greyRuledTop rp-greyRuledBottom">
+          <h3>
+            <span>Step 3</span><span style="color: #777; margin-left: 10px;">Share</span>
+          </h3>
+        </div>
+        <div class="rp-section-content" style="line-height: 30px;">
+          To collaborate you must
+          <button id="demoShareButton" class="rp-button rp-button-share">Share</button> this document
+          with other users or <a href="#" onmouseover="this.href = window.location.href" target="_blank">open this
+            same document in a new window</a> and collaborate with yourself.
         </div>
       </section>
 
-      <section id="collabMapDemo" class="rp-greyRuledBottom" style="padding-bottom: 20px">
-        <div class="rp-section-content">
-          <h2>Collaborative maps</h2>
-          <p class="demoDescription">Collaborative maps share key/value state
-          across sessions. They support standard map operations. Events are
-          fired when key-value pairs are changed.</p>
-          <h4>Add, change or remove key-value pairs on the demo Collaborative Map</h4>
-          <table style="margin: 10px 0;">
-            <tr>
-              <td style="vertical-align: top; padding-right: 10px;">
-                <table>
-                  <tr>
-                    <td style="text-align: center; color: grey; font-style: italic;">
-                      Keys
-                    </td><td style="text-align: center; color: grey; font-style: italic;">
-                      Values
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <select size="9" id="demoMapKeys"></select>
-                    </td><td>
-                      <select size="9" id="demoMapValues"></select>
-                    </td>
-                  </tr>
-                </table>
-              </td>
-              <td style="padding-left: 10px;">
-                <button id="demoMapRemove" class="rp-button" style="margin-bottom: 10px;">Remove selected item</button><br />
-                <button id="demoMapClear" class="rp-button" style="margin-bottom: 10px;">Clear the map</button><br />
-                <table>
-                  <tr>
-                    <td style="vertical-align: top; padding-right: 10px;">
-                      <button id="demoMapPut" class="rp-button">Put key-value pair</button>
-                    </td><td style="line-height: 28px;">
-                      Key: <input id="demoMapKey" type="text" style="margin-left: 12px;">
-                    </td>
-                  <tr>
-                    <td>
-                    </td><td style="padding-top: 10px; line-height: 28px;">
-                      Value: <input id="demoMapValue" type="text">
-                    </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-          </table>
-
-          <a target="_blank" class="demoReferenceLink" href="https://developers.google.com/drive/realtime/reference/gapi.drive.realtime.CollaborativeMap">Link to reference doc</a>
-           - <a target="_blank" href="https://github.com/googledrive/realtime-playground/blob/master/js/rtpg.map.js">Source code</a>
+      <section id="collabSections" class="disabled">
+        <div class="notesBox rp-greyRuledTop rp-greyRuledBottom">
+          <h3>
+            <span>Step 4</span><span style="color: #777; margin-left: 10px;">Collaborate</span>
+          </h3>
         </div>
-      </section>
 
-      <section id="collabCustomDemo">
-        <div class="rp-section-content">
-          <h2>Collaborative custom objects</h2>
-          <p class="demoDescription">Collaborative custom object have properties
-          who's state is shared across sessions. Events are fired when property
-          values are changed.</p>
-          <h4>Modify properties of the demo Collaborative Custom Object</h4>
-          <table id="demoCustomContainer">
-            <tr>
-              <td style="text-align: center; color: grey; font-style: italic;">Properties</td>
-              <td style="text-align: center; color: grey; font-style: italic;">Values</td>
-            </tr>
-            <tr>
-              <td>Name</td>
-              <td><input type="text" id="demoCustomName" /></td>
-            </tr>
-            <tr>
-              <td>Director</td>
-              <td><input type="text" id="demoCustomDirector" /></td>
-            </tr>
-            <tr>
-              <td>Notes</td>
-              <td><textarea id="demoCustomNotes"></textarea></td>
-            </tr>
-            <tr>
-              <td>Rating</td>
-              <td><input type="text" id="demoCustomRating" /></td>
-            </tr>
-          </table>
-          <a target="_blank" class="demoReferenceLink" href="https://developers.google.com/drive/realtime/reference/gapi.drive.realtime.CollaborativeObject">Link to reference doc</a>
-           - <a target="_blank" href="https://github.com/googledrive/realtime-playground/blob/master/js/rtpg.custom.js">Source code</a>
+        <!-- Collaborative Introduction -->
+        <section id="collabIntro" class="rp-greyRuledBottom" style="padding-bottom: 10px">
+          <div class="rp-section-content">
+            <p class="demoDescription">
+              Google Drive collaborative documents are made of 4 types of collaborative elements: String, Lists,
+              Maps and Custom objects. A Google Drive collaborative document can have as many of these collaborative
+              elements as they need. As a demonstration, You will find below UI widgets representing collaborative
+              elements of each type.
+            </p>
+            <div id="realtimeInitialized" style="display:none;margin-bottom:10px;">
+              <span style="font-size: 20px; color: green;">&#10003;</span>
+              Your Realtime session has been initialized. You can now use the widgets below.
+            </div>
+          </div>
+        </section>
+
+        <!-- Collaborative String Demo -->
+        <section id="collabStringDemo" class="rp-greyRuledBottom" style="padding-bottom: 20px">
+          <div class="rp-section-content">
+            <h2>Collaborative strings</h2>
+            <p class="demoDescription">Collaborative strings are just like normal strings, except that all browser
+              sessions will be notified and updated when the string changes. Events are fired when strings are
+              inserted to the collaborative string or when part of the string is deleted.</p>
+            <h4>Edit the demo Collaborative String</h4>
+            <textarea id="demoStringInput" style="margin-top: 10px"></textarea>
+            <a target="_blank" class="demoReferenceLink" href="https://developers.google.com/drive/realtime/reference/gapi.drive.realtime.CollaborativeString">Reference docs</a>
+             - <a target="_blank" href="https://github.com/googledrive/realtime-playground/blob/master/js/rtpg.string.js">Source code</a>
+          </div>
+        </section>
+
+        <!-- Collaborative List Demo -->
+        <section id="collabListDemo" class="rp-greyRuledBottom" style="padding-bottom: 20px">
+          <div class="rp-section-content">
+            <h2>Collaborative lists</h2>
+            <p class="demoDescription">A collaborative list state is shared across
+            sessions. Events are fired when items are added or removed to the list
+            or when an existig item's value is set.</p>
+            <h4>Add, remove or set items on the demo Collaborative List</h4>
+            <table style="margin: 10px 0;">
+              <tr>
+                <td style="text-align: center; color: grey; font-style: italic;">
+                  List items <br />
+                  <ul id="demoListInput">
+
+                  </ul>
+                </td>
+                <td style="padding-left: 20px;">
+                  <button id="demoListRemove" class="rp-button">Remove selected item</button>
+                  <button id="demoListAdd" class="rp-button">Add an item</button>
+                  <input id="demoListAddContent" type="text"><br />
+                  <button id="demoListClear" class="rp-button">Clear the list</button>
+                  <button id="demoListSet" class="rp-button">Set selected item's value</button>
+                  <input id="demoListSetContent" type="text"><br />
+                  <button id="demoListMove" class="rp-button">Move selected item to index</button>
+                  <input id="demoListMoveItem" type="text">
+                </td>
+              </tr>
+            </table>
+            <a target="_blank" class="demoReferenceLink" href="https://developers.google.com/drive/realtime/reference/gapi.drive.realtime.CollaborativeList">Link to reference doc</a>
+             - <a target="_blank" href="https://github.com/googledrive/realtime-playground/blob/master/js/rtpg.list.js">Source code</a>
+          </div>
+        </section>
+
+        <!-- Collaborative Map Demo -->
+        <section id="collabMapDemo" class="rp-greyRuledBottom" style="padding-bottom: 20px">
+          <div class="rp-section-content">
+            <h2>Collaborative maps</h2>
+            <p class="demoDescription">Collaborative maps share key/value state
+            across sessions. They support standard map operations. Events are
+            fired when key-value pairs are changed.</p>
+            <h4>Add, change or remove key-value pairs on the demo Collaborative Map</h4>
+            <table style="margin: 10px 0;">
+              <tr>
+                <td style="vertical-align: top; padding-right: 10px;">
+                  <table>
+                    <tr>
+                      <td style="text-align: center; color: grey; font-style: italic;">
+                        Keys
+                      </td><td style="text-align: center; color: grey; font-style: italic;">
+                        Values
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <select size="9" id="demoMapKeys"></select>
+                      </td><td>
+                        <select size="9" id="demoMapValues"></select>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <td style="padding-left: 10px;">
+                  <button id="demoMapRemove" class="rp-button" style="margin-bottom: 10px;">Remove selected item</button><br />
+                  <button id="demoMapClear" class="rp-button" style="margin-bottom: 10px;">Clear the map</button><br />
+                  <table>
+                    <tr>
+                      <td style="vertical-align: top; padding-right: 10px;">
+                        <button id="demoMapPut" class="rp-button">Put key-value pair</button>
+                      </td><td style="line-height: 28px;">
+                        Key: <input id="demoMapKey" type="text" style="margin-left: 12px;">
+                      </td>
+                    <tr>
+                      <td>
+                      </td><td style="padding-top: 10px; line-height: 28px;">
+                        Value: <input id="demoMapValue" type="text">
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+            <a target="_blank" class="demoReferenceLink" href="https://developers.google.com/drive/realtime/reference/gapi.drive.realtime.CollaborativeMap">Link to reference doc</a>
+             - <a target="_blank" href="https://github.com/googledrive/realtime-playground/blob/master/js/rtpg.map.js">Source code</a>
+          </div>
+        </section>
+
+        <!-- Custom Object Demo -->
+        <section id="collabCustomDemo">
+          <div class="rp-section-content">
+            <h2>Collaborative custom objects</h2>
+            <p class="demoDescription">Collaborative custom object have properties
+            who's state is shared across sessions. Events are fired when property
+            values are changed.</p>
+            <h4>Modify properties of the demo Collaborative Custom Object</h4>
+            <table id="demoCustomContainer">
+              <tr>
+                <td style="text-align: center; color: grey; font-style: italic;">Properties</td>
+                <td style="text-align: center; color: grey; font-style: italic;">Values</td>
+              </tr>
+              <tr>
+                <td>Name</td>
+                <td><input type="text" id="demoCustomName" /></td>
+              </tr>
+              <tr>
+                <td>Director</td>
+                <td><input type="text" id="demoCustomDirector" /></td>
+              </tr>
+              <tr>
+                <td>Notes</td>
+                <td><textarea id="demoCustomNotes"></textarea></td>
+              </tr>
+              <tr>
+                <td>Rating</td>
+                <td><input type="text" id="demoCustomRating" /></td>
+              </tr>
+            </table>
+            <a target="_blank" class="demoReferenceLink" href="https://developers.google.com/drive/realtime/reference/gapi.drive.realtime.CollaborativeObject">Link to reference doc</a>
+             - <a target="_blank" href="https://github.com/googledrive/realtime-playground/blob/master/js/rtpg.custom.js">Source code</a>
+          </div>
+        </section>
+      </section>
+    </div>
+
+    <div id="rightContainer">
+      <div id="fakeappbar">
+        <button id="undoButton" disabled="true" class="rp-button">Undo</button>
+        <button id="redoButton" disabled="true" class="rp-button">Redo</button>
+        <div id="collaborators">
         </div>
-      </section>
-    </section>
-
-  </div>
-
-  <div id="rightContainer">
-    <div id="fakeappbar">
-      <button id="undoButton" disabled="true" class="rp-button">Undo</button>
-      <button id="redoButton" disabled="true" class="rp-button">Redo</button>
-      <div id="collaborators">
+      </div>
+      <span id="logTitle" class="componentName" style="padding-top:1px;margin: 10px 0 5px 15px;">Event Logs
+      <span id="filterLocalContainer"><input id="filterLocal" type="checkbox">Hide local events</span></span>
+      <div class="scrollBarBox">
+        <div id="logContainer" class="scrollBarInner">
+          <div class="kd-list">
+          <table id="demoLog" class="gmail knurling"></table>
+          </div>
+          <div class="shadow" style="opacity: 0;"></div>
+        </div>
       </div>
     </div>
-    <span id="logTitle" class="componentName" style="padding-top:1px;margin: 10px 0 5px 15px;">Event Logs
-    <span id="filterLocalContainer"><input id="filterLocal" type="checkbox">Hide local events</span></span>
-    <div class="scrollBarBox">
-      <div id="logContainer" class="scrollBarInner">
-        <div class="kd-list">
-        <table id="demoLog" class="gmail knurling"></table>
-        </div>
-        <div class="shadow" style="opacity: 0;"></div>
-      </div>
-    </div>
-  </div>
+    <a href="https://github.com/googledrive/realtime-playground">
+      <img style="position: fixed; bottom: 0; right: 0; border: 0; z-index:1000;" src="/images/github.png" alt="Fork me on GitHub">
+    </a>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-25993200-2']);
+      _gaq.push(['_trackPageview']);
 
-  <a href="https://github.com/googledrive/realtime-playground"><img style="position: fixed; bottom: 0; right: 0; border: 0; z-index:1000;" src="/images/github.png" alt="Fork me on GitHub"></a>
-
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-25993200-2']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
-
-</body>
-
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
 </html>
