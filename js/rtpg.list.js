@@ -139,7 +139,6 @@ rtpg.list.onListItemClick = function(evt) {
       rtpg.list.cursors.set(
         rtpg.getMe().sessionId, rtpg.list.field.registeredReference);
     }
-    rtpg.realtimeDoc.getModel().endCompoundOperation();
   }
 
   // Any new index changes are inside a non undoable compound operation, and will not
