@@ -64,5 +64,5 @@ rtpg.collaborators.onCollaboratorJoined = function(event) {
 rtpg.collaborators.onCollaboratorLeft = function(event) {
   rtpg.log.logEvent(event, 'User closed the document');
   rtpg.collaborators.updateUi();
-  rtpg.list.garbageCollectReferenceIndices();
+  rtpg.list.garbageCollectCursorMap();
 };

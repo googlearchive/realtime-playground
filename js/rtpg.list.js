@@ -139,7 +139,6 @@ rtpg.list.onListItemClick = function(evt) {
       rtpg.list.cursors.set(
         rtpg.getMe().sessionId, rtpg.list.field.registeredReference);
     }
-    rtpg.realtimeDoc.getModel().endCompoundOperation();
   }
 
   // Any new index changes are inside a non undoable compound operation, and will not
@@ -260,8 +259,10 @@ rtpg.list.onRealtimeReferenceShifted = function(evt) {
  */
 rtpg.list.onRealtimeCursorChange = function(evt) {
   console.log('Cursor Change Event');
-  evt.newValue.addEventListener(gapi.drive.realtime.EventType.REFERENCE_SHIFTED,
-    rtpg.list.onRealtimeReferenceShifted);
+  if(evt.newValue){
+    evt.newValue.addEventListener(gapi.drive.realtime.EventType.REFERENCE_SHIFTED,
+      rtpg.list.onRealtimeReferenceShifted);
+  }
   rtpg.list.updateUi();
 };
 
