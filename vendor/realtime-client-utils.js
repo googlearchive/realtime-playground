@@ -108,6 +108,7 @@ Authorizer.prototype = {
           break;
       }
       config['drive-realtime'] =  { 'server' : this.serverUrl };
+      gapi.drive.realtime.setServerAddress(this.serverUrl);
     }
     var that = this;
     window.gapi.load('auth:client,drive-realtime,drive-share', {
