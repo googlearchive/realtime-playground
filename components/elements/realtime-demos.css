@@ -1,0 +1,321 @@
+.blue-bg {
+  position: absolute;
+  top:0;
+  left:0;
+  right:0;
+  height: 350px;
+  background-color: #3f51b5;
+}
+
+.container {
+  position: relative;
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+}
+
+.drawer {
+  background-color: #d0d9ff;
+}
+
+.main {
+  background-color: #e8eaf6;
+}
+
+#intro {
+  margin-top: 200px;
+}
+
+.doc-title {
+  position: absolute;
+  left: 10%;
+  top: 80px;
+  font-size: 65px;
+  color: white;
+}
+
+@media (min-width: 1090px) {
+  #back-icon {
+    left: calc(((100% - 350px) / 20) - 25px) !important;  
+  }
+}
+
+#back-icon {
+  position: fixed;
+  color: #fff;
+  left: calc(5% - 25px);
+  top: 20px;
+  width: 50px;
+  height: 50px;
+  z-index: 5;
+  cursor: pointer;
+}
+
+
+/* Collaborative String Styles */
+
+#string paper-input {
+  width: 100%;
+  font-weight: 100;
+}
+
+/* Collaborative List/Map Styles */
+
+.right table {
+  width: 70%;
+}
+
+.right table td {
+  padding: 0px;
+  height: 54px;
+  vertical-align: bottom;
+}
+
+.left {
+  width: 30%;
+  float: left;
+  padding: 10px;
+}
+
+.right {
+  margin-left: 32%;
+  padding: 10px;
+  vertical-align: top;
+}
+
+@media (max-width: 680px) {
+  .left, .right {
+    float:none;
+    display: block;
+    margin-left: 0;
+  }
+}
+
+#list paper-button, #map paper-button {
+  font-size: 11px;
+  width: 150px;
+}
+
+#list paper-input, #map paper-input {
+  width: 150px;
+  padding: 0;
+  font-weight: 100;
+}
+
+#list paper-radio-button {
+  display: block;
+  font-weight: 100;
+}
+
+/* Collaborative Map Styles */
+
+#map table {
+  border-collapse: collapse;
+  font-weight: 100;
+}
+
+#map table th {
+  font-size: 13px;
+}
+
+#map table td {
+  padding: 5px;
+}
+
+#map table.map-display tr.active, #map table tbody tr.active:hover {
+  color: #fff;
+  background-color: #259b24;
+  transition: all .2s;
+}
+
+#map table.map-display tbody tr:hover {
+  transition: all .2s;
+  cursor: pointer;
+  background-color: #a3e9a4;
+}
+
+
+/* Custom Object Styles */
+
+#custom td {
+  font-weight: 100;
+}
+
+
+
+/* Collaborator Styles */
+
+.drawer-title {
+  padding-left: 15px;
+  font-size: 23px;
+  font-weight: 100;
+  color: white;
+  background-color: #5677fc;
+  height: 50px;
+  width: 100%;
+  line-height:50px;
+}
+
+.collaborator-container {
+  padding: 15px;
+}
+
+.events, .collaborators {
+  margin-top: 25px;
+}
+
+core-icon-button {
+  background-color: #fff;
+  width: 60px;
+  text-align: center;
+  margin: 5px;
+}
+
+core-animated-pages {
+  width: 100%;
+  height: 100%;
+}
+
+.controls-container {
+  margin-left: 29px;
+  margin-top: 10px;
+}
+
+
+
+
+
+
+
+.demo-card {
+  width: 80%;
+  margin-left: 10%;
+  margin-bottom: 25px;
+  background-color: #ffffff;
+  display: block;
+}
+
+.title {
+  font-size: 20px;
+  padding: 20px;
+}
+
+.blue {
+  color: white;
+  background-color: #5677fc;
+}
+
+.purple {
+  color: white;
+  background-color: #673ab7;
+}
+
+.purple .demos-view-icon {
+  background-color: white;
+  color: #673ab7;
+}
+
+.green {
+  color: white;
+  background-color: #259b24;
+}
+
+.green .demos-view-icon {
+  color: #259b24;
+  background-color: white;
+}
+
+.red {
+  color: white;
+  background-color: #9c27b0;
+}
+
+.red .demos-view-icon {
+  background-color: white;
+  color: #9c27b0;
+}
+
+.yellow {
+  background-color: #ffeb3b;
+}
+
+.yellow .demos-view-icon {
+  color: #ffeb3b;
+  background-color: #000;
+}
+
+.content {
+  padding: 20px;
+  transition:all 1s;
+}
+
+.content p {
+  font-weight: 100;
+}
+
+.content p a {
+  text-decoration: underline;
+  color: blue;
+  cursor: pointer;
+}
+
+.code-button {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+
+.code-button core-icon {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.panel {
+  width: 100%;
+  height: 100%;
+}
+
+#codePanel {
+  width: 100%;
+  height: 100%;
+  padding: 30px 0px;
+  overflow: auto;
+}
+
+.code-footer {
+  width: 100%;
+  height: 0%;
+}
+
+.code-container {
+  width: 80%;
+  margin-left: 10%;
+  position: relative;
+}
+
+.code-container pre {
+  position: relative;
+}
+
+.code-container code {
+  overflow: auto;
+}
+
+#codePanel h1 {
+  font-size: 40px;
+  font-weight: 100;
+}
+
+.demos-view-icon {
+  position: absolute;
+  top: 0;
+  left: -25px;
+  height: 50px;
+  width: 50px;
+  border-radius: 25px;
+}
+
+.demos-view-icon:hover {
+  cursor: pointer;
+}

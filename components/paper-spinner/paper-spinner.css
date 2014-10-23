@@ -1,0 +1,221 @@
+/*
+    @license
+    Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+    This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+    The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+    The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+    Code distributed by Google as part of the polymer project is also
+    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+ */
+
+/**************************/
+/* STYLES FOR THE SPINNER */
+/**************************/
+
+/*
+ * Constants:
+ *      RADIUS      = 12.5
+ *      STROKEWIDTH = 3
+ *      ARCSIZE     = 270 degrees (amount of circle the arc takes up)
+ *      ARCTIME     = 1333ms (time it takes to expand and contract arc)
+ *      ARCSTARTROT = 216 degrees (how much the start location of the arc
+ *                                should rotate each time, 216 gives us a
+ *                                5 pointed star shape (it's 360/5 * 2).
+ *                                For a 7 pointed star, we might do
+ *                                360/7 * 3 = 154.286)
+ *
+ *      SHRINK_TIME = 400ms
+ */
+
+:host {
+  height: 28px;
+  width: 28px;
+  display: inline-block;
+}
+
+#container {
+  display: inline-block;
+  height: 28px;
+  width: 28px;
+}
+
+/* Rotating the whole thing */
+@-webkit-keyframes rotate {
+  from {-webkit-transform: rotate(0deg);}
+  to {-webkit-transform: rotate(360deg);}
+}
+
+@keyframes rotate {
+  from {transform: rotate(0deg);}
+  to {transform: rotate(360deg);}
+}
+#container.active {
+  -webkit-animation-name: rotate;
+  -webkit-animation-duration: 1568.63ms; /* 360 * ARCTIME / (ARCSTARTROT + (360-ARCSIZE)) */
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+  animation-name: rotate;
+  animation-duration: 1568.63ms; /* 360 * ARCTIME / (ARCSTARTROT + (360-ARCSIZE)) */
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@-webkit-keyframes disappear {
+  to {
+    opacity:0;
+  }
+}
+
+@keyframes disappear {
+  to {
+    opacity:0;
+  }
+}
+
+
+/* Filling and unfilling the arc */
+@-webkit-keyframes fillunfill {
+  from {
+    stroke-dashoffset: 58.8 /* 2*RADIUS*PI * ARCSIZE/360 - 0.1 */
+    /* 0.1 a bit of a magic constant here */
+  }
+  50% {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -58.4 /* -(2*RADIUS*PI * ARCSIZE/360 - 0.5) */
+    /* 0.5 a bit of a magic constant here */
+  }
+}
+
+@keyframes fillunfill {
+  from {
+    stroke-dashoffset: 58.8 /* 2*RADIUS*PI * ARCSIZE/360 - 0.1 */
+    /* 0.1 a bit of a magic constant here */
+  }
+  50% {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -58.4 /* -(2*RADIUS*PI * ARCSIZE/360 - 0.5) */
+    /* 0.5 a bit of a magic constant here */
+  }
+}
+
+@-webkit-keyframes rot {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(-360deg);
+  }
+}
+
+@keyframes rot {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@-webkit-keyframes colors {
+  0% {
+    stroke: #4285f4;
+  }
+  18% {
+    stroke: #4285f4;
+  }
+  25% {
+    stroke: #db4437;
+  }
+  43% {
+    stroke: #db4437;
+  }
+  50% {
+    stroke: #f4b400;
+  }
+  68% {
+    stroke: #f4b400;
+  }
+  75% {
+    stroke: #0f9d58;
+  }
+  93% {
+    stroke: #0f9d58;
+  }
+  100% {
+    stroke: #4285f4;
+  }
+}
+
+@keyframes colors {
+  0% {
+    stroke: #4285f4;
+  }
+  18% {
+    stroke: #4285f4;
+  }
+  25% {
+    stroke: #db4437;
+  }
+  43% {
+    stroke: #db4437;
+  }
+  50% {
+    stroke: #f4b400;
+  }
+  68% {
+    stroke: #f4b400;
+  }
+  75% {
+    stroke: #0f9d58;
+  }
+  93% {
+    stroke: #0f9d58;
+  }
+  100% {
+    stroke: #4285f4;
+  }
+}
+
+@-webkit-keyframes shrink {
+  to {
+    stroke-width:0px;
+  }
+}
+
+@keyframes shrink {
+  to {
+    stroke-width:0px;
+  }
+}
+
+#animation.active {
+  -webkit-transform-origin: 50% 50%;
+  transform-origin: 50% 50%;
+  -webkit-animation-name: fillunfill, rot, colors, shrink; 
+  -webkit-animation-duration: 1333ms, 5332ms, 5332ms, 400ms; /* ARCTIME, 4*ARCTIME, 4*ARCTIME, SHRINK_TIME */
+  -webkit-animation-iteration-count: infinite, infinite, infinite, 1;
+  -webkit-animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1), steps(4), linear, cubic-bezier(0.4, 0.0, 0.2, 1);
+  -webkit-animation-play-state: running, running, running, paused;
+  -webkit-animation-fill-mode: forwards;
+  animation-name: fillunfill, rot, colors, shrink;
+  animation-duration: 1333ms, 5332ms, 5332ms, 400ms; /* ARCTIME, 4*ARCTIME, 4*ARCTIME, SHRINK_TIME */
+  animation-iteration-count: infinite, infinite, infinite, 1;
+  animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1), steps(4), linear, cubic-bezier(0.4, 0.0, 0.2, 1);
+  animation-play-state: running, running, running, paused;
+  animation-fill-mode: forwards;
+}
+
+#animation.warmdown {
+  -webkit-animation-play-state: running, running, running, running;
+  animation-play-state: running, running, running, running;
+}
+
+#animation {
+  stroke-dasharray: 58.9;  /* 2*RADIUS*PI * ARCSIZE/360 */
+  stroke-dashoffset: 58.9; /* 2*RADIUS*PI * ARCSIZE/360 */
+  transform-origin: 50% 50%;
+}

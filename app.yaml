@@ -6,30 +6,34 @@ threadsafe: true
 
 handlers:
 
-- url: /favicon.ico
-  static_files: favicon.ico
-  upload: favicon.ico
-
-- url: /images
-  static_dir: images
-  secure: always
+- url: /favicon.png
+  static_files: favicon.png
+  upload: favicon.png
 
 - url: /css
   static_dir: css
   secure: always
 
-- url: /js
-  static_dir: js
-  secure: always
-  
-- url: /
-  static_files: templates/index.html
-  upload: templates/index.html
+- url: /components
+  static_dir: components
   secure: always
 
-- url: /sandbar
-  static_files: templates/fake_devsite_sandbar.html
-  upload: templates/fake_devsite_sandbar.html
+- url: /vendor
+  static_dir: vendor
+  secure: always
+
+- url: /tests
+  static_dir: tests
+  secure: always
+
+- url: /test
+  static_files: templates/test.html
+  upload: templates/test.html
+  secure: always
+
+- url: /
+  static_files: templates/playground.html
+  upload: templates/playground.html
   secure: always
 
 - url: .*

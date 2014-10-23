@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Realtime API Test Suite</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Load Styles -->
+    <link href="css/testingStyles.css" rel="stylesheet" />
+    <link href='https://fonts.googleapis.com/css?family=Roboto:300,400' rel='stylesheet' type='text/css'>
+    <link href='css/tommorrow-night-theme.css' rel='stylesheet' type='text/css'>
+
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="tests/testDocument.js"></script>
+    <script src="vendor/realtime-client-utils.js"></script>
+
+    <!-- Libraries -->
+    <script src="vendor/highlight.js"></script>
+    <script src="vendor/testingClass.js"></script>
+    <script src="vendor/testingLibrary.js"></script>
+    <script src="vendor/d3.js"></script>
+    <script src="tests/progress.js"></script>
+  </head>
+  <body onLoad='startRealtime()'>
+    <script>
+      window.testSuite = new FunctionalTesting('Google Drive Realtime API Test Suite');
+      document.body.appendChild(testSuite.el);
+
+      window.util = new Utils({
+        appId: '840867953062',
+        clientId: '840867953062.apps.googleusercontent.com'
+      });
+
+      window.testDocument1 = new TestDocument('alpha');
+      window.testDocument2 = new TestDocument('beta');
+
+      function onInitializeFile(model) {
+        testDocument1.initializeDocument(model);
+      }
+
+      function onFileLoaded(doc) {
+        testDocument1.onFileLoaded(doc);
+        util.load(fileId, onSecondFileLoaded, null);
+      }
+
+      function onSecondFileLoaded(doc) {
+        testDocument2.onFileLoaded(doc)
+        testSuite.execute();
+      }
+
+      function onAuthComplete(authResult){
+        if (!authResult || authResult.error) {
+          window.util.authResult(onAuthComplete, true);
+        } else {
+          util.createRealtimeFile('test-document', function (resp) {
+            window.fileId = resp.result.id;
+            util.load(fileId, onFileLoaded, onInitializeFile);
+          });
+        }
+      }
+
+      function startRealtime() {
+        window.util.authorize(onAuthComplete, false);
+      }
+
+      var testPaths = [
+        'collaborativeListTests.js',
+        'collaborativeMapTests.js',
+        'collaborativeStringTests.js',
+        'collaboratorObjectTests.js',
+        'documentSaveStateChangedEventTests.js',
+        //'documentTests.js',
+        'errorTests.js',
+        'eventListenerTests.js',
+        'indexReferenceTests.js',
+        'modelTests.js',
+        //'realtimeTests.js',
+        'referenceShiftedEventTests.js',
+        'textDeletedEventTests.js',
+        'undoRedoStateChangedEventTests.js',
+        'textInsertedEventTests.js',
+        'valueChangedEventTests.js',
+        'valuesAddedEventTests.js',
+        'valuesRemovedEventTests.js',
+        'valuesSetEventTests.js'
+      ]
+
+      var testPath = util.getParam('testPath');
+      if(testPath){
+        var script = document.createElement('script');
+        script.src = 'tests/' + testPath;
+        document.body.appendChild(script);
+      } else {
+        for(var i = 0; i < testPaths.length; i++){
+          var script = document.createElement('script');
+          script.src = 'tests/' + testPaths[i];
+          document.body.appendChild(script);
+        }
+      }
+    </script>
+  </body>
+</html>

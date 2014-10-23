@@ -1,0 +1,469 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../core-animated-pages/transitions/tile-cascade.html">
+<link rel="import" href="../core-animated-pages/transitions/hero-transition.html">
+<link rel="import" href="../core-ajax/core-ajax.html">
+<link rel="import" href="../core-drawer-panel/core-drawer-panel.html">
+<link rel="import" href="../core-icon-button/core-icon-button.html">
+<link rel="import" href="../core-tooltip/core-tooltip.html">
+<link rel="import" href="../paper-radio-group/paper-radio-group.html">
+<link rel="import" href="../paper-radio-button/paper-radio-button.html">
+<link rel="import" href="../paper-shadow/paper-shadow.html">
+<link rel="import" href="event-card.html">
+<link rel="import" href="collaborator-element.html">
+
+<polymer-element name="realtime-demos">
+  <template>
+    <link href="realtime-demos.css" rel="stylesheet">
+    <link href="../../css/tommorrow-night-theme.css" rel="stylesheet">
+    <app-globals id="globals"></app-globals>
+    <core-ajax
+      id="driveFileMetadataRequest"
+      url="https://www.googleapis.com/drive/v2/files/{{ documentId }}"
+      params='{}'
+      handleAs="json"
+      on-core-response="{{handleResponse}}">
+    </core-ajax>
+    <core-signals
+      on-core-signal-view-code="{{ viewCode }}">
+    </core-signals>
+    <core-drawer-panel>
+      <div drawer class="drawer">
+        <core-animated-pages id="drawer" selected="{{ page }}" transitions="tile-cascade list-cascade" on-core-animated-pages-transition-end="{{complete}}">
+          <section></section>
+          <section>
+            <div tile-cascade>
+              <div class="controls">
+                <div class="drawer-title">Controls</div>
+                <div class="controls-container">
+                  <core-tooltip label="Undo">
+                    <core-icon-button icon="rotate-left" disabled?="{{ canUndo == false }}" on-click="{{ undo }}"></core-icon-button>
+                  </core-tooltip>
+                  <core-tooltip label="Redo">
+                    <core-icon-button icon="rotate-right" disabled?="{{ canRedo == false }}" on-click="{{ redo }}"></core-icon-button>
+                  </core-tooltip>
+                  <core-tooltip label="Open in new tab" className="no-left">
+                    <core-icon-button icon="open-in-new" on-click="{{ openInNewTab }}"></core-icon-button>
+                  </core-tooltip>
+                  <core-tooltip label="Share">
+                    <core-icon-button icon="account-child" on-click="{{ share }}"></core-icon-button>
+                  </core-tooltip>
+                </div>
+              </div>
+              <div class="collaborators">
+                <div class="drawer-title">Active Collaborators</div>
+                <div class="collaborator-container">
+                  <template repeat="{{ collaborator in collaborators }}">
+                    <collaborator-element collaborator="{{ collaborator }}"></collaborator-element>
+                  </template>
+                </div>
+              </div>
+              <div class="events">
+                <div class="drawer-title">Events</div>
+                <div class="events-container">
+                  <template repeat="{{event in eventsList}}">
+                    <event-card event="{{event}}"></event-card>
+                  </template>
+                </div>
+              </div>
+            </div>
+          </section>
+        </core-animated-pages>
+      </div>
+      <div main class="main">
+        <div class="blue-bg"></div>
+        <core-animated-pages id="main" selected="{{ page }}" transitions="hero-transition tile-cascade" on-core-animated-pages-transition-end="{{complete}}">
+          <section></section>
+          <section>
+            <div id="demoContainer" class="container" tile-cascade>
+              <core-icon id="back-icon" icon="arrow-back" on-click="{{ back }}"></core-icon>
+              <div class="doc-title">{{ documentTitle }}</div>
+              <div id="intro" class="demo-card">
+                <div class="container">
+                  <paper-shadow z="1"></paper-shadow>
+                  <div class="title blue" hero>Getting Started</div>
+                  <div class="content">
+                    <p>Google Drive collaborative documents are made of 4 types of collaborative elements: String, Lists, Maps and Custom objects. A Google Drive collaborative document can have as many of these collaborative elements as they need. As a demonstration, you will find below UI widgets representing collaborative elements of each type.
+                    <br /><br />
+                    Open <a on-click="{{ openInNewTab }}">this document</a> in a new tab and watch your changes instantly appear across browser windows.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- String Demo -->
+              <div id="string" class="demo-card" hero hero-id="string-code">
+                <div class="container">
+                  <paper-shadow z="1"></paper-shadow>
+                  <div class="title red" hero-id="string-code-title" hero>
+                    Collaborative String
+                    <div class="code-button">
+                      <core-tooltip className="custom-code" label="See Code" data-code="string" on-click="{{ seeCode }}">
+                        <core-icon icon="developer-mode-tv"></core-icon>
+                      </core-tooltip>
+                    </div>
+                  </div>
+                  <div class="content" hero-id="string-code-body">
+                    <p>Collaborative strings are just like normal strings, except that all browser sessions will be notified and updated when the string changes. Events are fired when a collaborative string is modified.</p>
+                    <paper-input floatingLabel multiline id="stringInput" value="{{ collaborativeString }}" on-keyup="{{ onCollaborativeStringKeyup }}" label="type something..."></paper-input>
+                  </div>
+                </div>
+              </div>
+
+              <!-- List Demo -->
+              <div id="list" class="demo-card" hero hero-id="list-code">
+                <div class="container">
+                  <paper-shadow z="1"></paper-shadow>
+                  <div class="title purple" hero hero-id="list-code-title">
+                    Collaborative List
+                    <div class="code-button" data-code="list" on-click="{{ seeCode }}">
+                      <core-tooltip className="custom-code" label="See Code">
+                        <core-icon icon="developer-mode-tv"></core-icon>
+                      </core-tooltip>
+                    </div>
+                  </div>
+                  <div class="content">
+                    <p>A collaborative list state is shared across sessions. Events are fired when items are added or removed to the list or when an existig item's value is set.</p>
+                    <div class="left">
+                      <div class="list-title">List Items</div>
+                      <paper-radio-group id="listDemoGroup" selected="{{ selectedItem }}" on-change="{{ onRadioChange }}">
+                        <template repeat="{{ listItem in collaborativeList }}">
+                          <paper-radio-button name="{{ listItem }}" label="{{ listItem }}"></paper-radio-button>
+                        </template>
+                      </paper-radio-group>
+                    </div>
+                    <div class="right">
+                      <table>
+                        <tr>
+                          <td><paper-button raised on-click="{{ onRemoveListItemClick }}" disabled?="{{ !selectedItem }}">Remove Selected Item</paper-button></td>
+                        </tr>
+                        <tr>
+                          <td><paper-button raised on-click="{{ onAddListItemClick }}" disabled?="{{ addItemValue.length == 0 }}">Add Item</paper-button></td>
+                          <td><paper-input floatingLabel id="addListItemInput" label="item name..." inputValue="{{ addItemValue }}"></paper-input></td>
+                        </tr>
+                        <tr>
+                          <td><paper-button raised on-click="{{ onClearListClick }}" disabled?="{{ collaborativeList.length == 0 }}">Clear List</paper-button></td>
+                        </tr>
+                        <tr>
+                          <td><paper-button raised on-click="{{ onSetListItemClick }}" disabled?="{{ setItemValue.length == 0 }}">Set Selected Item</paper-button></td>
+                          <td><paper-input floatingLabel id="setListItemInput" label="item name..." inputValue="{{ setItemValue }}"></paper-input></td>
+                        </tr>
+                        <tr>
+                          <td><paper-button raised on-click="{{ onMoveListItemClick }}" disabled?="{{ moveItemValue.length == 0 }}">Move Item To Index</paper-button></td>
+                          <td><paper-input floatingLabel id="moveListItemInput" label="new index..." inputValue="{{ moveItemValue }}"></paper-input></td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Map Demo -->
+              <div id="map" class="demo-card" hero hero-id="map-code">
+                <div class="container">
+                  <paper-shadow z="1"></paper-shadow>
+                  <div class="title green" hero hero-id="map-code-title">
+                    Collaborative Map
+                    <div class="code-button" data-code="map" on-click="{{ seeCode }}">
+                      <core-tooltip className="custom-code" label="See Code">
+                        <core-icon icon="developer-mode-tv"></core-icon>
+                      </core-tooltip>
+                    </div>
+                  </div>
+                  <div class="content">
+                    <p>Collaborative maps share key/value state across sessions. They support standard map operations. Events are fired when key-value pairs are changed.</p>
+                    <div class="left">
+                      <table class="map-display">
+                        <thead>
+                          <tr>
+                            <th>Keys</th>
+                            <th>Values</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <template repeat="{{ mapItem in collaborativeMap }}">
+                            <tr id="mapItem-{{ mapItem.key }}" class="{{ mapItem.key == selectedMapItemKey ? 'active' : '' }}" on-click="{{ onMapItemClick }}">
+                              <td class="mapKey">{{ mapItem.key }}</td>
+                              <td class="mapValue">{{ mapItem.value }}</td>
+                            </tr>
+                          </template>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="right">
+                      <table>
+                        <tr>
+                          <td><paper-button raised on-click="{{ onRemoveMapItemClick }}" disabled?="{{ !selectedMapItemKey }}">Remove Selected Item</paper-button></td>
+                        </tr>
+                        <tr>
+                          <td><paper-button raised on-click="{{ onClearMapClick }}" disabled?="{{ collaborativeMap.length == 0 }}">Clear List</paper-button></td>
+                        </tr>
+                        <tr>
+                          <td><paper-button raised on-click="{{ onAddMapItemClick }}" disabled?="{{ !addMapKeyValue.length && !addMapValue.length }}">Add Pair</paper-button></td>
+                          <td><paper-input floatingLabel id="addMapKeyInput" inputValue="{{ addMapKeyValue }}" label="key..."></paper-input></td>
+                        </tr>
+                        <tr>
+                          <td></td>
+                          <td><paper-input floatingLabel id="addMapValueInput" inputValue="{{ addMapValue }}" label="value..."></paper-input></td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Custom Demo -->
+              <div id="custom" class="demo-card" hero hero-id="custom-code">
+                <div class="container">
+                  <paper-shadow z="1"></paper-shadow>
+                  <div class="title yellow" hero hero-id="custom-code-title">
+                    Custom Object
+                    <div class="code-button" data-code="custom" on-click="{{ seeCode }}">
+                      <core-tooltip className="custom-code" label="See Code">
+                        <core-icon icon="developer-mode-tv"></core-icon>
+                      </core-tooltip>
+                    </div>
+                  </div>
+                  <div class="content">
+                    <p>Collaborative custom object have properties who's state is shared across sessions. Events are fired when property values are changed.</p>
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Properties</th>
+                          <th>Values</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Name</td>
+                          <td><paper-input id="customNameInput" on-keyup="{{ onNameKeyup }}" label="name..." value="{{ name }}"></paper-input></td>
+                        </tr>
+                        <tr>
+                          <td>Director</td>
+                          <td><paper-input id="customDirectorInput" on-keyup="{{ onDirectorKeyup }}" label="director..." value="{{ director }}"></paper-input></td>
+                        </tr>
+                        <tr>
+                          <td>Notes</td>
+                          <td><paper-input multiline id="customNotesInput" on-keyup="{{ onNotesKeyup }}" label="notes..." value="{{ notes }}"></paper-input></td>
+                        </tr>
+                        <tr>
+                          <td>Rating</td>
+                          <td><paper-input id="customRatingInput" on-keyup="{{ onRatingKeyup }}" label="rating..." value="{{ rating }}"></paper-input></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section>
+            <div class="panel" hero hero-id="string-code">
+              <div id="codePanel" class="red" hero hero-id="string-code-title">
+                <div class="code-container">
+                  <h1>Collaborative String Sample Code</h1>
+                  <pre>
+                    <core-icon class="demos-view-icon" icon="arrow-back" on-click="{{ demosView }}"></core-icon>
+                    <code id="stringSampleCodeBlock" class="javascript">
+var app = {};
+
+function onInitialize (model) {
+  // String Initializer
+  var collaborativeString = model.createString('Edit Me!');
+  model.getRoot().set('demo_string', collaborativeString);
+}
+
+function onFileLoaded (doc) {
+  app.doc = doc;
+  app.stringDemo = doc.getModel().getRoot().get('demo_string');
+  setup();
+}
+
+function setup () {
+  app.stringDemo.addEventListener(
+    gapi.drive.realtime.EventType.TEXT_INSERTED,
+    onStringChange);
+  app.stringDemo.addEventListener(
+    gapi.drive.realtime.EventType.TEXT_DELETED,
+    onStringChange);
+}
+
+function onStringChange (evt) {
+  if(evt.isLocal){
+    // No need to update the UI here since we caused the event
+  } else {
+    document.querySelector('.string-demo').value = app.stringDemo.getText();
+  }
+}
+                    </code>
+                  </pre>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section>
+            <div class="panel" hero hero-id="list-code">
+              <div id="codePanel" class="purple" hero hero-id="list-code-title">
+                <div class="code-container">
+                  <h1>Collaborative List Sample Code</h1>
+                  <pre>
+                    <core-icon class="demos-view-icon" icon="arrow-back" on-click="{{ demosView }}"></core-icon>
+                    <code id="listSampleCodeBlock" class="javascript">
+var app = {};
+
+function onInitialize (model) {
+  var collaborativeList = model.createList();
+  collaborativeList.pushAll(['Cat', 'Dog', 'Sheep', 'Chicken']);
+  model.getRoot().set('demo_list', collaborativeList);
+}
+
+function onFileLoaded (doc) {
+  app.doc = doc;
+  app.listDemo = doc.getModel().getRoot().get('demo_list');
+  setup();
+}
+
+function setup () {
+  app.listDemo.addEventListener(
+    gapi.drive.realtime.EventType.VALUES_ADDED,
+    onListChange);
+  app.listDemo.addEventListener(
+    gapi.drive.realtime.EventType.VALUES_REMOVED,
+    onListChange);
+  app.listDemo.addEventListener(
+    gapi.drive.realtime.EventType.VALUES_SET,
+    onListChange);
+}
+
+function onListChange (evt) {
+  // Update the UI, etc.
+}
+                    </code>
+                  </pre>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section>
+            <div class="panel" hero hero-id="map-code">
+              <div id="codePanel" class="green" hero hero-id="map-code-title">
+                <div class="code-container">
+                  <h1>Collaborative Map Sample Code</h1>
+                  <pre>
+                    <core-icon class="demos-view-icon" icon="arrow-back" on-click="{{ demosView }}"></core-icon>
+                    <code id="mapSampleCodeBlock" class="javascript">
+var app = {};
+
+function onInitialize (model) {
+  var collaborativeMap = model.createMap({
+    key1: "value 1",
+    key2: "value 2",
+    key3: "value 3"
+  });
+  model.getRoot().set('demo_map', collaborativeMap);
+}
+
+function onFileLoaded (doc) {
+  app.doc = doc;
+  app.mapDemo = doc.getModel().getRoot().get('demo_map');
+  setup();
+}
+
+function setup () {
+  this.mapDemo.addEventListener(
+    gapi.drive.realtime.EventType.VALUE_CHANGED,
+    this.onMapValueChanged);
+}
+
+function onMapValueChanged (evt) {
+  var property = evt.property; // Which property changed
+  var oldValue = evt.oldValue; // Previous map value for this property
+  var newValue = evt.newValue; // New map value for this property
+}
+
+// A method to demonstrate getting all the values from a map
+function getValues () {
+  var keys = app.mapDemo.keys();
+  var values = [];
+  for(var i = 0; i < keys.length; i++){
+    values.push(app.mapDemo.get(keys[i]));
+  }
+  return values;
+}
+                    </code>
+                  </pre>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section>
+            <div class="panel" hero hero-id="custom-code">
+              <div id="codePanel" class="yellow" hero hero-id="custom-code-title">
+                <div class="code-container">
+                  <h1>Custom Object Sample Code</h1>
+                  <pre>
+                    <core-icon class="demos-view-icon" icon="arrow-back" on-click="{{ demosView }}"></core-icon>
+                    <code id="customSampleCodeBlock" class="javascript">
+var app = {};
+
+var Movie = function () {};
+
+Movie.prototype = {
+  initialize: function (name, director) {
+    this.name = name;
+    this.director = director;
+    this.notes = '';
+    this.rating = '';
+  }
+}
+
+// You must register the custom object before loading or creating any file that
+// uses this custom object.
+function registerTypes () {
+  var custom = gapi.drive.realtime.custom;
+  custom.registerType(Movie, 'DemoMovie');
+  Movie.prototype.name = custom.collaborativeField('name');
+  Movie.prototype.director = custom.collaborativeField('director');
+  Movie.prototype.notes = custom.collaborativeField('notes');
+  Movie.prototype.rating = custom.collaborativeField('rating');
+  custom.setInitializer(Movie, Movie.prototype.initialize);
+}
+
+function onInitialize (model) {
+  var customObject = model.create(Movie, 'Minority Report', 'Steven Spielberg');
+  model.getRoot().set('demo_custom', customObject);
+}
+
+function onFileLoaded (doc) {
+  app.doc = doc;
+  app.customDemo = doc.getModel().getRoot().get('demo_custom');
+  setup();
+}
+
+function setup () {
+  app.customDemo.addEventListener(
+    gapi.drive.realtime.EventType.VALUE_CHANGED,
+    onCustomDemoChange);
+}
+
+// Below we look at just the director field, but you would need to update the UI for all fields
+function onCustomDemoChange (evt) {
+  var input = document.querySelector('#directorInput');
+  input.value = app.customDemo.director;
+}
+
+function onDirectorKeyup () {
+  app.customDemo.director = document.querySelector('#directorInput').value;
+  // This will fire a change event
+}
+                    </code>
+                  </pre>
+                </div>
+              </div>
+            </div>
+          </section>
+        </core-animated-pages>
+      </div>
+    </core-drawer-panel>
+  </template>
+  <script src="realtime-demos.js"></script>
+</polymer-element>

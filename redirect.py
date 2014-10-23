@@ -17,11 +17,9 @@
 __author__ = 'nivco@google.com (Nicolas Garnier)'
 
 import webapp2
-
+import logging
 
 class DefaultHandler(webapp2.RequestHandler):
-  """Handler redirecting /* to /"""
-
   def get(self):
     """Redirect to / and keeping the URL parameters."""
     if self.request.query_string:
@@ -29,9 +27,8 @@ class DefaultHandler(webapp2.RequestHandler):
     else:
       self.redirect('/')
 
-
 DEFAULT_ROUTES = [
-    (r'.*', DefaultHandler)
+    (r'/.*', DefaultHandler)
 ]
 
 app = webapp2.WSGIApplication(DEFAULT_ROUTES)

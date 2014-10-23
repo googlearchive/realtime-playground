@@ -1,0 +1,65 @@
+<!--
+    @license
+    Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+    This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+    The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+    The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+    Code distributed by Google as part of the polymer project is also
+    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+Element providing material design circular spinner.
+
+##### Example
+
+    <paper-spinner id="spinner" active></paper-spinner>
+
+@element paper-spinner
+@blurb Element providing material design circular spinner.
+@status alpha
+@homepage http://polymerlabs.github.io/paper-spinner
+-->
+
+<polymer-element name="paper-spinner">
+
+  <template>
+    <span id="container">
+      <link rel="stylesheet" href="paper-spinner.css">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" height="28" width="28">
+        <path id="animation" fill="none" d="M 14,1.5 A 12.5,12.5 0 1 1 1.5,14" stroke-width="3" stroke-linecap="square"/>
+      </svg>
+    </template>
+  </span>
+  <script>
+    Polymer({
+      eventDelegates: {
+        'animationend': 'reset',
+        'webkitAnimationEnd': 'reset'
+      },
+      publish: {
+        /**
+         * Displays the spinner.
+         *
+         * @attribute active
+         * @type boolean
+         * @default false
+         */
+        active: {value: false, reflect: true}
+      },
+      activeChanged: function() {
+        if (this.active) {
+          this.$.container.classList.add('active');
+          this.$.animation.classList.add('active');
+        } else {
+          this.$.animation.classList.add('warmdown');
+        }
+      },
+      reset: function() {
+        this.$.container.classList.remove('active');
+        this.$.animation.classList.remove('active', 'warmdown');
+      }
+    });
+  </script>
+</polymer-element>

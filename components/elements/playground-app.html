@@ -1,0 +1,33 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../core-animated-pages/core-animated-pages.html">
+<link rel="import" href="../core-animated-pages/transitions/slide-from-right.html">
+<link rel="import" href="../core-icons/core-icons.html">
+<link rel="import" href="../core-signals/core-signals.html">
+<link rel="import" href="app-globals.html">
+<link rel="import" href="create-document.html">
+<link rel="import" href="realtime-demos.html">
+
+<polymer-element name="playground-app">
+  <template>
+    <link rel="stylesheet" href="playground-app.css">
+    <app-globals id="globals"></app-globals>
+    <core-signals
+      on-core-signal-file-loaded="{{ onDocumentLoaded }}"
+      on-core-signal-back="{{ back }}">
+    </core-signals>
+    <core-animated-pages id="app" transitions="slide-from-right" >
+      <section class="authView">
+        <div class="jumbo-icon">
+          <core-icon icon="lock-open" on-click="{{ authorize }}"></core-icon>
+          <div id="subtitle" class="subtitle">Authenticating...</div>
+      </section>
+      <section class="createView">
+        <create-document></create-document>
+      </section>
+      <section>
+        <realtime-demos></realtime-demos>
+      </section>
+    </core-animated-pages>
+  </template>
+  <script src="playground-app.js"></script>
+</playground-app>

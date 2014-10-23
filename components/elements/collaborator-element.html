@@ -1,0 +1,46 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<polymer-element name="collaborator-element" attributes="collaborator">
+  <template>
+    <style>
+      :host {
+        display: block;
+        position: relative;
+        border-radius: 2px;
+        width: 96%;
+        margin-left: 2%;
+        height: 50px;
+        background-color: #fff;
+        margin-bottom: 10px;
+      }
+
+      img {
+        width: 50px;
+        height: 50px;
+        display: inline-block;
+        margin-left: -4px;
+      }
+
+      .bar {
+        width: 15px;
+        height: 100%;
+        display: inline-block;
+      }
+
+      .name {
+        display: inline-block;
+        line-height: 50px;
+        vertical-align: top;
+        text-align: center;
+        width: calc(100% - 75px);
+      }
+    </style>
+    <paper-shadow z="1"></paper-shadow>
+    <div class="bar" style="background-color:{{ collaborator.color }}"></div>
+    <img src="{{ collaborator.photoUrl }}" />
+    <div class="name">{{ collaborator.displayName }}</div>
+  </template>
+  <script>
+    Polymer({});
+  </script>
+</polymer-element>

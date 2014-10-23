@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes" />
+    <meta charset="utf-8" />
+    <meta name="description"
+      content="The Google Drive Realtime API Playground showcases and allows you to experiment with the Google Drive Realtime API." />
+    <meta name="keywords"
+      content="OAuth, Google, drive, realtime, api, javascript, operational, transforms" />
+    <title>Google Drive Realtime Playground</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/main.css" />
+
+    <!-- JS -->
+    <script src="components/platform/platform.js"></script>
+    <script src="//www.google.com/jsapi"></script>
+    <script src="//apis.google.com/js/api.js"></script>
+    <script src="vendor/realtime-client-utils.js"></script>
+    <script src="vendor/highlight.js"></script>
+
+    <!-- Components -->
+    <link rel="import" href="components/font-roboto/roboto.html" />
+    <link rel="import" href="components/elements/playground-app.html" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+
+    <!-- Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-56023038-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+  </head>
+  <body unresolved>
+    <playground-app></playground-app>
+  </body>
+</html>

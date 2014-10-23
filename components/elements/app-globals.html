@@ -1,0 +1,33 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<polymer-element name="app-globals">
+  <script>
+    (function(Utils){
+      var util = new Utils({
+        onAuthComplete: function (authResult) {
+          that.onAuthComplete();
+        },
+        appId: 'Your App Id',
+        clientId: 'Your Client Id'
+      });
+
+      var Movie = function () {};
+
+      Movie.prototype = {
+        initialize: function (name, director) {
+          this.name = name;
+          this.director = director;
+          this.notes = '';
+          this.rating = '';
+        }
+      }
+
+      Polymer({
+        ready: function () {
+          this.util = util;
+          this.Movie = Movie;
+        }
+      });
+    })(window.Utils);
+  </script>
+</polymer-element>

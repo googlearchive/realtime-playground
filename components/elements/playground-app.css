@@ -1,0 +1,46 @@
+core-animated-pages {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+section {
+  height: 100%;
+  width: 100%;
+}
+
+core-icon {
+  cursor: pointer;
+}
+
+.jumbo-icon {
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  left: calc(50% - 175px);
+  top: calc(50% - 175px);
+}
+
+.jumbo-icon core-icon {
+  transition: all .5s;
+  -webkit-transition: all .5s;
+  height: 250px;
+  width: 250px;
+  color: white;
+}
+
+.jumbo-icon core-icon:hover {
+  -webkit-transition: all .5s;
+  transition: all .5s;
+  color: #9fa8da;
+  cursor: pointer;
+}
+
+.jumbo-icon .subtitle {
+  color: white;
+  font-weight: 100;
+  text-align: center;
+}
