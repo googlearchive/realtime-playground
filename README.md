@@ -35,7 +35,7 @@ First, you need to activate the Drive API for your app. You can do it by configu
 
 ### Setup your App information in the code
 
-You should now have your **Client ID** and your **App ID**. In `/js/rtpg.js` change the `APP_ID` and the `CLIENT_ID` constants at the top of the file.
+You should now have your **Client ID** and your **App ID**. In `/components/elements/app-globals.html` change the `appId` and the `clientId` properties in the utils hash.
 
 ### Deploy, run that's it!
 
