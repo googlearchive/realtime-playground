@@ -14,7 +14,20 @@ Element providing material design circular spinner.
 
 ##### Example
 
-    <paper-spinner id="spinner" active></paper-spinner>
+    <paper-spinner active></paper-spinner>
+
+The default spinner cycles between blue, red, yellow and green. It can be customized so
+that it uses one color only.
+
+##### Example
+
+    <style shim-shadowdom>
+      paper-spinner.blue::shadow .circle {
+        border-color: #4285f4;
+      }
+    </style>
+
+    <paper-spinner class="blue" active></paper-spinner>
 
 @element paper-spinner
 @blurb Element providing material design circular spinner.
@@ -22,16 +35,54 @@ Element providing material design circular spinner.
 @homepage http://polymerlabs.github.io/paper-spinner
 -->
 
-<polymer-element name="paper-spinner">
+<polymer-element name="paper-spinner" attributes="active">
 
   <template>
-    <span id="container">
-      <link rel="stylesheet" href="paper-spinner.css">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" height="28" width="28">
-        <path id="animation" fill="none" d="M 14,1.5 A 12.5,12.5 0 1 1 1.5,14" stroke-width="3" stroke-linecap="square"/>
-      </svg>
-    </template>
-  </span>
+    <link rel="stylesheet" href="paper-spinner.css">
+
+    <div id="spinnerContainer">
+      <div class="spinner-layer blue">
+        <div class="circle-clipper left">
+          <div class="circle" fit></div>
+        </div><div class="gap-patch">
+          <div class="circle" fit></div>
+        </div><div class="circle-clipper right">
+          <div class="circle" fit></div>
+        </div>
+      </div>
+
+      <div class="spinner-layer red">
+        <div class="circle-clipper left">
+          <div class="circle" fit></div>
+        </div><div class="gap-patch">
+          <div class="circle" fit></div>
+        </div><div class="circle-clipper right">
+          <div class="circle" fit></div>
+        </div>
+      </div>
+
+      <div class="spinner-layer yellow">
+        <div class="circle-clipper left">
+          <div class="circle" fit></div>
+        </div><div class="gap-patch">
+          <div class="circle" fit></div>
+        </div><div class="circle-clipper right">
+          <div class="circle" fit></div>
+        </div>
+      </div>
+
+      <div class="spinner-layer green">
+        <div class="circle-clipper left">
+          <div class="circle" fit></div>
+        </div><div class="gap-patch">
+          <div class="circle" fit></div>
+        </div><div class="circle-clipper right">
+          <div class="circle" fit></div>
+        </div>
+      </div>
+    </div>
+  </template>
+
   <script>
     Polymer({
       eventDelegates: {
@@ -48,17 +99,17 @@ Element providing material design circular spinner.
          */
         active: {value: false, reflect: true}
       },
+
       activeChanged: function() {
         if (this.active) {
-          this.$.container.classList.add('active');
-          this.$.animation.classList.add('active');
+          this.$.spinnerContainer.classList.add('active');
         } else {
-          this.$.animation.classList.add('warmdown');
+          this.$.spinnerContainer.classList.add('warmdown');
         }
       },
+
       reset: function() {
-        this.$.container.classList.remove('active');
-        this.$.animation.classList.remove('active', 'warmdown');
+        this.$.spinnerContainer.classList.remove('active', 'warmdown');
       }
     });
   </script>

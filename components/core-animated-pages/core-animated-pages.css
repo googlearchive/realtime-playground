@@ -20,7 +20,6 @@ polyfill-next-selector { content: ':host > *'; }
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 0;
 }
 
 polyfill-next-selector { content: ':host > *:not(.core-selected):not([animate])'; }

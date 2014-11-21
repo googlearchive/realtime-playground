@@ -12,20 +12,42 @@
 <head>
   <meta charset="UTF-8">
   <title></title>
-  <script src="../platform/platform.js"></script>
+  <script src="../webcomponentsjs/webcomponents.js"></script>
   <link rel="import" href="paper-spinner.html">
+  <style shim-shadowdom>
+  paper-spinner.blue::shadow .circle {
+    border-color: #4285f4;
+  }
+
+  paper-spinner.red::shadow .circle {
+    border-color: #db4437;
+  }
+
+  paper-spinner.yellow::shadow .circle {
+    border-color: #f4b400;
+  }
+
+  paper-spinner.green::shadow .circle {
+    border-color: #0f9d58;
+  }
+  </style>
 </head>
 <body>
-  <style>
-  </style>
   <template is="auto-binding">
-    <paper-spinner id="spinner" active></paper-spinner>
+    <paper-spinner class="blue" active></paper-spinner>
+    <paper-spinner class="red" active></paper-spinner>
+    <paper-spinner class="yellow" active></paper-spinner>
+    <paper-spinner class="green" active></paper-spinner>
+    <paper-spinner active></paper-spinner>
     <button on-tap="{{toggle}}">Toggle</button>
   </template>
   <script>
     var t = document.querySelector('template');
     t.toggle = function() {
-      t.$.spinner.active = !t.$.spinner.active;
+      var spinners = document.querySelectorAll('paper-spinner');
+      Array.prototype.forEach.call(spinners, function(spinner) {
+        spinner.active = !spinner.active;
+      });
     }
   </script>
 </body>
