@@ -1,0 +1,60 @@
+{
+  "name": "realtime-playground",
+  "version": "0.0.0",
+  "homepage": "https://github.com/googledrive/realtime-playground",
+  "authors": "Google Drive Realtime API authors",
+  "description": "Polymer-powered Google Drive Realtime Playground",
+  "main": "components/elements/playground-app.html",
+  "keywords": [
+    "playground",
+    "polymer",
+    "drive",
+    "realtime"
+  ],
+  "license": "BSD",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "components",
+    "test",
+    "tests"
+  ],
+  "resolutions": {
+    "polymer": "~0.5.1",
+    "core-component-page": "^0.5.0"
+  },
+  "dependencies": {
+    "core-a11y-keys": "Polymer/core-a11y-keys#~0.5.1",
+    "core-ajax": "Polymer/core-ajax#~0.5.1",
+    "core-animated-pages": "Polymer/core-animated-pages#~0.5.1",
+    "core-animation": "Polymer/core-animation#~0.5.1",
+    "core-drawer-panel": "Polymer/core-drawer-panel#~0.5.1",
+    "core-icon-button": "Polymer/core-icon-button#~0.5.1",
+    "core-icon": "Polymer/core-icon#~0.5.1",
+    "core-icons": "Polymer/core-icons#~0.5.1",
+    "core-iconset-svg": "Polymer/core-iconset-svg#~0.5.1",
+    "core-iconset": "Polymer/core-iconset#~0.5.1",
+    "core-input": "Polymer/core-input#~0.5.1",
+    "core-media-query": "Polymer/core-media-query#~0.5.1",
+    "core-meta": "Polymer/core-meta#~0.5.1",
+    "core-selection": "Polymer/core-selection#~0.5.1",
+    "core-selector": "Polymer/core-selector#~0.5.1",
+    "core-signals": "Polymer/core-signals#~0.5.1",
+    "core-style": "Polymer/core-style#~0.5.1",
+    "core-tooltip": "Polymer/core-tooltip#~0.5.1",
+    "core-transition": "Polymer/core-transition#~0.5.1",
+    "font-roboto": "Polymer/font-roboto#~0.5.1",
+    "paper-button": "Polymer/paper-button#~0.5.1",
+    "paper-focusable": "Polymer/paper-focusable#~0.4.2",
+    "paper-icon-button": "Polymer/paper-icon-button#~0.5.1",
+    "paper-input": "Polymer/paper-input#~0.5.1",
+    "paper-radio-button": "Polymer/paper-radio-button#~0.5.1",
+    "paper-radio-group": "Polymer/paper-radio-group#~0.5.1",
+    "paper-ripple": "Polymer/paper-ripple#~0.5.1",
+    "paper-shadow": "Polymer/paper-shadow#~0.5.1",
+    "paper-spinner": "Polymer/paper-spinner#~0.5.1",
+    "polymer": "Polymer/polymer#~0.5.1"
+  }
+}
