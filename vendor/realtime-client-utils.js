@@ -56,17 +56,29 @@ Utils.prototype = {
   createRealtimeFile: function(title, callback) {
     var that = this;
     window.gapi.client.load('drive', 'v2', function() {
-      window.gapi.client.drive.files.insert({
+      var insertHash = {
         'resource': {
           mimeType: that.options.mimeType,
           title: title
         }
-      }).execute(callback);
+      }
+      
+      if(that.authorizer.unknownServerUrl || that.authorizer.sandboxUrl){
+        insertHash.root = 'https://content-googleapis-test.sandbox.google.com';
+      }
+
+      window.gapi.client.drive.files.insert(insertHash).execute(callback);
     });
   },
 
   load: function(documentId, onFileLoaded, initializeModel) {
-    window.gapi.drive.realtime.load(documentId, onFileLoaded, initializeModel, this.onError);
+    var that = this;
+    window.gapi.drive.realtime.load(documentId, function(doc){
+      if(that.getParam('serverUrl')){
+        window.doc = doc;  // Debugging purposes
+      }
+      onFileLoaded(doc)
+    }, initializeModel, this.onError);
   },
 
   onError: function(e) {
@@ -104,21 +116,36 @@ Authorizer.prototype = {
     if(this.serverUrl){
       switch(this.serverUrl){
         case 'sandbox':
-          this.serverUrl = 'https://drive.sandbox.google.com/otservice'
+          this.sandboxUrl = true;
+          this.apiUrl = 'https://drive.sandbox.google.com/otservice';
+          this.serverUrl = this.apiUrl;
           break;
+        case 'canary':
+          this.apiUrl = 'https://drive.google.com/otservice/canary';
+          this.serverUrl = 'https://drive.google.com/otservice';
+          break;
+        case 'scary':
+          this.apiUrl = 'https://drive.google.com/otservice/scary';
+          this.serverUrl = 'https://drive.google.com/otservice';
+          break;
+        default:
+          this.unknownServerUrl = true;
+          this.apiUrl = this.serverUrl;
       }
-      config['drive-realtime'] =  { 'server' : this.serverUrl };
-      gapi.drive.realtime.setServerAddress(this.serverUrl);
+      config['drive-realtime'] =  { 'server' : this.apiUrl };
     }
     var that = this;
     window.gapi.load('auth:client,drive-realtime,drive-share', {
       config: config,
       callback:  function() {
+        if(that.serverUrl){
+          gapi.drive.realtime.setServerAddress(that.serverUrl);
+        }
         that.authorize(onAuthComplete, usePopup);
       }
     });
     if(this.authTimer){
-      this.authTimer.clear();
+      window.clearTimeout(this.authTimer);
     }
     this.refreshAuth();
   },

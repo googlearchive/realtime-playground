@@ -5,24 +5,33 @@ Polymer({
     this.$.drawer.selected = 0;
     this.document = null;
     this.documentTitle = "loading . . ."
+    this.documentTitleBaseUrl = 'https://www.googleapis.com'
+    if(this.util.getParam('serverUrl') == 'sandbox'){
+      this.documentTitleBaseUrl = 'https://content-googleapis-test.sandbox.google.com';
+    }
   },
 
   documentChanged: function (evt, doc) {
     this.doc = doc;
     this.collaborators = doc.getCollaborators();
 
-    this.stringDemo = doc.getModel().getRoot().get('demo_string');
-    this.listDemo = doc.getModel().getRoot().get('demo_list');
-    this.cursorsDemo = doc.getModel().getRoot().get('demo_cursors');
-    this.mapDemo = doc.getModel().getRoot().get('demo_map');
-    this.customDemo = doc.getModel().getRoot().get('demo_custom');
+    this.model = doc.getModel();
+
+    this.stringDemo = this.model.getRoot().get('demo_string');
+    this.listDemo = this.model.getRoot().get('demo_list');
+    this.cursorsDemo = this.model.getRoot().get('demo_cursors');
+    this.mapDemo = this.model.getRoot().get('demo_map');
+    this.customDemo = this.model.getRoot().get('demo_custom');
 
     this.setupModel();
     this.setupCollaborators();
     this.setupCollaborativeString();
     this.setupCollaborativeList();
     this.setupCollaborativeMap();
-    this.setupCustomObject(); 
+
+    if(this.customDemo) {
+      this.setupCustomObject(); 
+    }
     
     this.$.drawer.selected = 1;
     this.eventsList = [];
@@ -57,13 +66,22 @@ Polymer({
     this.onCollaboratorChange = this.onCollaboratorChange.bind(this);
     this.doc.addEventListener(gapi.drive.realtime.EventType.COLLABORATOR_JOINED, this.onCollaboratorChange);
     this.doc.addEventListener(gapi.drive.realtime.EventType.COLLABORATOR_LEFT, this.onCollaboratorChange);
+    this.setMyColor();
   },
 
   onCollaboratorChange: function () {
     this.collaborators = this.doc.getCollaborators();
+    this.setMyColor();
     this.garbageCollectCursors();
   },
 
+  setMyColor: function () {
+    for(var i = 0; i < this.collaborators.length; i++){
+      if(this.collaborators[i].isMe){
+        this.myColor = this.collaborators[i].color;
+      }
+    }
+  },
 
   // Collaborative String Methods
   setupCollaborativeString: function () {
@@ -78,7 +96,7 @@ Polymer({
     this.collaborativeString = this.stringDemo.getText();
   },
 
-  onCollaborativeStringKeyup: function (evt) {
+  onCollaborativeStringInputChange: function (evt) {
     this.stringDemo.setText(this.$.stringInput.inputValue);
   },
 
@@ -236,6 +254,9 @@ Polymer({
   },
 
   onMapItemClick: function (evt, no, el) {
+    if(this.model.isReadOnly){
+      return;
+    }
     this.selectedMapItemKey = el.querySelector('.mapKey').textContent;
   },
 
@@ -275,19 +296,19 @@ Polymer({
     this.rating = this.customDemo.rating;
   },
 
-  onNameKeyup: function () {
+  onNameInputChange: function () {
     this.customDemo.name = this.$.customNameInput.inputValue;
   },
 
-  onDirectorKeyup: function () {
+  onDirectorInputChange: function () {
     this.customDemo.director = this.$.customDirectorInput.inputValue;
   },
 
-  onNotesKeyup: function () {
+  onNotesInputChange: function () {
     this.customDemo.notes = this.$.customNotesInput.inputValue;
   },
 
-  onRatingKeyup: function () {
+  onRatingInputChange: function () {
     this.customDemo.rating = this.$.customRatingInput.inputValue;
   },
 

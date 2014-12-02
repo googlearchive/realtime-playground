@@ -33,7 +33,7 @@
                 <div class="bottom">
                   <paper-spinner id="loader1" active class="hidden"></paper-spinner>
                   <paper-input id="name" label="Document Name" inputValue="{{ documentName }}"></paper-input>
-                  <paper-button id="create" on-click="{{ createDriveDocument }}" disabled?="{{ documentName.length == 0 }}">Create</paper-button>
+                  <paper-button id="create" label="Create" on-click="{{ createDriveDocument }}" disabled?="{{ documentName.length == 0 }}"></paper-button>
                 </div>
               </div>
               <core-icon id="back" icon="arrow-back" on-click="{{ back }}"></core-icon>

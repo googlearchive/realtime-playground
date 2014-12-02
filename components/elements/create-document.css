@@ -42,7 +42,7 @@ section {
 
 .create-document-jumbo-icon .subtitle {
   color: white;
-  font-weight: 100;
+  font-weight: 300;
   text-align: center;
 }
 
@@ -76,7 +76,7 @@ section {
 
 .top core-icon, h1 {
   display: inline-block;
-  font-weight: 100;
+  font-weight: 300;
 }
 
 .top h1 {

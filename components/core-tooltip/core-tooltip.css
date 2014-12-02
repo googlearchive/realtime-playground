@@ -59,6 +59,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   border-width: 4px;
 }
 
+.core-tooltip.no-left{
+  left: -9px !important;
+}
+
+.core-tooltip.custom-code {
+  left: -15px !important;
+  top: 25px !important;
+}
+
 .top {
   margin-bottom: 10px; /* TODO: not specified in spec */
   bottom: 100%;

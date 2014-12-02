@@ -1,4 +1,5 @@
 TestingClass = function (description, fileName) {
+	this.title = description;
 	this.el = this.createHTML(this.el);
 	this.el.querySelector('.test-class-description').textContent = description;
 	this.el.querySelector('.test-class-description').addEventListener('click', function () {
@@ -19,7 +20,7 @@ TestingClass = function (description, fileName) {
 
 TestingClass.prototype = {
 
-	testTimeout: 10000,
+	testTimeout: 20000,
 
 	retryInterval: 10,
 

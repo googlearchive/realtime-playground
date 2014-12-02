@@ -6,9 +6,15 @@
 
     <!-- Load Styles -->
     <link href="css/testingStyles.css" rel="stylesheet" />
-    <link href='https://fonts.googleapis.com/css?family=Roboto:300,400' rel='stylesheet' type='text/css'>
     <link href='css/tommorrow-night-theme.css' rel='stylesheet' type='text/css'>
 
+    <!-- Components -->
+    <script src="components/platform/platform.js"></script>
+    <link rel="import" href="components/paper-spinner/paper-spinner.html" />
+    <link rel="import" href="components/font-roboto/roboto.html" />
+    <link rel="import" href="components/paper-button/paper-button.html" />
+
+    <!-- JS -->
     <script src="https://apis.google.com/js/api.js"></script>
     <script src="tests/testDocument.js"></script>
     <script src="vendor/realtime-client-utils.js"></script>
@@ -17,10 +23,14 @@
     <script src="vendor/highlight.js"></script>
     <script src="vendor/testingClass.js"></script>
     <script src="vendor/testingLibrary.js"></script>
-    <script src="vendor/d3.js"></script>
-    <script src="tests/progress.js"></script>
+
   </head>
   <body onLoad='startRealtime()'>
+    <div class="scrim hidden"></div>
+    <div class="lightbox hidden">
+      <h1>Please Authorize</h1>
+      <paper-button name="hi" id="authorize" label="Authorize" onclick="manualAuthorize()"></paper-button>
+    </div>
     <script>
       window.testSuite = new FunctionalTesting('Google Drive Realtime API Test Suite');
       document.body.appendChild(testSuite.el);
@@ -49,13 +59,20 @@
 
       function onAuthComplete(authResult){
         if (!authResult || authResult.error) {
-          window.util.authResult(onAuthComplete, true);
+          document.body.querySelector('.scrim').classList.remove('hidden');
+          document.body.querySelector('.lightbox').classList.remove('hidden');
         } else {
+          document.body.querySelector('.scrim').classList.add('hidden');
+          document.body.querySelector('.lightbox').classList.add('hidden');
           util.createRealtimeFile('test-document', function (resp) {
             window.fileId = resp.result.id;
             util.load(fileId, onFileLoaded, onInitializeFile);
           });
         }
+      }
+
+      function manualAuthorize() {
+        window.util.authorize(onAuthComplete, true);
       }
 
       function startRealtime() {
@@ -68,7 +85,12 @@
         'collaborativeStringTests.js',
         'collaboratorObjectTests.js',
         'documentSaveStateChangedEventTests.js',
-        //'documentTests.js',
+        // 'documentTests.js',
+        // 'clientDocumentImportTests.js',
+        // 'serverImportTests.js',
+        // 'documentSerializationTests.js',
+        'serverImportTests.js',
+        'documentSharing.js',
         'errorTests.js',
         'eventListenerTests.js',
         'indexReferenceTests.js',

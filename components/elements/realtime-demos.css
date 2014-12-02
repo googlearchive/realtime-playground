@@ -34,6 +34,14 @@
   color: white;
 }
 
+.doc-sub-title {
+  position: absolute;
+  left: 10%;
+  top: 161px;
+  font-size: 20px;
+  color: white;
+}
+
 @media (min-width: 1090px) {
   #back-icon {
     left: calc(((100% - 350px) / 20) - 25px) !important;  
@@ -56,7 +64,7 @@
 
 #string paper-input {
   width: 100%;
-  font-weight: 100;
+  font-weight: 300;
 }
 
 /* Collaborative List/Map Styles */
@@ -99,19 +107,20 @@
 #list paper-input, #map paper-input {
   width: 150px;
   padding: 0;
-  font-weight: 100;
+  font-weight: 300;
+  height: 60px;
 }
 
 #list paper-radio-button {
   display: block;
-  font-weight: 100;
+  font-weight: 300;
 }
 
 /* Collaborative Map Styles */
 
 #map table {
   border-collapse: collapse;
-  font-weight: 100;
+  font-weight: 300;
 }
 
 #map table th {
@@ -138,7 +147,7 @@
 /* Custom Object Styles */
 
 #custom td {
-  font-weight: 100;
+  font-weight: 300;
 }
 
 
@@ -148,7 +157,7 @@
 .drawer-title {
   padding-left: 15px;
   font-size: 23px;
-  font-weight: 100;
+  font-weight: 300;
   color: white;
   background-color: #5677fc;
   height: 50px;
@@ -193,6 +202,10 @@ core-animated-pages {
   margin-bottom: 25px;
   background-color: #ffffff;
   display: block;
+}
+
+.demo-card .container {
+  overflow: hidden;
 }
 
 .title {
@@ -250,7 +263,7 @@ core-animated-pages {
 }
 
 .content p {
-  font-weight: 100;
+  font-weight: 300;
 }
 
 .content p a {
@@ -304,7 +317,7 @@ core-animated-pages {
 
 #codePanel h1 {
   font-size: 40px;
-  font-weight: 100;
+  font-weight: 300;
 }
 
 .demos-view-icon {
