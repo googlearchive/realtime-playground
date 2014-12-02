@@ -3,6 +3,7 @@
 <link rel="import" href="../paper-input/paper-input.html">
 <link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="../paper-spinner/paper-spinner.html">
+<link rel="import" href="extra-icons.html">
 
 <polymer-element name="create-document">
   <template>
@@ -16,7 +17,7 @@
               <div class="subtitle">Create Realtime Document</div>
             </div>
             <div class="create-document-jumbo-icon" cross-fade>
-              <core-icon id="openDrive" icon="drive" on-click="{{ onOpenDriveDocumentClick }}"></core-icon>
+              <core-icon id="openDrive" icon="extras:drive" on-click="{{ onOpenDriveDocumentClick }}"></core-icon>
               <div class="subtitle">Open Drive Document</div>
             </div>
           </div>
@@ -32,7 +33,7 @@
                 <div class="bottom">
                   <paper-spinner id="loader1" active class="hidden"></paper-spinner>
                   <paper-input id="name" label="Document Name" inputValue="{{ documentName }}"></paper-input>
-                  <paper-button id="create" label="Create" on-click="{{ createDriveDocument }}" disabled?="{{ documentName.length == 0 }}"></paper-button>
+                  <paper-button id="create" on-click="{{ createDriveDocument }}" disabled?="{{ documentName.length == 0 }}">Create</paper-button>
                 </div>
               </div>
               <core-icon id="back" icon="arrow-back" on-click="{{ back }}"></core-icon>

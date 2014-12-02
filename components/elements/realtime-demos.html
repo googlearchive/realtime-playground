@@ -5,6 +5,7 @@
 <link rel="import" href="../core-drawer-panel/core-drawer-panel.html">
 <link rel="import" href="../core-icon-button/core-icon-button.html">
 <link rel="import" href="../core-tooltip/core-tooltip.html">
+<link rel="import" href="../core-icons/image-icons.html">
 <link rel="import" href="../paper-radio-group/paper-radio-group.html">
 <link rel="import" href="../paper-radio-button/paper-radio-button.html">
 <link rel="import" href="../paper-shadow/paper-shadow.html">
@@ -26,7 +27,7 @@
     <core-signals
       on-core-signal-view-code="{{ viewCode }}">
     </core-signals>
-    <core-drawer-panel>
+    <core-drawer-panel responsiveWidth="1090px" drawerWidth="350px" rightDrawer="true">
       <div drawer class="drawer">
         <core-animated-pages id="drawer" selected="{{ page }}" transitions="tile-cascade list-cascade" on-core-animated-pages-transition-end="{{complete}}">
           <section></section>
@@ -36,10 +37,10 @@
                 <div class="drawer-title">Controls</div>
                 <div class="controls-container">
                   <core-tooltip label="Undo">
-                    <core-icon-button icon="rotate-left" disabled?="{{ canUndo == false }}" on-click="{{ undo }}"></core-icon-button>
+                    <core-icon-button icon="image:rotate-left" disabled?="{{ canUndo == false }}" on-click="{{ undo }}"></core-icon-button>
                   </core-tooltip>
                   <core-tooltip label="Redo">
-                    <core-icon-button icon="rotate-right" disabled?="{{ canRedo == false }}" on-click="{{ redo }}"></core-icon-button>
+                    <core-icon-button icon="image:rotate-right" disabled?="{{ canRedo == false }}" on-click="{{ redo }}"></core-icon-button>
                   </core-tooltip>
                   <core-tooltip label="Open in new tab" className="no-left">
                     <core-icon-button icon="open-in-new" on-click="{{ openInNewTab }}"></core-icon-button>
