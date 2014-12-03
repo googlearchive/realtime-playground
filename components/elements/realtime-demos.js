@@ -97,7 +97,7 @@ Polymer({
   },
 
   onCollaborativeStringInputChange: function (evt) {
-    this.stringDemo.setText(this.$.stringInput.inputValue);
+    this.stringDemo.setText(this.$.stringInput.value);
   },
 
 
@@ -297,19 +297,19 @@ Polymer({
   },
 
   onNameInputChange: function () {
-    this.customDemo.name = this.$.customNameInput.inputValue;
+    this.customDemo.name = this.$.customNameInput.value;
   },
 
   onDirectorInputChange: function () {
-    this.customDemo.director = this.$.customDirectorInput.inputValue;
+    this.customDemo.director = this.$.customDirectorInput.value;
   },
 
   onNotesInputChange: function () {
-    this.customDemo.notes = this.$.customNotesInput.inputValue;
+    this.customDemo.notes = this.$.customNotesInput.value;
   },
 
   onRatingInputChange: function () {
-    this.customDemo.rating = this.$.customRatingInput.inputValue;
+    this.customDemo.rating = this.$.customRatingInput.value;
   },
 
   addEvent: function (evt) {
