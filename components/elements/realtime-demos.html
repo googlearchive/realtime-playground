@@ -36,18 +36,29 @@
               <div class="controls">
                 <div class="drawer-title">Controls</div>
                 <div class="controls-container">
-                  <core-tooltip label="Undo">
-                    <core-icon-button icon="image:rotate-left" disabled?="{{ canUndo == false }}" on-click="{{ undo }}"></core-icon-button>
-                  </core-tooltip>
-                  <core-tooltip label="Redo">
-                    <core-icon-button icon="image:rotate-right" disabled?="{{ canRedo == false }}" on-click="{{ redo }}"></core-icon-button>
-                  </core-tooltip>
-                  <core-tooltip label="Open in new tab" className="no-left">
-                    <core-icon-button icon="open-in-new" on-click="{{ openInNewTab }}"></core-icon-button>
-                  </core-tooltip>
-                  <core-tooltip label="Share">
-                    <core-icon-button icon="account-child" on-click="{{ share }}"></core-icon-button>
-                  </core-tooltip>
+                  <div>
+                    <core-tooltip label="Undo">
+                      <core-icon-button icon="image:rotate-left" disabled?="{{ canUndo == false }}" on-click="{{ undo }}"></core-icon-button>
+                    </core-tooltip>
+                    <core-tooltip label="Redo">
+                      <core-icon-button icon="image:rotate-right" disabled?="{{ canRedo == false }}" on-click="{{ redo }}"></core-icon-button>
+                    </core-tooltip>
+                    <core-tooltip hidden?="{{ !isInGoogleDrive }}" label="Open in new tab" className="no-left">
+                      <core-icon-button icon="open-in-new" disabled?="{{ isInGoogleDrive == false }}" on-click="{{ openInNewTab }}"></core-icon-button>
+                    </core-tooltip>
+                    <core-tooltip hidden?="{{ !isInGoogleDrive }}" label="Share">
+                      <core-icon-button icon="account-child" disabled?="{{ isInGoogleDrive == false }}" on-click="{{ share }}"></core-icon-button>
+                    </core-tooltip>
+                  </div>
+                  <div>
+                    <core-tooltip label="Import">
+                      <core-icon-button hidden?="{{ isInGoogleDrive }}" icon="file-upload" on-click="{{ import }}"></core-icon-button>
+                      <input style="display:none" type="file" id="fileImport" />
+                    </core-tooltip>
+                    <core-tooltip label="Export">
+                      <core-icon-button hidden?="{{ !isToJsonAvailable }}" icon="file-download" on-click="{{ export }}"></core-icon-button>
+                    </core-tooltip>
+                  </div>
                 </div>
               </div>
               <div class="collaborators">
@@ -140,18 +151,18 @@
                         </tr>
                         <tr>
                           <td><paper-button raised on-click="{{ onAddListItemClick }}" disabled?="{{ addItemValue.length == 0 }}">Add Item</paper-button></td>
-                          <td><paper-input floatingLabel id="addListItemInput" disabled?="{{ model.isReadOnly }}" label="item name..." inputValue="{{ addItemValue }}"></paper-input></td>
+                          <td><paper-input floatingLabel id="addListItemInput" disabled?="{{ model.isReadOnly }}" label="item name..." value="{{ addItemValue }}"></paper-input></td>
                         </tr>
                         <tr>
                           <td><paper-button raised on-click="{{ onClearListClick }}" disabled?="{{ (collaborativeList.length == 0) || model.isReadOnly }}">Clear List</paper-button></td>
                         </tr>
                         <tr>
                           <td><paper-button raised on-click="{{ onSetListItemClick }}" disabled?="{{ setItemValue.length == 0 }}">Set Selected Item</paper-button></td>
-                          <td><paper-input floatingLabel id="setListItemInput" disabled?="{{ model.isReadOnly }}" label="item name..." inputValue="{{ setItemValue }}"></paper-input></td>
+                          <td><paper-input floatingLabel id="setListItemInput" disabled?="{{ model.isReadOnly }}" label="item name..." value="{{ setItemValue }}"></paper-input></td>
                         </tr>
                         <tr>
                           <td><paper-button raised on-click="{{ onMoveListItemClick }}" disabled?="{{ moveItemValue.length == 0 }}">Move Item To Index</paper-button></td>
-                          <td><paper-input floatingLabel id="moveListItemInput" disabled?="{{ model.isReadOnly }}" label="new index..." inputValue="{{ moveItemValue }}"></paper-input></td>
+                          <td><paper-input floatingLabel id="moveListItemInput" disabled?="{{ model.isReadOnly }}" label="new index..." value="{{ moveItemValue }}"></paper-input></td>
                         </tr>
                       </table>
                     </div>
@@ -201,11 +212,11 @@
                         </tr>
                         <tr>
                           <td><paper-button raised on-click="{{ onAddMapItemClick }}" disabled?="{{ !addMapKeyValue.length && !addMapValue.length }}">Add Pair</paper-button></td>
-                          <td><paper-input floatingLabel id="addMapKeyInput" disabled?="{{ model.isReadOnly }}" inputValue="{{ addMapKeyValue }}" label="key..."></paper-input></td>
+                          <td><paper-input floatingLabel id="addMapKeyInput" disabled?="{{ model.isReadOnly }}" value="{{ addMapKeyValue }}" label="key..."></paper-input></td>
                         </tr>
                         <tr>
                           <td></td>
-                          <td><paper-input floatingLabel id="addMapValueInput" disabled?="{{ model.isReadOnly }}" inputValue="{{ addMapValue }}" label="value..."></paper-input></td>
+                          <td><paper-input floatingLabel id="addMapValueInput" disabled?="{{ model.isReadOnly }}" value="{{ addMapValue }}" label="value..."></paper-input></td>
                         </tr>
                       </table>
                     </div>

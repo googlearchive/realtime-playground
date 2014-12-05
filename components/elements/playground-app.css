@@ -44,3 +44,34 @@ core-icon {
   font-weight: 300;
   text-align: center;
 }
+
+.icons {
+  transition: 1s all;
+  position: absolute;
+  width: 550px;
+  left: calc(50% - 125px);
+  top: 50%;
+  margin-top: -125px;
+}
+
+.main-jumbo-icon {
+  width: 250px;
+  height: 250px;
+  display: inline-block;
+  position: relative;
+}
+
+.enable-local-option .icons {
+  left: calc(50% - 250px);
+}
+
+.enable-local-option .local-icon {
+  transition: 1s all;
+  pointer-events: auto;
+  opacity: 1;
+}
+
+.local-icon {
+  opacity: 0;
+  pointer-events: none;
+}

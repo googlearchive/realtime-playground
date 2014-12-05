@@ -1,5 +1,5 @@
 
-window.testSuite.load(new TestingClass('Document Sharing', 'documentSharing.js')
+window.testSuite.load(new TestingClass('Server Importing', 'serverImportTests.js')
   .test({
     description: 'Transition In-Memory to Collaborative Document',
     run: function () {
