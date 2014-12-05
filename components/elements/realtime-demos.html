@@ -43,16 +43,27 @@
                     <core-tooltip label="Redo">
                       <core-icon-button icon="image:rotate-right" disabled?="{{ canRedo == false }}" on-click="{{ redo }}"></core-icon-button>
                     </core-tooltip>
+<<<<<<< HEAD
                     <core-tooltip hidden?="{{ !isInGoogleDrive }}" label="Open in new tab" className="no-left">
                       <core-icon-button icon="open-in-new" disabled?="{{ isInGoogleDrive == false }}" on-click="{{ openInNewTab }}"></core-icon-button>
                     </core-tooltip>
                     <core-tooltip hidden?="{{ !isInGoogleDrive }}" label="Share">
+=======
+                    <core-tooltip hidden?="{{ isInGoogleDrive }}" label="Open in new tab" className="no-left">
+                      <core-icon-button icon="open-in-new" disabled?="{{ isInGoogleDrive == false }}" on-click="{{ openInNewTab }}"></core-icon-button>
+                    </core-tooltip>
+                    <core-tooltip hidden?="{{ isInGoogleDrive }}" label="Share">
+>>>>>>> c881a6e326a3c19fd38b9d4e14a7f4b9db8adea6
                       <core-icon-button icon="account-child" disabled?="{{ isInGoogleDrive == false }}" on-click="{{ share }}"></core-icon-button>
                     </core-tooltip>
                   </div>
                   <div>
                     <core-tooltip label="Import">
+<<<<<<< HEAD
                       <core-icon-button hidden?="{{ isInGoogleDrive }}" icon="file-upload" on-click="{{ import }}"></core-icon-button>
+=======
+                      <core-icon-button hidden?="{{ !isInGoogleDrive }}" icon="file-upload" on-click="{{ import }}"></core-icon-button>
+>>>>>>> c881a6e326a3c19fd38b9d4e14a7f4b9db8adea6
                       <input style="display:none" type="file" id="fileImport" />
                     </core-tooltip>
                     <core-tooltip label="Export">
