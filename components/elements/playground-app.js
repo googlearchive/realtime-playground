@@ -11,7 +11,10 @@ Polymer({
   onAuthComplete: function (authResult) {
     if (!authResult || authResult.error) {
       this.authorized = false;
-      this.$.subtitle.textContent = "Click to authenticate"
+      this.$.subtitle.textContent = "Click to authenticate";
+      if (gapi.drive.realtime.loadFromJson && gapi.drive.realtime.newInMemoryDocument){
+        this.$.authIcons.classList.add('enable-local-option')  
+      }
     } else {
       this.authorized = true;
       this.documentId = this.util.getParam('id');
@@ -32,7 +35,7 @@ Polymer({
       if(this.documentId){
         this.util.load(this.documentId, this.onFileLoaded, function() {});
       } else {
-        this.$.app.selected = 1;  
+        this.$.app.selected = 2;  
       }
     }
   },
@@ -51,14 +54,23 @@ Polymer({
     });
   },
 
-  onDocumentLoaded: function (evt, data) {
-    this.shadowRoot.querySelector('realtime-demos').document = data.doc;
-    this.shadowRoot.querySelector('realtime-demos').documentId = data.documentId;
-    this.$.app.selected = 2;
+  switchToLocalMode: function () {
+    this.registerTypes();
+    this.$.app.selected = 1;
   },
 
-  back: function () {
-    this.$.app.selected = 1;
+  onDocumentLoaded: function (evt, data) {
+    this.shadowRoot.querySelector('realtime-demos').document = data.doc;
+    if(data.documentId){
+      this.shadowRoot.querySelector('realtime-demos').documentId = data.documentId;
+    } else {
+      this.shadowRoot.querySelector('realtime-demos').documentTitle = data.documentTitle;
+    }
+    this.$.app.selected = 3;
+  },
+
+  back: function (evt, data) {
+    this.$.app.selected = data.destination;
   },
 
   registerTypes: function () {
@@ -77,6 +89,7 @@ Polymer({
       this.Movie.prototype.rating = custom.collaborativeField('rating');
       custom.setInitializer(this.Movie, this.Movie.prototype.initialize);
     } catch (e) {
+      alert('mega error here');
       return;
     }
   }

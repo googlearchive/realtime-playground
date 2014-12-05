@@ -28,12 +28,12 @@
               <div flex class="panel">
                 <div class="top">
                   <h1>New Realtime Document</h1>
-                  <core-icon icon="drive-file" ></core-icon>
+                  <core-icon icon="note-add" ></core-icon>
                 </div>
                 <div class="bottom">
                   <paper-spinner id="loader1" active class="hidden"></paper-spinner>
                   <paper-input id="name" label="Document Name" inputValue="{{ documentName }}"></paper-input>
-                  <paper-button id="create" label="Create" on-click="{{ createDriveDocument }}" disabled?="{{ documentName.length == 0 }}"></paper-button>
+                  <paper-button raised id="create" on-click="{{ createDriveDocument }}" disabled?="{{ documentName.length == 0 }}">Create</paper-button>
                 </div>
               </div>
               <core-icon id="back" icon="arrow-back" on-click="{{ back }}"></core-icon>

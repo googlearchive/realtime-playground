@@ -6,14 +6,30 @@ Polymer({
     this.document = null;
     this.documentTitle = "loading . . ."
     this.documentTitleBaseUrl = 'https://www.googleapis.com'
+    this.setBindings();
+    this.$.fileImport.addEventListener('change', this.importFile, false);
     if(this.util.getParam('serverUrl') == 'sandbox'){
       this.documentTitleBaseUrl = 'https://content-googleapis-test.sandbox.google.com';
     }
   },
 
+  setBindings: function () {
+    this.importFile = this.importFile.bind(this);
+    this.onUndoRedoStateChanged = this.onUndoRedoStateChanged.bind(this);
+    this.onCollaboratorChange = this.onCollaboratorChange.bind(this);
+    this.onCollaborativeStringEvent = this.onCollaborativeStringEvent.bind(this);
+    this.onListChange = this.onListChange.bind(this);
+    this.onReferenceShifted = this.onReferenceShifted.bind(this);
+    this.onCursorsChange = this.onCursorsChange.bind(this);
+    this.onMapValueChanged = this.onMapValueChanged.bind(this);
+    this.onCustomDemoChange = this.onCustomDemoChange.bind(this);
+  },
+
   documentChanged: function (evt, doc) {
     this.doc = doc;
     this.collaborators = doc.getCollaborators();
+    this.isInGoogleDrive = doc.isInGoogleDrive;
+    this.isToJsonAvailable = !!doc.getModel().toJson;
 
     this.model = doc.getModel();
 
@@ -50,7 +66,6 @@ Polymer({
   },
 
   setupModel: function () {
-    this.onUndoRedoStateChanged = this.onUndoRedoStateChanged.bind(this);
     this.doc.getModel().addEventListener(gapi.drive.realtime.EventType.UNDO_REDO_STATE_CHANGED, this.onUndoRedoStateChanged);
     this.onUndoRedoStateChanged();
   },
@@ -61,9 +76,38 @@ Polymer({
     this.canRedo = this.doc.getModel().canRedo;
   },
 
+
+  // Import/Export Methods
+  import: function () {
+    this.$.fileImport.click();
+  },
+
+  importFile: function (e) {
+    var that = this;
+    var file = e.target.files[0];
+    if (!file) {
+      return;
+    }
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var contents = e.target.result;
+      try {
+        var doc = gapi.drive.realtime.loadFromJson(contents);
+        that.documentChanged(null, doc);
+      } catch (e) {
+        alert(e.message);
+      }
+    };
+    reader.readAsText(file);
+  },
+
+  export: function () {
+    document.location = 'data:Application/octet-stream,' +
+                         encodeURIComponent(this.doc.getModel().toJson());
+  },
+
   // Collaborator Methods
   setupCollaborators: function () {
-    this.onCollaboratorChange = this.onCollaboratorChange.bind(this);
     this.doc.addEventListener(gapi.drive.realtime.EventType.COLLABORATOR_JOINED, this.onCollaboratorChange);
     this.doc.addEventListener(gapi.drive.realtime.EventType.COLLABORATOR_LEFT, this.onCollaboratorChange);
     this.setMyColor();
@@ -85,7 +129,6 @@ Polymer({
 
   // Collaborative String Methods
   setupCollaborativeString: function () {
-    this.onCollaborativeStringEvent = this.onCollaborativeStringEvent.bind(this);
     this.stringDemo.addEventListener(gapi.drive.realtime.EventType.TEXT_INSERTED, this.onCollaborativeStringEvent);
     this.stringDemo.addEventListener(gapi.drive.realtime.EventType.TEXT_DELETED, this.onCollaborativeStringEvent);
     this.collaborativeString = this.stringDemo.getText();
@@ -104,9 +147,6 @@ Polymer({
 
   // Collaborative List Methods
   setupCollaborativeList: function () {
-    this.onListChange = this.onListChange.bind(this);
-    this.onReferenceShifted = this.onReferenceShifted.bind(this);
-    this.onCursorsChange = this.onCursorsChange.bind(this);
     this.listDemo.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, this.onListChange);
     this.listDemo.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, this.onListChange);
     this.listDemo.addEventListener(gapi.drive.realtime.EventType.VALUES_SET, this.onListChange);
@@ -179,6 +219,9 @@ Polymer({
   },
 
   onRadioChange: function (evt) {
+    if(!this.isInGoogleDrive){
+      return;
+    }
     var index = this.getIndex(evt.target.attributes.name.value);
     // Start a non undoable compound operation, we don't want to be able to undo a refrence creation
     this.doc.getModel().beginCompoundOperation('', false);
@@ -231,7 +274,6 @@ Polymer({
 
   // Collaborative Map Methods
   setupCollaborativeMap: function () {
-    this.onMapValueChanged = this.onMapValueChanged.bind(this);
     this.mapDemo.addEventListener(gapi.drive.realtime.EventType.VALUE_CHANGED, this.onMapValueChanged);
     this.collaborativeMap = this.parseMap(this.mapDemo);
   },
@@ -279,7 +321,6 @@ Polymer({
 
   // Custom Object Methods
   setupCustomObject: function () {
-    this.onCustomDemoChange = this.onCustomDemoChange.bind(this);
     this.customDemo.addEventListener(gapi.drive.realtime.EventType.VALUE_CHANGED, this.onCustomDemoChange);
     this.setCustomObjectValues();
   },
@@ -326,15 +367,19 @@ Polymer({
   },
 
   back: function () {
+    var destination = this.isInGoogleDrive ? 1 : 2;
     this.fire('core-signal', { 
-      name:'back'
+      name:'back',
+      data: {
+        destination: destination
+      }
     });
     
     var that = this;
 
     setTimeout(function(){
       that.$.drawer.selected = 0;
-      that.$.demoContainer.setAttribute('tile-cascade');
+      that.$.demoContainer.setAttribute('tile-cascade', true);
       that.shadowRoot.querySelector('core-drawer-panel').closeDrawer();
     }, 1000);
     

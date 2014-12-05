@@ -5,6 +5,7 @@
 <link rel="import" href="../core-signals/core-signals.html">
 <link rel="import" href="app-globals.html">
 <link rel="import" href="create-document.html">
+<link rel="import" href="local-document.html">
 <link rel="import" href="realtime-demos.html">
 
 <polymer-element name="playground-app">
@@ -17,9 +18,20 @@
     </core-signals>
     <core-animated-pages id="app" transitions="slide-from-right" >
       <section class="authView">
-        <div class="jumbo-icon">
-          <core-icon icon="lock-open" on-click="{{ authorize }}"></core-icon>
-          <div id="subtitle" class="subtitle">Authenticating...</div>
+        <div id="authIcons" class="jumbo-icon">
+          <div class="icons">
+            <div class="main-jumbo-icon">
+              <core-icon icon="lock-open" on-click="{{ authorize }}"></core-icon>
+              <div id="subtitle" class="subtitle">Authenticating...</div>
+            </div>
+            <div class="main-jumbo-icon local-icon">
+              <core-icon icon="cloud-off" on-click="{{ switchToLocalMode }}"></core-icon>
+              <div class="subtitle">Work Locally</div>
+            </div>
+          </div>
+      </section>
+      <section class="localView">
+        <local-document></local-document>
       </section>
       <section class="createView">
         <create-document></create-document>

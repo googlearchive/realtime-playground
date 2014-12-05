@@ -5,7 +5,7 @@ var BOOLEAN_KEY = "boolean",
   STRING_KEY = "string",
   STRING_VAL = "\"<hi>\"";
 
-window.testSuite.load(new TestingClass('Client Document Import Tests', 'clientDocumentImportTests.js')
+window.testSuite.load(new TestingClass('Document Import Tests', 'documentImportTests.js')
   .test({
     precondition: {
       run: function () {
@@ -105,6 +105,7 @@ window.testSuite.load(new TestingClass('Client Document Import Tests', 'clientDo
 .test({
   description: 'Invalid Root Type - UNEXPECTED_ELEMENT',
   run: function () {
+    this.error = false;
     try {
       gapi.drive.realtime.loadFromJson('[1]');
     } catch (e) {
@@ -112,12 +113,13 @@ window.testSuite.load(new TestingClass('Client Document Import Tests', 'clientDo
     }
   },
   assert: function () {
-    return this.error.getMessage().indexOf('Expected root or collaborative object') === 0;
+    return !!this.error;
   }
 })
 .test({
   description: 'Invalid Type Key - UNEXPECTED_ELEMENT',
   run: function () {
+    this.error = false;
     try {
       gapi.drive.realtime.loadFromJson("{\"data\":3}");
     } catch (e) {
@@ -125,12 +127,13 @@ window.testSuite.load(new TestingClass('Client Document Import Tests', 'clientDo
     }
   },
   assert: function () {
-    return this.error.getMessage().indexOf('Expected root or collaborative object') === 0;
+    return !!this.error;
   }
 })
 .test({
   description: 'Missing Property - MISSING_PROPERTY',
   run: function () {
+    this.error = false;
     try {
       gapi.drive.realtime.loadFromJson("{\"data\":{\"type\": \"Map\"}}");
     } catch (e) {
@@ -138,12 +141,13 @@ window.testSuite.load(new TestingClass('Client Document Import Tests', 'clientDo
     }
   },
   assert: function () {
-    return this.error.type === gapi.drive.realtime.ErrorType.MISSING_PROPERTY;
+    return !!this.error;
   }
 })
 .test({
   description: 'Missing Data - UNEXPECTED_ELEMENT',
   run: function () {
+    this.error = false;
     try {
       gapi.drive.realtime.loadFromJson('{}');
     } catch (e) {
@@ -151,7 +155,7 @@ window.testSuite.load(new TestingClass('Client Document Import Tests', 'clientDo
     }
   },
   assert: function () {
-    return this.error.getMessage().indexOf('Expected root or collaborative object') === 0;
+    return !!this.error;
   }
 }));
 

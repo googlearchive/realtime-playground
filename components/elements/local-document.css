@@ -1,0 +1,168 @@
+:host {
+  width: 100%;
+  height: 100%;
+}
+
+core-animated-pages {
+  height: 100%;
+}
+
+section {
+  overflow: hidden;
+}
+
+.icons {
+  width: 550px;
+  position: absolute;
+  left:calc(50% - 250px);
+  top:calc(50% - 175px);
+}
+
+.local-document-jumbo-icon {
+  width: 250px;
+  height: 250px;
+  display: inline-block;
+  position: relative;
+}
+
+.local-document-jumbo-icon core-icon {
+  transition: all .5s;
+  -webkit-transition: all .5s;
+  height: 250px;
+  width: 250px;
+  color: white;
+}
+
+.local-document-jumbo-icon core-icon:hover {
+  -webkit-transition: all .5s;
+  transition: all .5s;
+  color: #9fa8da;
+  cursor: pointer;
+}
+
+.local-document-jumbo-icon .subtitle {
+  color: white;
+  font-weight: 300;
+  text-align: center;
+}
+
+#load .local-document-jumbo-icon {
+  position: absolute;
+  left:calc(50% - 175px);
+  top:calc(50% - 175px);
+}
+
+#panelBackground {
+  width: 100%;
+  height: 100%;
+  background-color: #8c9eff;
+}
+
+#panel {
+  background-color: white;
+  position: relative;
+  width: 400px;
+  height: 300px;
+  margin-top: 200px;
+  margin-left: calc(50% - 200px);
+}
+
+.top {
+  color: white;
+  position: relative;
+  height: 100px;
+  background-color: #3f51b5;
+}
+
+.top core-icon, h1 {
+  display: inline-block;
+  font-weight: 300;
+}
+
+.top h1 {
+  margin: 60px 0 0 20px;
+}
+
+.top core-icon:hover {
+  color: white;
+}
+
+.top core-icon {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  right: 10px;
+  top: 10px;
+}
+
+#create .bottom {
+  padding: 20px;
+  height: 160px;
+  overflow: auto;
+}
+
+#back {
+  position: absolute;
+  bottom:0;
+  left: 0;
+  background-color: #3f51b5;
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  margin-left: -25px;
+  margin-bottom: -25px;
+  color: #fff;
+  cursor: pointer;
+}
+
+paper-input {
+  width:350px;
+  margin-top: 10px;
+}
+
+paper-button {
+  float: right;
+  margin-top: 30px;
+}
+
+#load .bottom {
+  height: 200px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+#load .bottom ul {
+  list-style-type: none;
+  padding: 0px;
+  margin: 0;
+}
+
+#load .bottom li {
+  transition: all .1s;
+  cursor: pointer;
+  padding: 5px 35px;
+}
+
+#load .bottom li:hover {
+  transition: all .1s;
+  background-color: #5c6bc0;
+  color: #fff;
+}
+
+#loader1, #loader2 {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  left:calc(50% - 25px);
+  transition: all 1s;
+}
+
+#loader1 {
+  bottom: 50px;
+}
+
+#loader1.hidden {
+  opacity: 0;
+  z-index: -1;
+  transition: all 1s;
+}
