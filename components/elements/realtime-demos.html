@@ -52,11 +52,11 @@
                   </div>
                   <div>
                     <core-tooltip label="Import">
-                      <core-icon-button hidden?="{{ isInGoogleDrive }}" icon="file-upload" on-click="{{ import }}"></core-icon-button>
+                      <core-icon-button hidden?="{{ isInGoogleDrive }}" icon="file-download" on-click="{{ import }}"></core-icon-button>
                       <input style="display:none" type="file" id="fileImport" />
                     </core-tooltip>
                     <core-tooltip label="Export">
-                      <core-icon-button hidden?="{{ !isToJsonAvailable }}" icon="file-download" on-click="{{ export }}"></core-icon-button>
+                      <core-icon-button hidden?="{{ !isToJsonAvailable }}" icon="file-upload" on-click="{{ export }}"></core-icon-button>
                     </core-tooltip>
                   </div>
                 </div>
