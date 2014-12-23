@@ -58,6 +58,13 @@
           case gapi.drive.realtime.EventType.REFERENCE_SHIFTED:
             this.eventString = "SessionId " + this.event.sessionId + " has shifted cursor reference from " + this.event.oldIndex + " to " + this.event.newIndex + ".";
             break;
+          case gapi.drive.realtime.EventType.ATTRIBUTE_CHANGED:
+            switch(this.event.attribute){
+              case gapi.drive.realtime.Attribute.IS_READ_ONLY:
+                this.eventString = this.eventString = "The documents read only value has changed to " + this.event.value;
+                break;
+            }
+            break;
         }
       }
     });

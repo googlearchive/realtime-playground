@@ -16,6 +16,7 @@ Polymer({
   setBindings: function () {
     this.importFile = this.importFile.bind(this);
     this.onUndoRedoStateChanged = this.onUndoRedoStateChanged.bind(this);
+    this.onAttributeChange = this.onAttributeChange.bind(this);
     this.onCollaboratorChange = this.onCollaboratorChange.bind(this);
     this.onCollaborativeStringEvent = this.onCollaborativeStringEvent.bind(this);
     this.onListChange = this.onListChange.bind(this);
@@ -40,7 +41,9 @@ Polymer({
     this.mapDemo = this.model.getRoot().get('demo_map');
     this.customDemo = this.model.getRoot().get('demo_custom');
 
+    this.setupDocument();
     this.setupModel();
+
     this.setupCollaborators();
     this.setupCollaborativeString();
     this.setupCollaborativeList();
@@ -64,6 +67,16 @@ Polymer({
 
   handleResponse: function (resp) {
     this.documentTitle = resp.detail.response.title;
+  },
+
+  setupDocument: function () {
+    this.doc.addEventListener(gapi.drive.realtime.EventType.ATTRIBUTE_CHANGED, this.onAttributeChange);
+    this.onAttributeChange();
+  },
+
+  onAttributeChange: function (evt) {
+    this.addEvent(evt);
+    this.isReadOnly = this.doc.getModel().isReadOnly;
   },
 
   setupModel: function () {
@@ -297,7 +310,7 @@ Polymer({
   },
 
   onMapItemClick: function (evt, no, el) {
-    if(this.model.isReadOnly){
+    if(this.isReadOnly){
       return;
     }
     this.selectedMapItemKey = el.querySelector('.mapKey').textContent;

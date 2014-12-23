@@ -89,7 +89,7 @@
             <div id="demoContainer" class="container" tile-cascade>
               <core-icon id="back-icon" icon="arrow-back" on-click="{{ back }}"></core-icon>
               <div class="doc-title">{{ documentTitle }}</div>
-              <div class="doc-sub-title" hidden?="{{ !model.isReadOnly }}">Read-only</div>
+              <div class="doc-sub-title" hidden?="{{ !isReadOnly }}">Read-only</div>
               <div id="intro" class="demo-card">
                 <div class="container">
                   <paper-shadow z="1"></paper-shadow>
@@ -117,7 +117,7 @@
                   </div>
                   <div class="content" hero-id="string-code-body">
                     <p>Collaborative strings are just like normal strings, except that all browser sessions will be notified and updated when the string changes. Events are fired when a collaborative string is modified.</p>
-                    <paper-input floatingLabel multiline disabled?="{{ model.isReadOnly }}" id="stringInput" value="{{ collaborativeString }}" on-input="{{ onCollaborativeStringInputChange }}" label="type something..."></paper-input>
+                    <paper-input floatingLabel multiline disabled?="{{ isReadOnly }}" id="stringInput" value="{{ collaborativeString }}" on-input="{{ onCollaborativeStringInputChange }}" label="type something..."></paper-input>
                   </div>
                 </div>
               </div>
@@ -140,7 +140,7 @@
                       <div class="list-title">List Items</div>
                       <paper-radio-group id="listDemoGroup" selected="{{ selectedItem }}" on-change="{{ onRadioChange }}">
                         <template repeat="{{ listItem in collaborativeList }}">
-                          <paper-radio-button disabled?="{{ model.isReadOnly }}" name="{{ listItem }}" label="{{ listItem }}" color="{{ myColor }}"></paper-radio-button>
+                          <paper-radio-button disabled?="{{ isReadOnly }}" name="{{ listItem }}" label="{{ listItem }}" color="{{ myColor }}"></paper-radio-button>
                         </template>
                       </paper-radio-group>
                     </div>
@@ -151,18 +151,18 @@
                         </tr>
                         <tr>
                           <td><paper-button raised on-click="{{ onAddListItemClick }}" disabled?="{{ addItemValue.length == 0 }}">Add Item</paper-button></td>
-                          <td><paper-input floatingLabel id="addListItemInput" disabled?="{{ model.isReadOnly }}" label="item name..." value="{{ addItemValue }}"></paper-input></td>
+                          <td><paper-input floatingLabel id="addListItemInput" disabled?="{{ isReadOnly }}" label="item name..." value="{{ addItemValue }}"></paper-input></td>
                         </tr>
                         <tr>
-                          <td><paper-button raised on-click="{{ onClearListClick }}" disabled?="{{ (collaborativeList.length == 0) || model.isReadOnly }}">Clear List</paper-button></td>
+                          <td><paper-button raised on-click="{{ onClearListClick }}" disabled?="{{ (collaborativeList.length == 0) || isReadOnly }}">Clear List</paper-button></td>
                         </tr>
                         <tr>
                           <td><paper-button raised on-click="{{ onSetListItemClick }}" disabled?="{{ setItemValue.length == 0 }}">Set Selected Item</paper-button></td>
-                          <td><paper-input floatingLabel id="setListItemInput" disabled?="{{ model.isReadOnly }}" label="item name..." value="{{ setItemValue }}"></paper-input></td>
+                          <td><paper-input floatingLabel id="setListItemInput" disabled?="{{ isReadOnly }}" label="item name..." value="{{ setItemValue }}"></paper-input></td>
                         </tr>
                         <tr>
                           <td><paper-button raised on-click="{{ onMoveListItemClick }}" disabled?="{{ moveItemValue.length == 0 }}">Move Item To Index</paper-button></td>
-                          <td><paper-input floatingLabel id="moveListItemInput" disabled?="{{ model.isReadOnly }}" label="new index..." value="{{ moveItemValue }}"></paper-input></td>
+                          <td><paper-input floatingLabel id="moveListItemInput" disabled?="{{ isReadOnly }}" label="new index..." value="{{ moveItemValue }}"></paper-input></td>
                         </tr>
                       </table>
                     </div>
@@ -208,15 +208,15 @@
                           <td><paper-button raised on-click="{{ onRemoveMapItemClick }}" disabled?="{{ !selectedMapItemKey }}">Remove Selected Item</paper-button></td>
                         </tr>
                         <tr>
-                          <td><paper-button raised on-click="{{ onClearMapClick }}" disabled?="{{ (collaborativeMap.length == 0) || model.isReadOnly }}">Clear List</paper-button></td>
+                          <td><paper-button raised on-click="{{ onClearMapClick }}" disabled?="{{ (collaborativeMap.length == 0) || isReadOnly }}">Clear List</paper-button></td>
                         </tr>
                         <tr>
                           <td><paper-button raised on-click="{{ onAddMapItemClick }}" disabled?="{{ !addMapKeyValue.length && !addMapValue.length }}">Add Pair</paper-button></td>
-                          <td><paper-input floatingLabel id="addMapKeyInput" disabled?="{{ model.isReadOnly }}" value="{{ addMapKeyValue }}" label="key..."></paper-input></td>
+                          <td><paper-input floatingLabel id="addMapKeyInput" disabled?="{{ isReadOnly }}" value="{{ addMapKeyValue }}" label="key..."></paper-input></td>
                         </tr>
                         <tr>
                           <td></td>
-                          <td><paper-input floatingLabel id="addMapValueInput" disabled?="{{ model.isReadOnly }}" value="{{ addMapValue }}" label="value..."></paper-input></td>
+                          <td><paper-input floatingLabel id="addMapValueInput" disabled?="{{ isReadOnly }}" value="{{ addMapValue }}" label="value..."></paper-input></td>
                         </tr>
                       </table>
                     </div>
@@ -248,19 +248,19 @@
                       <tbody>
                         <tr>
                           <td>Name</td>
-                          <td><paper-input id="customNameInput" disabled?="{{ model.isReadOnly }}" on-input="{{ onNameInputChange }}" label="name..." value="{{ name }}"></paper-input></td>
+                          <td><paper-input id="customNameInput" disabled?="{{ isReadOnly }}" on-input="{{ onNameInputChange }}" label="name..." value="{{ name }}"></paper-input></td>
                         </tr>
                         <tr>
                           <td>Director</td>
-                          <td><paper-input id="customDirectorInput" disabled?="{{ model.isReadOnly }}" on-input="{{ onDirectorInputChange }}" label="director..." value="{{ director }}"></paper-input></td>
+                          <td><paper-input id="customDirectorInput" disabled?="{{ isReadOnly }}" on-input="{{ onDirectorInputChange }}" label="director..." value="{{ director }}"></paper-input></td>
                         </tr>
                         <tr>
                           <td>Notes</td>
-                          <td><paper-input multiline id="customNotesInput" disabled?="{{ model.isReadOnly }}" on-input="{{ onNotesInputChange }}" label="notes..." value="{{ notes }}"></paper-input></td>
+                          <td><paper-input multiline id="customNotesInput" disabled?="{{ isReadOnly }}" on-input="{{ onNotesInputChange }}" label="notes..." value="{{ notes }}"></paper-input></td>
                         </tr>
                         <tr>
                           <td>Rating</td>
-                          <td><paper-input id="customRatingInput" disabled?="{{ model.isReadOnly }}" on-input="{{ onRatingInputChange }}" label="rating..." value="{{ rating }}"></paper-input></td>
+                          <td><paper-input id="customRatingInput" disabled?="{{ isReadOnly }}" on-input="{{ onRatingInputChange }}" label="rating..." value="{{ rating }}"></paper-input></td>
                         </tr>
                       </tbody>
                     </table>
