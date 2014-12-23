@@ -19,8 +19,7 @@ window.testSuite.load(new TestingClass('Document Sharing', 'documentSharing.js')
     },
     assert: function () {
       if(this.resp){
-        return (this.resp.role == 'writer' || this.resp.role == 'owner') &&
-          this.resp.emailAddress == 'drivemobiletest@gmail.com' &&
+        return this.resp.role == 'writer' &&
           this.resp.kind == 'drive#permission';
       } else {
         return false;
