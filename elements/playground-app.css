@@ -1,6 +1,6 @@
 
-/* Viewports < 600px */
-@media (max-width: 600px) {
+/* Viewports < 700px */
+@media (max-width: 700px) {
     .icons {
       width: calc(100% - 20px);
       height: 150px;
@@ -53,20 +53,17 @@
     }
 }
 
-
-
-/* Viewports > 600px */
-@media (min-width: 600px) {
+/* Viewports > 700px */
+@media (min-width: 700px) {
     .icons {
       transition: 1s all;
       position: fixed;
       width: 510px;
       top: 50%;
       left: 50%;
-      margin-left: 125px;
-      width: 505px;
-      transform: translate(-50%, -50%);
-      -webkit-transform: translate(-50%, -50%);
+      margin-left: -125px;
+      margin-top: -135px;
+      width: 510px;
     }
 
     .jumbo-icon {
@@ -103,7 +100,7 @@
 
     .enable-local-option .icons {
       transition: all .5s;
-      margin-left: 0px;
+      margin-left: -250px;
     }
 
     .enable-local-option .local-icon {
@@ -135,4 +132,3 @@ section {
 core-icon {
   cursor: pointer;
 }
-
