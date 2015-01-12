@@ -27,7 +27,7 @@
     <core-signals
       on-core-signal-view-code="{{ viewCode }}">
     </core-signals>
-    <core-drawer-panel responsiveWidth="1090px" drawerWidth="350px" rightDrawer="true">
+    <core-drawer-panel responsiveWidth="1090px" drawerWidth="350px" rightDrawer="true" swipeAnywhere="{{ swipeAnywhere }}">
       <div drawer class="drawer">
         <core-animated-pages id="drawer" selected="{{ page }}" transitions="tile-cascade list-cascade" on-core-animated-pages-transition-end="{{complete}}">
           <section></section>

@@ -178,6 +178,14 @@ To position the drawer to the right, add `rightDrawer` attribute.
        * @default false
        */
       disableSwipe: false,
+
+      /**
+        
+        @attribute swipeAnywhere
+        @type boolean
+        @default false
+       */
+      swipeAnywhere: false,
       
       /**
        * If true, ignore `responsiveWidth` setting and force the narrow layout.
@@ -297,7 +305,7 @@ To position the drawer to the right, add `rightDrawer` attribute.
     },
 
     downHandler: function(e) {
-      if (!this.dragging && this.isMainSelected() && this.isEdgeTouch(e)) {
+      if (!this.dragging && this.isMainSelected() && this.isEdgeTouch(e.pageX)) {
         this.startEdgePeek();
       }
     },
@@ -313,10 +321,10 @@ To position the drawer to the right, add `rightDrawer` attribute.
       }
     },
 
-    isEdgeTouch: function(e) {
+    isEdgeTouch: function(pageX) {
       return this.swipeAllowed() && (this.rightDrawer ?
-        e.pageX >= this.offsetWidth - this.edgeSwipeSensitivity :
-        e.pageX <= this.edgeSwipeSensitivity);
+        pageX >= this.offsetWidth - this.edgeSwipeSensitivity :
+        pageX <= this.edgeSwipeSensitivity);
     },
 
     trackStart : function(e) {
@@ -324,7 +332,7 @@ To position the drawer to the right, add `rightDrawer` attribute.
         this.dragging = true;
 
         if (this.isMainSelected()) {
-          this.dragging = this.peeking || this.isEdgeTouch(e);
+          this.dragging = this.peeking || this.isEdgeTouch(e) || this.swipeAnywhere;
         }
 
         if (this.dragging) {

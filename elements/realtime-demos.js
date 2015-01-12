@@ -3,6 +3,7 @@ Polymer({
     this.util = this.$.globals.util;
     this.eventsList = [];
     this.$.drawer.selected = 0;
+    this.swipeAnywhere = /(iPad|iPhone|iPod touch);.*CPU.*OS (7|8)_\d/i.test(navigator.userAgent);
     this.document = null;
     this.documentTitle = "loading . . ."
     this.documentTitleBaseUrl = 'https://www.googleapis.com'
