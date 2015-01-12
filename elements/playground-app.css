@@ -58,16 +58,19 @@
 /* Viewports > 600px */
 @media (min-width: 600px) {
     .icons {
-      width: 550px;
-      position: absolute;
-      left:calc(50% - 250px);
-      top:calc(50% - 175px);
+      transition: 1s all;
+      position: fixed;
+      width: 510px;
+      top: 50%;
+      left: 50%;
+      margin-left: 125px;
+      width: 505px;
+      transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
     }
 
     .jumbo-icon {
       position: absolute;
-      width: 250px;
-      height: 250px;
       left: calc(50% - 175px);
       top: calc(50% - 175px);
     }
@@ -93,24 +96,14 @@
       text-align: center;
     }
 
-    .icons {
-      transition: 1s all;
-      position: absolute;
-      width: 550px;
-      left: calc(50% - 125px);
-      top: 50%;
-      margin-top: -125px;
-    }
-
     .main-jumbo-icon {
-      width: 250px;
-      height: 250px;
       display: inline-block;
       position: relative;
     }
 
     .enable-local-option .icons {
-      left: calc(50% - 250px);
+      transition: all .5s;
+      margin-left: 0px;
     }
 
     .enable-local-option .local-icon {
