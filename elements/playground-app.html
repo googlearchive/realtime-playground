@@ -1,8 +1,8 @@
-<link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../core-animated-pages/core-animated-pages.html">
-<link rel="import" href="../core-animated-pages/transitions/slide-from-right.html">
-<link rel="import" href="../core-icons/core-icons.html">
-<link rel="import" href="../core-signals/core-signals.html">
+<link rel="import" href="/components/polymer/polymer.html">
+<link rel="import" href="/components/core-animated-pages/core-animated-pages.html">
+<link rel="import" href="/components/core-animated-pages/transitions/slide-from-right.html">
+<link rel="import" href="/components/core-icons/core-icons.html">
+<link rel="import" href="/components/core-signals/core-signals.html">
 <link rel="import" href="app-globals.html">
 <link rel="import" href="create-document.html">
 <link rel="import" href="local-document.html">
@@ -20,12 +20,12 @@
       <section class="authView">
         <div id="authIcons" class="jumbo-icon">
           <div class="icons">
-            <div class="main-jumbo-icon">
-              <core-icon icon="lock-open" on-click="{{ authorize }}"></core-icon>
+            <div class="main-jumbo-icon" on-click="{{ authorize }}">
+              <core-icon icon="lock-open"></core-icon>
               <div id="subtitle" class="subtitle">Authenticating...</div>
             </div>
-            <div class="main-jumbo-icon local-icon">
-              <core-icon icon="cloud-off" on-click="{{ switchToLocalMode }}"></core-icon>
+            <div class="main-jumbo-icon local-icon" on-click="{{ switchToLocalMode }}">
+              <core-icon icon="cloud-off"></core-icon>
               <div class="subtitle">Work Locally</div>
             </div>
           </div>

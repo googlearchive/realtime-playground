@@ -1,3 +1,75 @@
+
+
+
+/* Viewports < 1090px */
+@media (max-width: 1089px) {
+  .demo-card {
+    width: 100%;
+    margin: 0;
+  }
+
+  #back-icon {
+    width: 35px;
+    height: 35px;
+    margin-left: 14px;
+  }
+
+  .doc-title {
+    position: absolute;
+    left: 20px;
+    top: 40px;
+    font-size: 30px;
+  }
+
+  #intro {
+    margin-top: 70px;
+  }
+
+  .doc-sub-title {
+    position: absolute;
+    left: 20px;
+    top: 73px;
+    font-size: 17px;
+    color: white;
+  }
+}
+
+/* Viewports > 1090px */
+@media (min-width: 1090px) {
+  .demo-card {
+    width: calc(100% - 50px);
+    margin: 0 25px 25px 25px;
+  }
+
+  #back-icon {
+    margin-left: 20px;
+    margin-top: 20px;
+    width: 50px;
+    height: 50px;
+  }
+
+  .doc-title {
+    position: absolute;
+    left: 25px;
+    top: 80px;
+    font-size: 65px;
+  }
+
+  #intro {
+    margin-top: 135px;
+  }
+
+  .doc-sub-title {
+    position: absolute;
+    left: 25px;
+    top: 161px;
+    font-size: 20px;
+  }
+}
+
+
+
+
 .blue-bg {
   position: absolute;
   top:0;
@@ -22,40 +94,13 @@
   background-color: #e8eaf6;
 }
 
-#intro {
-  margin-top: 200px;
-}
-
-.doc-title {
-  position: absolute;
-  left: 10%;
-  top: 80px;
-  font-size: 65px;
+.doc-title, .doc-sub-title {
   color: white;
-}
-
-.doc-sub-title {
-  position: absolute;
-  left: 10%;
-  top: 161px;
-  font-size: 20px;
-  color: white;
-}
-
-@media (min-width: 1090px) {
-  #back-icon {
-    left: calc(((100% - 350px) / 20) - 25px) !important;  
-  }
 }
 
 #back-icon {
-  position: fixed;
+  position: relative;
   color: #fff;
-  left: calc(5% - 25px);
-  top: 20px;
-  width: 50px;
-  height: 50px;
-  z-index: 5;
   cursor: pointer;
 }
 
@@ -197,9 +242,6 @@ core-animated-pages {
 
 
 .demo-card {
-  width: 80%;
-  margin-left: 10%;
-  margin-bottom: 25px;
   background-color: #ffffff;
   display: block;
 }

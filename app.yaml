@@ -18,8 +18,12 @@ handlers:
   static_dir: components
   secure: always
 
-- url: /vendor
-  static_dir: vendor
+- url: /elements
+  static_dir: elements
+  secure: always
+
+- url: /lib
+  static_dir: lib
   secure: always
 
 - url: /tests
