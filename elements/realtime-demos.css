@@ -1,3 +1,70 @@
+/* Viewports < 1090px */
+@media (max-width: 1089px) {
+  .demo-card {
+    width: 100%;
+    margin: 0;
+  }
+
+  #back-icon {
+    width: 35px;
+    height: 35px;
+    margin-left: 14px;
+    margin-top: 14px;
+  }
+
+  .doc-title {
+    position: absolute;
+    left: 20px;
+    top: 60px;
+    font-size: 30px;
+  }
+
+  #intro {
+    margin-top: 90px;
+  }
+
+  .doc-sub-title {
+    position: absolute;
+    left: 20px;
+    top: 100px;
+    font-size: 17px;
+    color: white;
+  }
+}
+
+/* Viewports > 1090px */
+@media (min-width: 1090px) {
+  .demo-card {
+    width: calc(100% - 50px);
+    margin: 0 25px 25px 25px;
+  }
+
+  #back-icon {
+    margin-left: 20px;
+    margin-top: 20px;
+    width: 50px;
+    height: 50px;
+  }
+
+  .doc-title {
+    position: absolute;
+    left: 25px;
+    top: 80px;
+    font-size: 65px;
+  }
+
+  #intro {
+    margin-top: 135px;
+  }
+
+  .doc-sub-title {
+    position: absolute;
+    left: 25px;
+    top: 161px;
+    font-size: 20px;
+  }
+}
+
 .blue-bg {
   position: absolute;
   top:0;
@@ -22,32 +89,13 @@
   background-color: #e8eaf6;
 }
 
-#intro {
-  margin-top: 200px;
-}
-
-.doc-title {
-  position: absolute;
-  left: 10%;
-  top: 80px;
-  font-size: 65px;
+.doc-title, .doc-sub-title {
   color: white;
 }
 
-@media (min-width: 1090px) {
-  #back-icon {
-    left: calc(((100% - 350px) / 20) - 25px) !important;  
-  }
-}
-
 #back-icon {
-  position: fixed;
+  position: relative;
   color: #fff;
-  left: calc(5% - 25px);
-  top: 20px;
-  width: 50px;
-  height: 50px;
-  z-index: 5;
   cursor: pointer;
 }
 
@@ -56,7 +104,7 @@
 
 #string paper-input {
   width: 100%;
-  font-weight: 100;
+  font-weight: 300;
 }
 
 /* Collaborative List/Map Styles */
@@ -99,19 +147,19 @@
 #list paper-input, #map paper-input {
   width: 150px;
   padding: 0;
-  font-weight: 100;
+  font-weight: 300;
+  height: 60px;
 }
 
 #list paper-radio-button {
   display: block;
-  font-weight: 100;
+  font-weight: 300;
 }
 
 /* Collaborative Map Styles */
-
 #map table {
   border-collapse: collapse;
-  font-weight: 100;
+  font-weight: 300;
 }
 
 #map table th {
@@ -134,21 +182,16 @@
   background-color: #a3e9a4;
 }
 
-
 /* Custom Object Styles */
-
 #custom td {
-  font-weight: 100;
+  font-weight: 300;
 }
 
-
-
 /* Collaborator Styles */
-
 .drawer-title {
   padding-left: 15px;
   font-size: 23px;
-  font-weight: 100;
+  font-weight: 300;
   color: white;
   background-color: #5677fc;
   height: 50px;
@@ -181,18 +224,13 @@ core-animated-pages {
   margin-top: 10px;
 }
 
-
-
-
-
-
-
 .demo-card {
-  width: 80%;
-  margin-left: 10%;
-  margin-bottom: 25px;
   background-color: #ffffff;
   display: block;
+}
+
+.demo-card .container {
+  overflow: hidden;
 }
 
 .title {
@@ -250,7 +288,7 @@ core-animated-pages {
 }
 
 .content p {
-  font-weight: 100;
+  font-weight: 300;
 }
 
 .content p a {
@@ -304,7 +342,7 @@ core-animated-pages {
 
 #codePanel h1 {
   font-size: 40px;
-  font-weight: 100;
+  font-weight: 300;
 }
 
 .demos-view-icon {

@@ -22,22 +22,9 @@ handlers:
   static_dir: vendor
   secure: always
 
-- url: /tests
-  static_dir: tests
-  secure: always
-
-- url: /test
-  static_files: templates/test.html
-  upload: templates/test.html
-  secure: always
-
 - url: /
   static_files: templates/playground.html
   upload: templates/playground.html
-  secure: always
-
-- url: .*
-  script: redirect.app
   secure: always
 
 skip_files:

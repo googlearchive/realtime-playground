@@ -1,5 +1,5 @@
 Polymer({
-  ready: function () {
+  ready: function() {
     this.util = this.$.globals.util;
     this.Movie = this.$.globals.Movie;
     this.onFileLoaded = this.onFileLoaded.bind(this);
@@ -7,29 +7,29 @@ Polymer({
     this.callback = this.callback.bind(this);
   },
 
-  onCreateDriveDocumentClick: function () {
+  onCreateDriveDocumentClick: function() {
     this.$.createPage.selected = 1;
   },
 
-  createDriveDocument: function () {
+  createDriveDocument: function() {
     var that = this;
     this.$.create.disabled = true;
     this.documentTitle = this.$.name.value;
     this.$.loader1.classList.remove('hidden');
-    this.util.createRealtimeFile(this.documentTitle, function (resp) {
+    this.util.createRealtimeFile(this.documentTitle, function(resp) {
       that.documentId = resp.result.id;
       that.util.load(that.documentId, that.onFileLoaded, that.onInitialize);
     });
-    
   },
 
-  onOpenDriveDocumentClick: function () {
+  onOpenDriveDocumentClick: function() {
     var token = gapi.auth.getToken().access_token;
     var view = new google.picker.View(google.picker.ViewId.DOCS);
-    view.setMimeTypes("application/vnd.google-apps.drive-sdk." + this.util.options.appId);
+    view.setMimeTypes('application/vnd.google-apps.drive-sdk.' +
+      this.util.appId);
     var picker = new google.picker.PickerBuilder()
         .enableFeature(google.picker.Feature.NAV_HIDDEN)
-        .setAppId(this.util.options.appId)
+        .setAppId(this.util.appId)
         .setOAuthToken(token)
         .addView(view)
         .addView(new google.picker.DocsUploadView())
@@ -39,8 +39,8 @@ Polymer({
     this.$.createPage.selected = 2;
   },
 
-  callback: function (resp) {
-    if(resp.action == google.picker.Action.PICKED){
+  callback: function(resp) {
+    if (resp.action == google.picker.Action.PICKED) {
       this.documentId = resp.docs[0].id;
       this.util.load(this.documentId, this.onFileLoaded, this.onInitialize);
     } else if (resp.action == google.picker.Action.CANCEL) {
@@ -48,20 +48,22 @@ Polymer({
     }
   },
 
-  back: function () {
+  back: function() {
     this.$.createPage.selected = 0;
   },
 
-  onFileLoaded: function (doc) {
+  onFileLoaded: function(doc) {
+    window.doc = doc;
     this.$.createPage.selected = 0;
     this.$.loader1.classList.add('hidden');
     this.$.name.value = '';
     this.$.create.disabled = false;
     var serverUrl = this.util.getParam('serverUrl');
-    window.history.pushState("object or string", "Title", "?id=" + this.documentId + (serverUrl ? "serverUrl=" + serverUrl : ""));
-    this.fire('core-signal', { 
-      name:'file-loaded', 
-      data: { 
+    window.history.pushState('object or string', 'Title', '?id=' +
+      this.documentId + (serverUrl ? '&serverUrl=' + serverUrl : ''));
+    this.fire('core-signal', {
+      name: 'file-loaded',
+      data: {
         doc: doc,
         documentTitle: this.documentTitle,
         documentId: this.documentId
@@ -69,14 +71,12 @@ Polymer({
     });
 
     var that = this;
-    setTimeout(function(){
-      that.back();  
+    setTimeout(function() {
+      that.back();
     }, 1000);
-    
   },
 
-  onInitialize: function (model) {
-    
+  onInitialize: function(model) {
     // String Initializer
     var collaborativeString = model.createString('Edit Me!');
     model.getRoot().set('demo_string', collaborativeString);
@@ -91,13 +91,14 @@ Polymer({
 
     // Map Initializer
     var collaborativeMap = model.createMap({
-      key1: "value 1",
-      key2: "value 2",
-      key3: "value 3"
+      key1: 'value 1',
+      key2: 'value 2',
+      key3: 'value 3'
     });
     model.getRoot().set('demo_map', collaborativeMap);
 
-    var customObject = model.create(this.Movie, 'Minority Report', 'Steven Spielberg');
+    var customObject = model.create(this.Movie,
+      'Minority Report', 'Steven Spielberg');
     model.getRoot().set('demo_custom', customObject);
 
   }

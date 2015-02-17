@@ -1,8 +1,8 @@
-<link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../core-animated-pages/transitions/slide-up.html">
-<link rel="import" href="../paper-input/paper-input.html">
-<link rel="import" href="../paper-button/paper-button.html">
-<link rel="import" href="../paper-spinner/paper-spinner.html">
+<link rel="import" href="/components/polymer/polymer.html">
+<link rel="import" href="/components/core-animated-pages/transitions/slide-up.html">
+<link rel="import" href="/components/paper-input/paper-input.html">
+<link rel="import" href="/components/paper-button/paper-button.html">
+<link rel="import" href="/components/paper-spinner/paper-spinner.html">
 <link rel="import" href="extra-icons.html">
 
 <polymer-element name="create-document">
@@ -12,12 +12,12 @@
       <core-animated-pages id="createPage" selected="{{page}}" transitions="slide-up" on-core-animated-pages-transition-end="{{complete}}">
         <section layout vertical>
           <div class="icons">
-            <div class="create-document-jumbo-icon" cross-fade>
-              <core-icon id="createDrive" icon="note-add" on-click="{{ onCreateDriveDocumentClick }}"></core-icon>
+            <div class="create-document-jumbo-icon" cross-fade on-click="{{ onCreateDriveDocumentClick }}">
+              <core-icon id="createDrive" icon="note-add"></core-icon>
               <div class="subtitle">Create Realtime Document</div>
             </div>
-            <div class="create-document-jumbo-icon" cross-fade>
-              <core-icon id="openDrive" icon="extras:drive" on-click="{{ onOpenDriveDocumentClick }}"></core-icon>
+            <div class="create-document-jumbo-icon" cross-fade on-click="{{ onOpenDriveDocumentClick }}">
+              <core-icon id="openDrive" icon="extras:drive"></core-icon>
               <div class="subtitle">Open Drive Document</div>
             </div>
           </div>
@@ -28,12 +28,12 @@
               <div flex class="panel">
                 <div class="top">
                   <h1>New Realtime Document</h1>
-                  <core-icon icon="drive-file" ></core-icon>
+                  <core-icon icon="note-add" ></core-icon>
                 </div>
                 <div class="bottom">
                   <paper-spinner id="loader1" active class="hidden"></paper-spinner>
                   <paper-input id="name" label="Document Name" inputValue="{{ documentName }}"></paper-input>
-                  <paper-button id="create" on-click="{{ createDriveDocument }}" disabled?="{{ documentName.length == 0 }}">Create</paper-button>
+                  <paper-button raised id="create" on-click="{{ createDriveDocument }}" disabled?="{{ documentName.length == 0 }}">Create</paper-button>
                 </div>
               </div>
               <core-icon id="back" icon="arrow-back" on-click="{{ back }}"></core-icon>

@@ -1,0 +1,134 @@
+
+/* Viewports < 700px */
+@media (max-width: 700px) {
+    .icons {
+      width: calc(100% - 20px);
+      height: 150px;
+      position: absolute;
+      top:calc(50% - 100px);
+      left: 20px;
+    },
+
+    .jumbo-icon {
+      width: 100%;
+      height: 75px;
+      margin-left: 20px;
+      position: relative;
+    }
+
+    .jumbo-icon core-icon {
+      height: 75px;
+      width: 75px;
+      color: white;
+    }
+
+    .jumbo-icon core-icon:hover {
+      color: #9fa8da;
+      cursor: pointer;
+    }
+
+    .jumbo-icon .subtitle {
+      color: white;
+      font-weight: 300;
+      text-align: center;
+      display: inline-block;
+    }
+
+    .main-jumbo-icon {
+      height: 75px;
+      width: 100%;
+      display: inline-block;
+      position: relative;
+    }
+
+    .enable-local-option .local-icon {
+      transition: 1s all;
+      pointer-events: auto;
+      opacity: 1;
+    }
+
+    .local-icon {
+      opacity: 0;
+      pointer-events: none;
+    }
+}
+
+/* Viewports > 700px */
+@media (min-width: 700px) {
+    .icons {
+      transition: 1s all;
+      position: fixed;
+      width: 510px;
+      top: 50%;
+      left: 50%;
+      margin-left: -125px;
+      margin-top: -135px;
+      width: 510px;
+    }
+
+    .jumbo-icon {
+      position: absolute;
+      left: calc(50% - 175px);
+      top: calc(50% - 175px);
+    }
+
+    .jumbo-icon core-icon {
+      transition: all .5s;
+      -webkit-transition: all .5s;
+      height: 250px;
+      width: 250px;
+      color: white;
+    }
+
+    .jumbo-icon core-icon:hover {
+      -webkit-transition: all .5s;
+      transition: all .5s;
+      color: #9fa8da;
+      cursor: pointer;
+    }
+
+    .jumbo-icon .subtitle {
+      color: white;
+      font-weight: 300;
+      text-align: center;
+    }
+
+    .main-jumbo-icon {
+      display: inline-block;
+      position: relative;
+    }
+
+    .enable-local-option .icons {
+      transition: all .5s;
+      margin-left: -250px;
+    }
+
+    .enable-local-option .local-icon {
+      transition: 1s all;
+      pointer-events: auto;
+      opacity: 1;
+    }
+
+    .local-icon {
+      opacity: 0;
+      pointer-events: none;
+    }
+}
+
+core-animated-pages {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+section {
+  height: 100%;
+  width: 100%;
+}
+
+core-icon {
+  cursor: pointer;
+}

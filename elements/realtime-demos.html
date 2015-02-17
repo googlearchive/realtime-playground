@@ -1,25 +1,25 @@
-<link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../core-animated-pages/transitions/tile-cascade.html">
-<link rel="import" href="../core-animated-pages/transitions/hero-transition.html">
-<link rel="import" href="../core-ajax/core-ajax.html">
-<link rel="import" href="../core-drawer-panel/core-drawer-panel.html">
-<link rel="import" href="../core-icon-button/core-icon-button.html">
-<link rel="import" href="../core-tooltip/core-tooltip.html">
-<link rel="import" href="../core-icons/image-icons.html">
-<link rel="import" href="../paper-radio-group/paper-radio-group.html">
-<link rel="import" href="../paper-radio-button/paper-radio-button.html">
-<link rel="import" href="../paper-shadow/paper-shadow.html">
+<link rel="import" href="/components/polymer/polymer.html">
+<link rel="import" href="/components/core-animated-pages/transitions/tile-cascade.html">
+<link rel="import" href="/components/core-animated-pages/transitions/hero-transition.html">
+<link rel="import" href="/components/core-ajax/core-ajax.html">
+<link rel="import" href="/components/core-drawer-panel/core-drawer-panel.html">
+<link rel="import" href="/components/core-icon-button/core-icon-button.html">
+<link rel="import" href="/components/core-tooltip/core-tooltip.html">
+<link rel="import" href="/components/core-icons/image-icons.html">
+<link rel="import" href="/components/paper-radio-group/paper-radio-group.html">
+<link rel="import" href="/components/paper-radio-button/paper-radio-button.html">
+<link rel="import" href="/components/paper-shadow/paper-shadow.html">
 <link rel="import" href="event-card.html">
 <link rel="import" href="collaborator-element.html">
 
 <polymer-element name="realtime-demos">
   <template>
     <link href="realtime-demos.css" rel="stylesheet">
-    <link href="../../css/tommorrow-night-theme.css" rel="stylesheet">
+    <link href="/css/tomorrow-night.css" rel="stylesheet">
     <app-globals id="globals"></app-globals>
     <core-ajax
       id="driveFileMetadataRequest"
-      url="https://www.googleapis.com/drive/v2/files/{{ documentId }}"
+      url="{{ documentTitleBaseUrl }}/drive/v2/files/{{ documentId }}"
       params='{}'
       handleAs="json"
       on-core-response="{{handleResponse}}">
@@ -27,7 +27,7 @@
     <core-signals
       on-core-signal-view-code="{{ viewCode }}">
     </core-signals>
-    <core-drawer-panel responsiveWidth="1090px" drawerWidth="350px" rightDrawer="true">
+    <core-drawer-panel responsiveWidth="1090px" drawerWidth="350px" rightDrawer="true" swipeAnywhere="{{ swipeAnywhere }}">
       <div drawer class="drawer">
         <core-animated-pages id="drawer" selected="{{ page }}" transitions="tile-cascade list-cascade" on-core-animated-pages-transition-end="{{complete}}">
           <section></section>
@@ -36,18 +36,29 @@
               <div class="controls">
                 <div class="drawer-title">Controls</div>
                 <div class="controls-container">
-                  <core-tooltip label="Undo">
-                    <core-icon-button icon="image:rotate-left" disabled?="{{ canUndo == false }}" on-click="{{ undo }}"></core-icon-button>
-                  </core-tooltip>
-                  <core-tooltip label="Redo">
-                    <core-icon-button icon="image:rotate-right" disabled?="{{ canRedo == false }}" on-click="{{ redo }}"></core-icon-button>
-                  </core-tooltip>
-                  <core-tooltip label="Open in new tab" className="no-left">
-                    <core-icon-button icon="open-in-new" on-click="{{ openInNewTab }}"></core-icon-button>
-                  </core-tooltip>
-                  <core-tooltip label="Share">
-                    <core-icon-button icon="account-child" on-click="{{ share }}"></core-icon-button>
-                  </core-tooltip>
+                  <div>
+                    <core-tooltip label="Undo">
+                      <core-icon-button icon="image:rotate-left" disabled?="{{ canUndo == false }}" on-click="{{ undo }}"></core-icon-button>
+                    </core-tooltip>
+                    <core-tooltip label="Redo">
+                      <core-icon-button icon="image:rotate-right" disabled?="{{ canRedo == false }}" on-click="{{ redo }}"></core-icon-button>
+                    </core-tooltip>
+                    <core-tooltip hidden?="{{ !isInGoogleDrive }}" label="Open in new tab" className="no-left">
+                      <core-icon-button icon="open-in-new" disabled?="{{ isInGoogleDrive == false }}" on-click="{{ openInNewTab }}"></core-icon-button>
+                    </core-tooltip>
+                    <core-tooltip hidden?="{{ !isInGoogleDrive }}" label="Share">
+                      <core-icon-button icon="account-child" disabled?="{{ isInGoogleDrive == false }}" on-click="{{ share }}"></core-icon-button>
+                    </core-tooltip>
+                  </div>
+                  <div>
+                    <core-tooltip label="Import">
+                      <core-icon-button hidden?="{{ isInGoogleDrive }}" icon="file-download" on-click="{{ import }}"></core-icon-button>
+                      <input style="display:none" type="file" id="fileImport" />
+                    </core-tooltip>
+                    <core-tooltip label="Export">
+                      <core-icon-button hidden?="{{ !isToJsonAvailable }}" icon="file-upload" on-click="{{ export }}"></core-icon-button>
+                    </core-tooltip>
+                  </div>
                 </div>
               </div>
               <div class="collaborators">
@@ -78,6 +89,7 @@
             <div id="demoContainer" class="container" tile-cascade>
               <core-icon id="back-icon" icon="arrow-back" on-click="{{ back }}"></core-icon>
               <div class="doc-title">{{ documentTitle }}</div>
+              <div class="doc-sub-title" hidden?="{{ !isReadOnly }}">Read-only</div>
               <div id="intro" class="demo-card">
                 <div class="container">
                   <paper-shadow z="1"></paper-shadow>
@@ -105,7 +117,7 @@
                   </div>
                   <div class="content" hero-id="string-code-body">
                     <p>Collaborative strings are just like normal strings, except that all browser sessions will be notified and updated when the string changes. Events are fired when a collaborative string is modified.</p>
-                    <paper-input floatingLabel multiline id="stringInput" value="{{ collaborativeString }}" on-keyup="{{ onCollaborativeStringKeyup }}" label="type something..."></paper-input>
+                    <paper-input floatingLabel multiline disabled?="{{ isReadOnly }}" id="stringInput" value="{{ collaborativeString }}" on-input="{{ onCollaborativeStringInputChange }}" label="type something..."></paper-input>
                   </div>
                 </div>
               </div>
@@ -128,7 +140,7 @@
                       <div class="list-title">List Items</div>
                       <paper-radio-group id="listDemoGroup" selected="{{ selectedItem }}" on-change="{{ onRadioChange }}">
                         <template repeat="{{ listItem in collaborativeList }}">
-                          <paper-radio-button name="{{ listItem }}" label="{{ listItem }}"></paper-radio-button>
+                          <paper-radio-button disabled?="{{ isReadOnly }}" name="{{ listItem }}" label="{{ listItem }}" color="{{ myColor }}"></paper-radio-button>
                         </template>
                       </paper-radio-group>
                     </div>
@@ -139,18 +151,18 @@
                         </tr>
                         <tr>
                           <td><paper-button raised on-click="{{ onAddListItemClick }}" disabled?="{{ addItemValue.length == 0 }}">Add Item</paper-button></td>
-                          <td><paper-input floatingLabel id="addListItemInput" label="item name..." inputValue="{{ addItemValue }}"></paper-input></td>
+                          <td><paper-input floatingLabel id="addListItemInput" disabled?="{{ isReadOnly }}" label="item name..." value="{{ addItemValue }}"></paper-input></td>
                         </tr>
                         <tr>
-                          <td><paper-button raised on-click="{{ onClearListClick }}" disabled?="{{ collaborativeList.length == 0 }}">Clear List</paper-button></td>
+                          <td><paper-button raised on-click="{{ onClearListClick }}" disabled?="{{ (collaborativeList.length == 0) || isReadOnly }}">Clear List</paper-button></td>
                         </tr>
                         <tr>
                           <td><paper-button raised on-click="{{ onSetListItemClick }}" disabled?="{{ setItemValue.length == 0 }}">Set Selected Item</paper-button></td>
-                          <td><paper-input floatingLabel id="setListItemInput" label="item name..." inputValue="{{ setItemValue }}"></paper-input></td>
+                          <td><paper-input floatingLabel id="setListItemInput" disabled?="{{ isReadOnly }}" label="item name..." value="{{ setItemValue }}"></paper-input></td>
                         </tr>
                         <tr>
                           <td><paper-button raised on-click="{{ onMoveListItemClick }}" disabled?="{{ moveItemValue.length == 0 }}">Move Item To Index</paper-button></td>
-                          <td><paper-input floatingLabel id="moveListItemInput" label="new index..." inputValue="{{ moveItemValue }}"></paper-input></td>
+                          <td><paper-input floatingLabel id="moveListItemInput" disabled?="{{ isReadOnly }}" label="new index..." value="{{ moveItemValue }}"></paper-input></td>
                         </tr>
                       </table>
                     </div>
@@ -196,15 +208,15 @@
                           <td><paper-button raised on-click="{{ onRemoveMapItemClick }}" disabled?="{{ !selectedMapItemKey }}">Remove Selected Item</paper-button></td>
                         </tr>
                         <tr>
-                          <td><paper-button raised on-click="{{ onClearMapClick }}" disabled?="{{ collaborativeMap.length == 0 }}">Clear List</paper-button></td>
+                          <td><paper-button raised on-click="{{ onClearMapClick }}" disabled?="{{ (collaborativeMap.length == 0) || isReadOnly }}">Clear List</paper-button></td>
                         </tr>
                         <tr>
                           <td><paper-button raised on-click="{{ onAddMapItemClick }}" disabled?="{{ !addMapKeyValue.length && !addMapValue.length }}">Add Pair</paper-button></td>
-                          <td><paper-input floatingLabel id="addMapKeyInput" inputValue="{{ addMapKeyValue }}" label="key..."></paper-input></td>
+                          <td><paper-input floatingLabel id="addMapKeyInput" disabled?="{{ isReadOnly }}" value="{{ addMapKeyValue }}" label="key..."></paper-input></td>
                         </tr>
                         <tr>
                           <td></td>
-                          <td><paper-input floatingLabel id="addMapValueInput" inputValue="{{ addMapValue }}" label="value..."></paper-input></td>
+                          <td><paper-input floatingLabel id="addMapValueInput" disabled?="{{ isReadOnly }}" value="{{ addMapValue }}" label="value..."></paper-input></td>
                         </tr>
                       </table>
                     </div>
@@ -213,7 +225,7 @@
               </div>
 
               <!-- Custom Demo -->
-              <div id="custom" class="demo-card" hero hero-id="custom-code">
+              <div id="custom" class="demo-card" hidden?="{{ !customDemo }}" hero hero-id="custom-code">
                 <div class="container">
                   <paper-shadow z="1"></paper-shadow>
                   <div class="title yellow" hero hero-id="custom-code-title">
@@ -236,19 +248,19 @@
                       <tbody>
                         <tr>
                           <td>Name</td>
-                          <td><paper-input id="customNameInput" on-keyup="{{ onNameKeyup }}" label="name..." value="{{ name }}"></paper-input></td>
+                          <td><paper-input id="customNameInput" disabled?="{{ isReadOnly }}" on-input="{{ onNameInputChange }}" label="name..." value="{{ name }}"></paper-input></td>
                         </tr>
                         <tr>
                           <td>Director</td>
-                          <td><paper-input id="customDirectorInput" on-keyup="{{ onDirectorKeyup }}" label="director..." value="{{ director }}"></paper-input></td>
+                          <td><paper-input id="customDirectorInput" disabled?="{{ isReadOnly }}" on-input="{{ onDirectorInputChange }}" label="director..." value="{{ director }}"></paper-input></td>
                         </tr>
                         <tr>
                           <td>Notes</td>
-                          <td><paper-input multiline id="customNotesInput" on-keyup="{{ onNotesKeyup }}" label="notes..." value="{{ notes }}"></paper-input></td>
+                          <td><paper-input multiline id="customNotesInput" disabled?="{{ isReadOnly }}" on-input="{{ onNotesInputChange }}" label="notes..." value="{{ notes }}"></paper-input></td>
                         </tr>
                         <tr>
                           <td>Rating</td>
-                          <td><paper-input id="customRatingInput" on-keyup="{{ onRatingKeyup }}" label="rating..." value="{{ rating }}"></paper-input></td>
+                          <td><paper-input id="customRatingInput" disabled?="{{ isReadOnly }}" on-input="{{ onRatingInputChange }}" label="rating..." value="{{ rating }}"></paper-input></td>
                         </tr>
                       </tbody>
                     </table>
@@ -452,7 +464,7 @@ function onCustomDemoChange (evt) {
   input.value = app.customDemo.director;
 }
 
-function onDirectorKeyup () {
+function onDirectorInputChange () {
   app.customDemo.director = document.querySelector('#directorInput').value;
   // This will fire a change event
 }

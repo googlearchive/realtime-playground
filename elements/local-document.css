@@ -1,0 +1,166 @@
+/* Viewports 700px */
+@media (max-width: 700px) {
+  .icons {
+    width: 100%;
+    height: 150px;
+    position: absolute;
+    top:calc(50% - 100px);
+  }
+
+  .local-document-jumbo-icon {
+    width: 100%;
+    height: 75px;
+    margin-left: 20px;
+    position: relative;
+  }
+
+  .local-document-jumbo-icon core-icon {
+    height: 75px;
+    width: 75px;
+    color: white;
+  }
+
+  .local-document-jumbo-icon core-icon:hover {
+    color: #9fa8da;
+    cursor: pointer;
+  }
+
+  .local-document-jumbo-icon .subtitle {
+    color: white;
+    font-weight: 300;
+    text-align: center;
+    display: inline-block;
+  }
+
+  #load .local-document-jumbo-icon {
+    position: absolute;
+    text-align: center;
+    left: 0;
+    top: calc(50% - 175px);
+    margin-left: 0;
+  }
+
+  core-icon #createDrive {
+    display: inline-block;
+  }
+
+  #panel {
+    background-color: white;
+    height: 100%;
+    width: 100%;
+  }
+
+  paper-input {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  #back {
+    position: absolute;
+    bottom:0;
+    left: 0;
+    background-color: #3f51b5;
+    width: 50px;
+    height: 50px;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .top core-icon {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    right: 10px;
+    top: 37px;
+  }
+}
+
+/* Viewports > 700px */
+@media (min-width: 700px) {
+  .icons {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 510px;
+    margin-top: -135px;
+    margin-left: -250px;
+  }
+
+  .local-document-jumbo-icon {
+    display: inline-block;
+    position: relative;
+  }
+
+  .local-document-jumbo-icon core-icon {
+    transition: all .5s;
+    -webkit-transition: all .5s;
+    height: 250px;
+    width: 250px;
+    color: white;
+  }
+
+  .local-document-jumbo-icon core-icon:hover {
+    -webkit-transition: all .5s;
+    transition: all .5s;
+    color: #9fa8da;
+    cursor: pointer;
+  }
+
+  .local-document-jumbo-icon .subtitle {
+    color: white;
+    font-weight: 300;
+    text-align: center;
+  }
+
+  #load .local-document-jumbo-icon {
+    position: absolute;
+    left:calc(50% - 175px);
+    top:calc(50% - 175px);
+  }
+
+  #panel {
+    background-color: white;
+    position: relative;
+    width: 400px;
+    height: 300px;
+    margin-top: 200px;
+    margin-left: calc(50% - 200px);
+  }
+
+  paper-input {
+    width:350px;
+    margin-top: 10px;
+  }
+
+  #back {
+    border-radius: 25px;
+    margin-left: -25px;
+    margin-bottom: -25px;
+  }
+
+  .top core-icon {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    right: 10px;
+    top: 10px;
+  }
+}
+
+:host {
+  width: 100%;
+  height: 100%;
+}
+
+core-animated-pages {
+  height: 100%;
+}
+
+section {
+  overflow: hidden;
+}
+
+.local-document-jumbo-icon core-icon,
+.local-document-jumbo-icon .subtitle {
+  color: white;
+}

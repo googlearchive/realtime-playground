@@ -1,0 +1,24 @@
+<link rel="import" href="/components/polymer/polymer.html">
+<link rel="import" href="/components/paper-input/paper-input.html">
+<link rel="import" href="/components/paper-button/paper-button.html">
+<link rel="import" href="extra-icons.html">
+
+<polymer-element name="local-document">
+  <template>
+    <link rel="stylesheet" href="local-document.css">
+    <app-globals id="globals"></app-globals>
+      <div class="icons">
+        <div class="local-document-jumbo-icon" cross-fade>
+          <core-icon id="createDrive" icon="note-add" on-click="{{ onCreateLocalDocumentClick }}"></core-icon>
+          <div class="subtitle">Create Local Document</div>
+        </div>
+        <div class="local-document-jumbo-icon" cross-fade>
+          <core-icon id="openDrive" icon="file-upload" on-click="{{ import }}"></core-icon>
+          <input style="display:none" type="file" id="fileImport" />
+          <div class="subtitle">Load Document From JSON</div>
+        </div>
+      </div>
+    </div>
+  </template>
+  <script src="local-document.js"></script>
+</polymer-element>

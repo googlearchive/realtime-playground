@@ -1,14 +1,11 @@
-<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="/components/polymer/polymer.html">
 
 <polymer-element name="app-globals">
   <script>
-    (function(Utils){
-      var util = new Utils({
-        onAuthComplete: function (authResult) {
-          that.onAuthComplete();
-        },
-        appId: 'Your App Id Here',
-        clientId: 'Your Client Id Here'
+    (function(utils){
+      var util = new utils.RealtimeUtils({
+        appId: '840867953062',
+        clientId: '840867953062.apps.googleusercontent.com'
       });
 
       var Movie = function () {};
@@ -28,6 +25,6 @@
           this.Movie = Movie;
         }
       });
-    })(window.Utils);
+    })(window.utils);
   </script>
 </polymer-element>

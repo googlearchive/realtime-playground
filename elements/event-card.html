@@ -1,0 +1,90 @@
+<link rel="import" href="/components/polymer/polymer.html">
+
+<polymer-element name="event-card" attributes="event">
+  <template>
+  <style>
+    :host {
+      width: 90%;
+      margin-left: 5%;
+      margin-top: 10px;
+      background-color: #ffffff;
+      display: block;
+    }
+
+    .content {
+      padding: 5px;
+      font-weight: 300;
+      padding: 10px;
+    }
+  </style>
+    <div class="container">
+      <paper-shadow z="1"></paper-shadow>
+      <div class="content">
+        {{ eventString }}
+      </div>
+    </div>
+  </template>
+  <script>
+    Polymer({
+      ready: function () {
+        switch(this.event.type){
+          case gapi.drive.realtime.EventType.TEXT_INSERTED:
+            this.eventString = "'" + this.event.text +
+              "' was inserted at index " + this.event.index + ".";
+            break;
+          case gapi.drive.realtime.EventType.TEXT_DELETED:
+            this.eventString = "'" + this.event.text +
+              "' was removed at index " + this.event.index + ".";
+            break;
+          case gapi.drive.realtime.EventType.COLLABORATOR_JOINED:
+            this.eventString = this.event.collaborator.displayName +
+              " has joined the document.";
+            break;
+          case gapi.drive.realtime.EventType.COLLABORATOR_LEFT:
+            this.eventString = this.event.collaborator.displayName +
+              " has left the document.";
+            break;
+          case gapi.drive.realtime.EventType.VALUES_ADDED:
+            this.eventString = this.event.values.join(', ') +
+              (this.event.values.length == 1 ? ' was' : ' were') +
+              ' added at index ' + this.event.index + '.';
+            break;
+          case gapi.drive.realtime.EventType.VALUES_REMOVED:
+            this.eventString = this.event.values.join(', ') +
+              (this.event.values.length == 1 ? ' was' : ' were') +
+              ' removed at index ' + this.event.index + '.';
+            break;
+          case gapi.drive.realtime.EventType.VALUES_SET:
+            this.eventString = this.event.oldValues.join(', ') +
+              (this.event.oldValues.length == 1 ? ' was' : ' were') +
+              ' changed to ' + this.event.newValues.join(', ') + ' at index ' +
+              this.event.index + '.';
+            break;
+          case gapi.drive.realtime.EventType.VALUE_CHANGED:
+            this.eventString = this.event.property + ' has changed from ' +
+              this.event.oldValue + ' to ' + this.event.newValue + '.';
+            break;
+          case gapi.drive.realtime.EventType.UNDO_REDO_STATE_CHANGED:
+            this.eventString =
+              "The model's undo/redo state has changed -- canUndo: " +
+              this.event.canUndo + ", canRedo: " + this.event.canRedo + ".";
+            break;
+          case gapi.drive.realtime.EventType.REFERENCE_SHIFTED:
+            this.eventString = "SessionId " + this.event.sessionId +
+              " has shifted cursor reference from " + this.event.oldIndex +
+              " to " + this.event.newIndex + ".";
+            break;
+          case gapi.drive.realtime.EventType.ATTRIBUTE_CHANGED:
+            switch(this.event.attribute){
+              case gapi.drive.realtime.Attribute.IS_READ_ONLY:
+                this.eventString =
+                  "The documents read only value has changed to " +
+                  this.event.value;
+                break;
+            }
+            break;
+        }
+      }
+    });
+  </script>
+</polymer-element>
